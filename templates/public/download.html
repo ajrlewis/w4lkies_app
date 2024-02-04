@@ -1,0 +1,38 @@
+{% set active_page = "download" %}
+{% extends "public/base.html" %}
+
+{% block content %}
+<div class="container content">
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Download</h2>
+      </div>
+    </div>
+  </div>
+  <div class="shiftable panel">
+    <div class="row">
+      <div class="twelve columns">
+        <a href="{{ url_for('static', filename='pdf/W4lkies Proof of Cover.pdf') }}" download>Proof of Cover</a>
+      </div>
+    </div>
+  </div>
+  <div class="shiftable panel">
+    <div class="row">
+      <div class="twelve columns">
+        <a href="{{ url_for('static', filename='pdf/W4lkies Flyer.pdf') }}" download>Flyer</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <a href="{{ url_for('static', filename='pdf/W4lkies Business Card.pdf') }}" download>Business Card</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <a href="{{ url_for('static', filename='pdf/W4lkies Welcome Pack.pdf') }}" download>Welcome Pack</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

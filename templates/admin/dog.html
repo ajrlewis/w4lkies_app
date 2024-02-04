@@ -1,0 +1,157 @@
+{% set active_page = "dog" %}
+
+{% if dog %}
+  {% set content_header = "Dog " + dog.id | string  %}
+  {% set form_action = url_for('dog_bp.update', dog_id=dog.id) %}
+  {% set form_submit = "Update" %}
+{% else %}
+  {% set content_header = "Dogs" %}
+  {% set form_action = url_for('dog_bp.add') %}
+  {% set form_submit = "Add" %}
+{% endif %}
+
+{% extends "admin/base.html" %}
+
+
+{% block content %}
+<div class="container content">
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>{{ content_header }}</h2>        
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <form action="{{ form_action }}" method="POST">  
+      {{ dog_form.csrf_token }}
+      <div class="row">
+        <div class="six columns">
+          {{ dog_form.name.label() }}
+          {{ dog_form.name(class_="u-full-width") }}
+        </div>
+        <div class="six columns">
+          {{ dog_form.date_of_birth.label() }}
+          {{ dog_form.date_of_birth(class_="u-full-width") }}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="three columns">
+          {{ dog_form.is_allowed_treats.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ dog_form.is_allowed_treats }}
+          </div>
+        </div>
+        <div class="three columns">
+          {{ dog_form.is_allowed_off_the_lead.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ dog_form.is_allowed_off_the_lead }}
+          </div>
+        </div>
+        <div class="three columns">
+            {{ dog_form.is_allowed_on_social_media.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ dog_form.is_allowed_on_social_media }}
+          </div>
+        </div>
+        <div class="three columns">
+          {{ dog_form.is_neutered_or_spayed.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ dog_form.is_neutered_or_spayed }}
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_form.behavioral_issues.label() }}
+          {{ dog_form.behavioral_issues(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_form.medical_needs.label() }}
+          {{ dog_form.medical_needs(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_form.dog_breed_id.label() }}
+          {{ dog_form.dog_breed_id(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_form.customer_id.label() }}
+          {{ dog_form.customer_id(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_form.vet_id.label() }}
+          {{ dog_form.vet_id(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <button type="submit">
+            {{ form_submit }}
+          </button>
+        </div>
+      </div>
+    </form>
+    {% if dog %}
+      <button onclick="window.location.href='{{ url_for('dog_bp.get') }}'">Cancel</button>
+    {% endif %}
+  </div>
+
+  {% if dogs %}
+    <br>
+    <hr>
+    <br>
+    {% for dog in dogs %}
+      <div class="record">
+        <div class="record-header">
+          <div class="record-header-left">
+            <b>{{ dog.name }}</b>
+          </div>
+          <div class="record-header-right">
+            <a href="{{ url_for('dog_breed_bp.get', dog_breed_id=dog.dog_breed.id) }}">{{ dog.dog_breed.name }}</a>
+          </div>
+        </div>
+        <div>
+          <img class="rounded-image" src="{{ url_for('static', filename='img/dogs/' + (dog.name | lower) + '-02.jpg') }}">
+        </div>
+        <div class="record-details">
+          <div class="">
+            <b>Vet:</b> <a href="{{ url_for('vet_bp.get', vet_id=dog.vet.id) }}">{{ dog.vet.name }}</a>
+          </div>
+          <div class="">
+            <b>Customer:</b> <a href="{{ url_for('customer_bp.get', customer_id=dog.customer.id) }}">{{ dog.customer.name }}</a>
+          </div>
+        </div>
+        <br>
+        <div class="record-actions">
+          <div class="record-actions-update">
+            <button onclick="window.location.href='{{ url_for('dog_bp.get', dog_id=dog.id) }}'" type="submit">
+              Update
+            </button>
+          </div>
+          <div class="record-actions-delete">
+            <form
+              action="{{ url_for('dog_bp.delete', dog_id=dog.id) }}"
+              method="POST"
+              onsubmit="return confirm('Are you sure you want to delete this dog?');"
+            >
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock content %}

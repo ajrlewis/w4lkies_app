@@ -1,0 +1,39 @@
+{% extends "admin/base.html" %}
+
+{% block nav %}
+{% endblock nav %}
+
+{% block content %}
+<div class="container content"> 
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Sign In</h2>
+      </div>
+    </div>
+  <div>
+  <div class="shiftable panel">
+    <form action="{{ url_for('auth_bp.sign_in') }}" method="POST" >
+      {{ form.csrf_token }}
+      <input type="hidden" name="next" value="{{ request.args.get('next', '') }}"/>
+      <div class="row">
+        <div class="twelve columns">
+          {{ form.email.label() }}
+          {{ form.email(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ form.password.label() }}
+          {{ form.password(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <button type="submit">Sign In</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

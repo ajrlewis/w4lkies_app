@@ -1,0 +1,125 @@
+{% set active_page = "pay" %}
+{% extends "public/base.html" %}
+
+{% block content %}
+<div class="container content">
+
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Pay</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <div id="pr-form">
+      <form id="form" method="POST">
+        {{ form.csrf_token }}
+        <div class="row">
+          <div class="six columns">
+            {{ form.currency.label }} {{ form.currency }}
+          </div>
+          <div class="six columns">
+            {{ form.amount.label }} {{ form.amount }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="twelve columns">
+            {{ form.recaptcha }}
+            {{ form.submit }}
+          </div>
+        </div>
+      </form>
+    </div>
+    <div id="pr-container" style="display: none;">
+      <div class="row">
+        <div class="twelve columns">
+          <div id="pr-info"></div>
+        </div>
+      </div>
+      <div class="row" style="margin: auto;">
+        <div class="twelve columns" style="text-align: center;">
+          <div id="pr-qrcode-container" style="display: inline-block;"></div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="twelve columns">
+          <div id="pr-actions"></div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="twelve columns">
+          <a class="button" href="{{ url_for('pay_bp.get') }}">Create Another Invoice</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+<script type="text/javascript">
+  document.getElementById("form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent form submission
+
+    var form = event.target;
+    var formData = new FormData(form);
+
+    fetch("{{ url_for('pay_bp.get_invoice') }}", {
+      method: "POST",
+      body: formData
+    })
+    .then(function(response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Error: " + response.status);
+      }
+    })
+    .then(function(data) {
+      var date = data.date;
+      var amount = data.amount;
+      var pr = data.pr;
+
+      // Toggle the containers
+      document.getElementById("pr-form").style.display = "none"
+      document.getElementById("pr-container").style.display = "block"
+      
+      var content = "";
+
+      // Information on the payment request
+      content = `<p>${amount}</p>`;
+      document.getElementById("pr-info").innerHTML = content;
+
+      // Generate QR code
+      var qrCode = new QRCode(document.getElementById("pr-qrcode-container"), {
+        text: pr,
+        width: 256,
+        height: 256
+      });
+
+      // Show and copy payment request
+      content = `<a id="pr">${pr.substring(0, 10)}…${pr.substring(pr.length - 10, pr.length)}</a>`;
+      document.getElementById("pr-actions").innerHTML = content;
+
+      // Copy payment request to clipboard
+      var copyButton = document.getElementById("pr");
+      copyButton.addEventListener("click", function() {
+        navigator.clipboard.writeText(pr)
+          .then(function() {
+          })
+          .catch(function(error) {
+            console.error("Error copying to clipboard: ", error);
+          });
+      });
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+  });
+</script>
+{% endblock %}

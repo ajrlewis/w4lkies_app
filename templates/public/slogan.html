@@ -1,0 +1,7 @@
+<div class="container content">
+  <div class="slogan">
+    {% for word in config["WEBSITE_SLOGAN"].split() %}
+      <span class="shiftable">{{ word }}</span>
+    {% endfor %}
+  </div>
+</div>

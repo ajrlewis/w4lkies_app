@@ -1,0 +1,200 @@
+{% set active_page = "sign_up" %}
+{% extends "public/base.html" %}
+{% block content %}
+
+<div class="container content">
+
+  {% if form.errors %}
+    {{ form.errors }}
+  {% endif %}
+  
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Sign Up</h2>
+      </div>
+    </div>
+  </div>
+
+
+  <form method="POST" action="{{ url_for('sign_up_bp.add') }}">
+    {{ form.csrf_token }}
+
+    <div class="shiftable panel">
+      <div class="row">
+        <div class="twelve columns">
+          <h3>Customer Information</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ form.customer_name.label }}
+          {{ form.customer_name }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          {{ form.customer_phone.label }}
+          {{ form.customer_phone }}
+        </div>
+        <div class="six columns">
+          {{ form.customer_email.label }}
+          {{ form.customer_email }}
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="twelve columns">
+          <h4>Emergency Contact</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">      
+          {{ form.customer_emergency_contact_name.label }}
+          {{ form.customer_emergency_contact_name }}
+        </div>
+        <div class="six columns">
+          {{ form.customer_emergency_contact_phone.label }}
+          {{ form.customer_emergency_contact_phone }}
+        </div>
+      </div>
+    </div>
+
+    <div class="shiftable panel">
+      <div class="row">
+        <div class="twelve columns">
+          <h3>Dog Information</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          {{ form.dog_name.label }}
+          {{ form.dog_name }}
+        </div>
+        <div class="six columns">
+          {{ form.dog_date_of_birth.label }}
+          {{ form.dog_date_of_birth }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          {{ form.dog_breed_name.label }}
+          {{ form.dog_breed_name(id="dog-breed-name-select")}}
+        </div>
+        <div class="six columns" id="other-dog-breed-name-group" style="display: none;">
+          {{ form.other_dog_breed_name.label }}
+          {{ form.other_dog_breed_name }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns u-full-width">
+          {{ form.vet_name.label }}
+          {{ form.vet_name(id="vet-name-select") }}
+        </div>
+        <div class="six columns u-full-width" id="other-vet-name-group" style="display: none;">
+          {{ form.other_vet_name.label }}
+          {{ form.other_vet_name }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="three columns">
+          {{ form.dog_is_allowed_treats.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ form.dog_is_allowed_treats }}
+          </div>
+        </div>
+        <div class="three columns">
+          {{ form.dog_is_allowed_off_the_lead.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ form.dog_is_allowed_off_the_lead }}
+          </div>
+        </div>
+        <div class="three columns">
+          {{ form.dog_is_allowed_on_social_media.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ form.dog_is_allowed_on_social_media }}
+          </div>
+        </div>
+        <div class="three columns">
+          {{ form.dog_is_neutered_or_spayed.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ form.dog_is_neutered_or_spayed }}
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="twelve columns">
+          {{ form.dog_behavioral_issues.label }}
+          {{ form.dog_behavioral_issues }}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="twelve columns">
+          {{ form.dog_medical_needs.label }}
+          {{ form.dog_medical_needs }}
+        </div>
+      </div>
+
+    </div>
+
+    <div class="shiftable panel">
+
+      <div class="row">
+        <div class="twelve columns">
+          <h3>Consent & Submit</h3>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="twelve columns">
+          {{ form.consent.label }} 
+          <div class="checkbox" onclick="toggleCheckbox(this)">
+            {{ form.consent }}
+          </div>
+        </div>
+      </div>
+      
+      <br>
+
+      <div class="row">
+        <div class="twelve columns">
+          {{ form.submit }}
+          <p>
+            By submitting this form, you confirm that you have read and agree to our <a href="{{ url_for('legal_bp.get') }}" target="_blank">privacy notice</a>.
+          </p>
+          </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+  <script type="text/javascript">
+
+    var dogBreedSelect = document.getElementById("dog-breed-name-select");
+    var otherDogBreedGroup = document.getElementById("other-dog-breed-name-group");
+    dogBreedSelect.addEventListener("change", function() {
+      if (dogBreedSelect.value === "Other") {
+        otherDogBreedGroup.style.display = "block";
+      } else {
+        otherDogBreedGroup.style.display = "none";
+      }
+    });
+
+    var vetNameSelect = document.getElementById("vet-name-select");
+    var otherVetNameGroup = document.getElementById("other-vet-name-group");
+    vetNameSelect.addEventListener("change", function() {
+      if (vetNameSelect.value === "Other") {
+        otherVetNameGroup.style.display = "block";
+      } else {
+        otherVetNameGroup.style.display = "none";
+      }
+    });
+
+  </script>
+{% endblock scripts %}

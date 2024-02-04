@@ -1,0 +1,23 @@
+{% extends "email/base.html" %}
+
+{% block content %}
+  <br>
+  This is just a friendly email to let you know that your account was successfully signed into.
+  <br>
+  <table>
+    <tr>
+      <td>
+        <p class="email-table-row-header">User Name:</p>
+        <p class="email-table-row-content">{{ user.name }}</p>
+        <p class="email-table-row-header">User Email:</p>
+        <p class="email-table-row-content">{{ user.email }}</p>
+        <p class="email-table-row-header">Sign In At:</p>
+        <p class="email-table-row-content">{{ now }}</p>
+        <p class="email-table-row-header">IP Address:</p>
+        <p class="email-table-row-content">{{ ip_address }}</p>
+        <p class="email-table-row-header">User Agent:</p>
+        <p class="email-table-row-content">{{ user_agent }}</p>
+      </td>
+    </tr>
+  </table>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% set active_page = "index" %}
+{% extends "public/base.html" %}
+
+{% block content %}
+<div class="container content">
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Welcome!</h2>
+      </div>
+    </div>
+  </div>
+  <div class="shiftable panel">
+    <div class="row">
+      <div class="twelve columns">
+        Please navigate around the pages above or click <a href="{{ url_for('about_bp.get') }}">here</a> to learn more about us!
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

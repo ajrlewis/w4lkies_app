@@ -1,0 +1,97 @@
+{% set active_page = "vet" %}
+{% if vet %}
+  {% set content_header = "Vet " + vet.id | string  %}
+  {% set form_action = url_for('vet_bp.update', vet_id=vet.id) %}
+  {% set form_submit = "Update" %}
+{% else %}
+  {% set content_header = "Vets" %}
+  {% set form_action = url_for('vet_bp.add') %}
+  {% set form_submit = "Add" %}
+{% endif %}
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container content">
+
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>{{ content_header }}</h2>        
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <form action="{{ form_action }}" method="POST">  
+      {{ vet_form.csrf_token }}
+      <div class="row">
+        <div class="twelve columns">
+          {{ vet_form.name.label() }}
+          {{ vet_form.name(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ vet_form.phone.label() }}
+          {{ vet_form.phone(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ vet_form.address.label() }}
+          {{ vet_form.address(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <button type="submit">
+            {{ form_submit }}
+          </button>
+        </div>
+      </div>
+    </form>
+    {% if vet %}
+      <button type="submit" onclick="window.location.href='{{ url_for('vet_bp.get') }}'">Cancel</button>
+    {% endif %}
+  </div>
+
+  {% if vets %}
+    <br>
+    <hr>
+    <br>
+    {% for vet in vets %}
+      <div class="record">
+        <div class="record-header">
+          <div class="record-header-right">
+            <b>{{ vet.name }}</b>
+          </div>
+          <div class="record-header-left">
+            <b>{{ vet.phone }}</b>
+          </div>
+        </div>
+        <div class="record-details">
+          {{ vet.address }}
+        </div>
+        <br>
+        <div class="record-actions">
+          <div class="record-actions-update">
+            <button onclick="window.location.href='{{ url_for('vet_bp.get', vet_id=vet.id) }}'" type="submit">
+              Update
+            </button>
+          </div>
+          <div class="record-actions-delete">
+            <form
+              action="{{ url_for('vet_bp.delete', vet_id=vet.id) }}"
+              method="POST"
+              onsubmit="return confirm('Are you sure you want to delete this vet?');"
+            >
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock content %}

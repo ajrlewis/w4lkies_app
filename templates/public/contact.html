@@ -1,0 +1,49 @@
+{% set active_page = "contact" %}
+{% extends "public/base.html" %}
+
+{% block content %}
+<div class="container content">
+
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Contact</h2>
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <div class="row">
+      <div class="twelve columns">
+        <p>
+          <i class="fa-solid fa-person"></i> &nbsp; {{ config["WEBSITE_NAME"] }}
+        </p>
+        <p>
+          <i class="fa-solid fa-location-dot"></i> &nbsp; {{ config["WEBISTE_ADDRESS"] }}
+        </p>
+        <p class="expandable">
+          <i class="fa-solid fa-globe"></i> &nbsp; <a href="{{ config['WEBSITE_URL'] }}">{{ config["WEBSITE_URL"] }}</a>
+        </p>
+        <p class="expandable">
+          <i class="fa-solid fa-phone"></i> &nbsp; <a href="tel:{{ config['WEBSITE_TELEPHONE'] }}">{{ config["WEBSITE_TELEPHONE"] }}</a>
+        </p>
+        <p class="expandable">
+          <i class="fa-solid fa-envelope"></i> &nbsp; <a href="mailto:{{ config['MAIL_USERNAME'] }}?subject=Hello!">{{ config["MAIL_USERNAME"] }}</a>
+        </p>
+        <p class="expandable">
+          <i class="fa-brands fa-solid fa-instagram"></i> &nbsp; <a href="https://instagram.com/{{ config['WEBSITE_INSTAGRAM'] }}" target="_blank">@{{ config["WEBSITE_INSTAGRAM"] }}</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <div class="row">
+      <div class="twelve columns">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39750.19489751893!2d-0.30033214789370427!3d51.48776203564943!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760dd896754399%3A0x9f2dfccacd81169!2sLondon%20W4!5e0!3m2!1sen!2suk!4v1683580854437!5m2!1sen!2suk" width="100%" height="300px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

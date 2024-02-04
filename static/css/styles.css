@@ -1,0 +1,469 @@
+/* Variables */
+:root {
+  --color--success: #32d74b;
+  --color--success-20: #32d74b20;
+  --color--warning: orange;
+  --color--error: #df6858;
+  --color--error-20: #df685820;
+  --color--destructive: #f7403a;
+  --color--background: #fcf6f5;
+  --color--background-80: #fcf6f580;
+  --color--accent: #414A65;
+  --color--accent-light: #333;
+  --color--tint: #fd8927;
+  --color--tint-20: #fd892720;
+  --color--tint-80: #fd892780;
+  --color--panel-background: #F5E3CC;
+  --color--panel-accent: #b7410e;
+}
+
+/* HTML */
+html {
+  background: var(--color--background);
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+
+/* Body */
+body {
+  color: var(--color--accent);
+}
+
+/* Header */
+header {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+/* Navigation */
+nav {
+  overflow: hidden;
+  padding-top: 15px;
+  padding-bottom: 30px;
+}
+
+nav a {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid var(--color--tint);
+  border-radius: 20px;
+  text-decoration: none;
+  color: var(--color--tint);
+  background-color: #fff;
+  margin-right: 10px;
+}
+
+nav a:last-child {
+  margin-right: 0; /* Remove right margin for the last button */
+}
+
+a:hover {
+  background: var(--color--tint-20);
+  border-color: var(--color--tint);
+  color: var(--color--tint);
+  cursor: pointer;
+  outline: 0;
+}
+
+hr {
+  align: center;
+  display: block;
+  height: 3px;
+  border: 0;
+  border-top: 3px solid var(--color--accent);
+  margin: auto;
+  padding: 0;
+  width: 33%;
+}
+
+a {
+  color: var(--color--tint);
+}
+
+a:hover {
+  transform: scale(1.05);
+  color: var(--color--tint-80);
+}
+
+a.active {
+  color: var(--color--background);
+  background-color: var(--color--tint);
+  cursor: default;
+}
+
+/* Contact Icons */
+.social {
+  padding-top: 30px;
+}
+
+.social a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 10px;
+  border-radius: 50%;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Skeleton Container */
+.container {
+  text-align: center;
+}
+
+/* Container Content */
+.content {}
+
+.content .content-header {
+  padding-bottom: 15px;
+}
+
+.content .content-header h2 {
+  color: var(--color--accent);
+  display: inline-block;
+  position: relative;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.content .content-header h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--color--accent-light);
+  transition: all 0.2s ease-in-out;
+}
+
+.content .content-header h2:hover::after {
+  width: 100%;
+}
+
+/* Record  */
+.record {
+  padding: 20px;
+  margin: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--color--panel-background);
+  color: var(--color--accent-light);
+  font-size: 16px;
+  text-align: left;
+}
+
+.record-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.record-header-left {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.record-header-right {
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: var(--color--accent);
+}
+
+.record-header-right h3 {
+  font-size: 18px;
+  color: var(--color--panel-accent);
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.record-details {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-actions form {
+  margin: 0; /* Remove space */
+}
+
+.record-actions button {
+  background-color: var(--color--tint);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  height: 32px;
+}
+
+.record-actions button:hover {
+  background-color: var(--color--tint-80);
+}
+
+.record-actions-update button {
+}
+
+.record-actions-delete button {
+  background-color: var(--color--destructive);
+}
+
+.record-actions-delete form {
+  margin: 0; /* Remove default margin from form element */
+}
+
+/* Flash messages  */
+.flash-messages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.flash-messages li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.flash-messages .error {
+  background-color: var(--color--error-20);
+  color: var(--color--error);
+}
+
+.flash-messages .success {
+  background-color: var(--color--success-20);
+  color: var(--color--success);
+}
+
+/* Hideable Elements*/
+.hideable {
+  -moz-animation: cssAnimation 0s ease-in 5s forwards;
+  -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+  -o-animation: cssAnimation 0s ease-in 5s forwards;
+  animation: cssAnimation 0s ease-in 5s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+
+/* Shiftable Elements */
+.shiftable {
+  transition: all 0.2s ease-in-out;
+}
+
+.shiftable:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Expandable Elements */
+.expandable {
+  transition: all 0.2s ease-in-out;
+}
+
+.expandable:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stickable {
+  background-color: var(--color--background-80);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+@font-face {
+  font-family: "Hobo Std";
+  src: url("/static/fonts/HoboStd.otf") format("truetype");
+}
+
+/* Round and resize an image */
+.rounded-image {
+  border: 10px solid var(--color--panel-background);
+  border-radius: 50%;
+  height: 160px;
+  width: 160px;
+}
+
+/* Slogan text */
+.slogan {
+  font-family: "Hobo Std", serif;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-size: 24px;
+  text-transform: uppercase;
+  display: inline-block;
+  line-height: 1.5;
+  letter-spacing: 5px;
+  text-align: center;
+}
+
+.slogan span {
+  display: inline-block;
+  transform: rotate(-5deg);
+  margin-right: -10px;
+  margin-bottom: -10px;
+}
+
+.slogan span:nth-child(odd) {
+  background-color: var(--color--panel-background);
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.slogan span:nth-child(even) {
+  color: var(--color--panel-background);
+  color: var(--color--accent);
+  background-color: var(--color--background);
+  padding: 5px 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Image gallery */
+.gallery {}
+
+.gallery img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Panel */
+.panel {
+  background-color: var(--color--panel-background);
+  border-radius: 10px;
+  color: var(--color--panel-accent);
+  font-size: 20px;
+  margin-top: 10px;
+  padding: 20px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.panel h2, h3, h4 {
+  color: var(--color--panel-accent);
+  font-weight: bolder;
+  margin-top: 0;
+}
+
+.panel ul li {
+  color: var(--color--panel-accent);
+}
+
+.panel b {
+  color: var(--color--panel-accent);
+  font-weight: bold;
+}
+
+/* Checkbox Input */
+input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+.checkbox {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color--tint);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkbox:hover {
+  background-color: var(--color--tint-20);;
+}
+
+.checkbox.checked {
+  background-color: var(--color--tint);
+  border-color: var(--color--tint);
+}
+
+/* Inner Square Color */
+.checkbox.checked::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 4px;
+  background-color: var(--color--background);
+  border-radius: 2px;
+}
+
+/* Radio Button Inputs */
+button[type="radio"] {
+  background: none;
+  border-color: var(--color--tint);
+  color: var(--color--tint);
+  font-size: initial;
+  text-transform: none;
+}
+
+ button[type="radio"].active {
+  background: var(--color--tint);
+  border-color: var(--color--tint);
+  color: var(--color--background);
+  background-color: var(--color--tint);
+  cursor: default;
+}
+
+/* Text Input */
+textarea, select, input[type="date"], input[type="number"], input[type="text"], input[type="tel"] {
+  background: var(--color--tint-20);
+  border-color: var(--color--tint);
+  color: var(--color--accent);
+  font-size: initial;
+  text-transform: none;
+}
+
+/* Submit Button & Input */
+input[type="submit"], button[type="submit"] {
+  background: none;
+  border-color: var(--color--tint);
+  color: var(--color--tint);
+  font-size: initial;
+  text-transform: none;
+}
+
+input[type="submit"]:hover, button[type="submit"]:hover {
+  background: var(--color--tint-20);
+  border-color: var(--color--tint);
+  color: var(--color--tint);
+  cursor: pointer;
+  outline: 0;
+}
+
+input[type="submit"]:focus, button[type="submit"]:focus {
+  background: var(--color--tint-20);
+  border-color: var(--color--tint);
+  color: var(--color--tint);
+  font-size: initial;
+  text-transform: none;
+}
+
+input[type="submit"]:active, button[type="submit"]:active {
+  background: var(--color--tint-20);
+  border-color: var(--color--tint);
+  color: var(--color--tint);
+  font-size: initial;
+  text-transform: none;
+}

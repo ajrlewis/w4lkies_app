@@ -1,0 +1,22 @@
+{% set active_page = "verify-sign-up" %}
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container content">
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Add Sign Up</h2>
+      </div>
+    </div>
+  </div>
+  <div class="shiftable panel">
+    <form action="{{ url_for('verify_sign_up_bp.add') }}" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+      <textarea name="json_data" rows="10" cols="50" placeholder="Paste JSON data here"></textarea>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,113 @@
+{% set active_page = "service" %}
+{% if service %}
+  {% set content_header = "Service " + service.id | string  %}
+  {% set form_action = url_for('service_bp.update', service_id=service.id) %}
+  {% set form_submit = "Update" %}
+{% else %}
+  {% set content_header = "Services" %}
+  {% set form_action = url_for('service_bp.add') %}
+  {% set form_submit = "Add" %}
+{% endif %}
+
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container content">
+
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>{{ content_header }}</h2>        
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <form action="{{ form_action }}" method="POST">
+      {{ service_form.csrf_token }}
+      <div class="row">
+        <div class="twelve columns">
+          {{ service_form.name.label() }}
+          {{ service_form.name(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ service_form.description.label() }}
+          {{ service_form.description(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          {{ service_form.price.label() }}
+          {{ service_form.price(class_="u-full-width") }}
+        </div>
+        <div class="six columns">
+          {{ service_form.duration.label() }}
+          {{ service_form.duration(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ service_form.is_active.label }} 
+          <div class="checkbox {{ 'checked' if service_form.is_active.data else '' }}" onclick="toggleCheckbox(this)">
+            {{ service_form.is_active }}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <button type="submit">
+            {{ form_submit }}
+          </button>
+        </div>
+      </div>
+    </form>
+    {% if service %}
+      <button onclick="window.location.href='{{ url_for('service_bp.get') }}'">Cancel</button>
+    {% endif %}
+  </div>
+
+  {% if services %}
+    <br>
+    <hr>
+    <br>
+    <div class="row">
+      <div class="twelve columns">
+      </div>
+    </div>
+    {% for service in services %}
+      <div class="record">
+        <div class="record-header">
+          <div class="record-header-left">
+            <b>{{ service.name }}</b>
+          </div>
+          <div class="record-header-right">
+            <b>{{ "£%0.2f" | format(service.price | float) }}</b>
+          </div>
+        </div>
+        <div class="record-details">
+          {{ service.description }}
+        </div>
+        <div class="record-actions">
+          <div class="record-actions-update">
+            <button onclick="window.location.href='{{ url_for('service_bp.get', service_id=service.id) }}'" type="submit">
+              Update
+            </button>
+          </div>
+          <div class="record-actions-delete">
+            <form
+              action="{{ url_for('service_bp.delete', service_id=service.id) }}"
+              method="POST"
+              onsubmit="return confirm('Are you sure you want to delete this service?');"
+            >
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock content %}

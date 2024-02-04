@@ -1,0 +1,27 @@
+{% set active_page = "gallery" %}
+{% extends "public/base.html" %}
+
+{% block content %}
+<div class="container content">
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>Gallery</h2>
+      </div>
+    </div>
+  </div>
+  <div class="gallery">
+    {% for (dog_name, dog_breed), image_paths in dog_name_to_image_paths.items() %}
+      <div class="shiftable panel">
+        <h3>{{ dog_name }}</h3>
+        <h4>{{ dog_breed }}</h4>
+        {% for image_path in image_paths %}
+        <div>
+          <img src="{{ url_for('static', filename=image_path) }}" alt="Dog Gallery Image">
+        </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

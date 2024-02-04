@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ config['WEBSITE_NAME'] }}</title>
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/logo-white-background.png') }}">
+    <meta name="apple-mobile-web-app-title" content="{{ config['WEBSITE_NAME'] }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/fontawesome-free-6.2.0-web/css/all.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/Skeleton-2.0.4/css/normalize.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/vendor/Skeleton-2.0.4/css/skeleton.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+  </head>
+  <body>
+    {% block flash_messages %}
+      {% include "public/flash_messages.html" %}
+    {% endblock flash_messages %}
+    <header>
+      {% block logo %}
+        {% include "public/logo.html" %}
+      {% endblock logo %}
+      {% block slogan %}
+        {% include "public/slogan.html" %}
+      {% endblock slogan %}
+      {% block social %}
+        {% include "public/social.html" %}
+      {% endblock social %}
+    </header>
+
+    <nav>
+      {% block nav %}
+        {% include "public/nav.html" %}
+      {% endblock %}
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <br>
+    <br>
+    <footer>
+      {% block footer %}
+        {% include "public/footer.html" %}
+      {% endblock %}
+    </footer>
+    <br>  
+    <br>
+    <br>
+
+    <!-- <script src='https://www.google.com/recaptcha/api.js' async defer></script> -->
+
+    <script>     
+      // Sticky navigation bar
+      window.onscroll = function() {myFunction()};
+      var nav = document.getElementsByTagName("nav")[0];
+      var navHeight = nav.offsetHeight;
+      var nextElementSibling = nav.nextElementSibling;
+      var sticky = nav.offsetTop;
+      function myFunction() {
+        if (window.pageYOffset >= sticky) {
+          nav.classList.add("stickable")
+          nextElementSibling.style.paddingTop = navHeight + "px";
+        } else {
+          nav.classList.remove("stickable");
+          nextElementSibling.style.paddingTop = "0";
+        }
+      }
+      
+      // Toggles the checked class in the checkbox
+      function toggleCheckbox(checkbox) {
+        checkbox.classList.toggle("checked");
+        var input = checkbox.querySelector("input[type='checkbox']");
+        input.checked = !input.checked;
+      }
+
+      // Store the scroll position when the page is unloaded
+      window.addEventListener('beforeunload', function() {
+        sessionStorage.setItem('scrollPosition', window.pageYOffset);
+      });
+
+      // Restore the scroll position and apply fade-in effect when the page is loaded
+      window.addEventListener('load', function() {
+        var scrollPosition = sessionStorage.getItem('scrollPosition');
+        if (scrollPosition !== null) {
+          setTimeout(function() {
+            window.scrollTo(0, scrollPosition);
+            document.documentElement.style.opacity = 1;
+            sessionStorage.removeItem('scrollPosition');
+          }, 0);
+        } else {
+          document.documentElement.style.opacity = 1;
+        }
+      });
+
+      // Store the scroll position when the page is hidden
+      window.addEventListener('pagehide', function() {
+        sessionStorage.setItem('scrollPosition', window.pageYOffset);
+      });
+
+      // Restore the scroll position and apply fade-in effect when the page is loaded
+      window.addEventListener('pageshow', function() {
+        var scrollPosition = sessionStorage.getItem('scrollPosition');
+        if (scrollPosition !== null) {
+          setTimeout(function() {
+            window.scrollTo(0, scrollPosition);
+            document.documentElement.style.opacity = 1;
+            sessionStorage.removeItem('scrollPosition');
+          }, 0);
+        } else {
+          document.documentElement.style.opacity = 1;
+        }
+      });
+    </script>
+
+    {% block scripts %}
+    {% endblock %}
+
+  </body>
+</html>

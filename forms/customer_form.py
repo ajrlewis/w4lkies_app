@@ -1,0 +1,46 @@
+from datetime import datetime
+from flask_wtf import FlaskForm
+from wtforms import DateField, StringField, SubmitField, TelField
+from wtforms.validators import DataRequired, Optional
+from utils.form_mixin import FormMixin
+
+
+class CustomerForm(FlaskForm, FormMixin):
+    name = StringField(
+        "Name",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Daphne Blake", "class": "u-full-width"},
+    )
+
+    # phone = TelField
+    phone = StringField(
+        "Phone",
+        validators=[
+            DataRequired(),
+        ],
+        render_kw={"placeholder": "(+44) 0123 456789", "class": "u-full-width"},
+    )
+
+    email = StringField(
+        "Email",
+        validators=[DataRequired()],
+        render_kw={
+            "placeholder": "daphne@themysterymachine.com",
+            "class": "u-full-width",
+        },
+    )
+
+    emergency_contact_name = StringField(
+        "Emergency Contact's Name",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "Fred Jones", "class": "u-full-width"},
+    )
+
+    # emergency_contact_phone = TelField
+    emergency_contact_phone = StringField(
+        "Emergency Contact's Phone",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "(+44) 1234 567890", "class": "u-full-width"},
+    )
+
+    signed_up_on = DateField("Signed Up On", default=datetime.utcnow)

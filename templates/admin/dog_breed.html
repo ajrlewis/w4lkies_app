@@ -1,0 +1,143 @@
+{% set active_page = "dog_breed" %}
+
+{% if dog %}
+  {% set content_header = "Dog Breed " + dog_breed.id | string  %}
+  {% set form_action = url_for('dog_breed_bp.update', dog_breed_id=dog_breed.id) %}
+  {% set form_submit = "Update" %}
+{% else %}
+  {% set content_header = "Dog Breeds" %}
+  {% set form_action = url_for('dog_breed_bp.add') %}
+  {% set form_submit = "Add" %}
+{% endif %}
+
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container content">
+
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>{{ content_header }}</h2>        
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <form action="{{ form_action }}" method="POST">  
+      {{ dog_breed_form.csrf_token }}
+      <div class="row">
+        <div class="twelve column">
+          {{ dog_breed_form.name.label() }}
+          {{ dog_breed_form.name(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve column">
+          {{ dog_breed_form.description.label() }}
+          {{ dog_breed_form.description(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve column">
+          {{ dog_breed_form.origin.label() }} 
+          {{ dog_breed_form.origin(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve column">
+          {{ dog_breed_form.historical_function.label() }} 
+          {{ dog_breed_form.historical_function(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_breed_form.life_expectancy.label() }} 
+          {{ dog_breed_form.life_expectancy(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_breed_form.temperament.label() }} 
+          {{ dog_breed_form.temperament(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_breed_form.walking_duration.label() }} 
+          {{ dog_breed_form.walking_duration(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_breed_form.walking_speed.label() }} 
+          {{ dog_breed_form.walking_speed(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ dog_breed_form.common_health_issues.label() }} 
+          {{ dog_breed_form.common_health_issues(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <button type="submit">
+            {{ form_submit }}
+          </button>
+        </div>
+      </div>
+    </form>
+  {% if dog_breed %}
+    <button onclick="window.location.href='{{ url_for('dog_breed_bp.get') }}'">Cancel</button>
+  {% endif %}
+  </div>
+
+  {% if dog_breeds %}
+    <br>
+    <hr>
+    <br>
+    {% for dog_breed in dog_breeds %}
+      <div class="record">
+        <div class="record-header">
+          <div class="record-header-left">
+            <b>{{ dog_breed.name }}</b>
+            <br>
+          </div>
+          <div class="record-header-right">
+            <b>{{ dog_breed.walking_duration }}</b>
+            <br>
+            {{ dog_breed.walking_speed }}
+          </div>
+        </div>
+        <div class="record-details">
+          {{ dog_breed.origin }}
+          <br>
+          {{ dog_breed.temperament }}
+          <br>
+          <br>
+          {{ dog_breed.description }}
+        </div>
+        <br>
+        <div class="record-actions">
+          <div class="record-actions-update">
+            <button onclick="window.location.href='{{ url_for('dog_breed_bp.get', dog_breed_id=dog_breed.id) }}'" type="submit">
+              Update
+            </button>
+          </div>
+          <div class="record-actions-delete">
+            <form
+              action="{{ url_for('dog_breed_bp.delete', dog_breed_id=dog_breed.id) }}"
+              method="POST"
+              onsubmit="return confirm('Are you sure you want to delete this dog breed?');"
+            >
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,121 @@
+{% set active_page = "customer" %}
+{% extends "admin/base.html" %}
+
+
+{% block content %}
+<div class="container content">
+
+  {% if customer %}
+    {% set content_header = "Customer " + customer.id | string %}
+    {% set form_action = url_for('customer_bp.update', customer_id=customer.id) %}
+    {% set form_submit = "Update" %}
+  {% else %}
+    {% set content_header = "Customers" %}
+    {% set form_action = url_for('customer_bp.add') %}
+    {% set form_submit = "Add" %}
+  {% endif %}
+
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>{{ content_header }}</h2>        
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <form action="{{ form_action }}" method="POST">  
+      {{ customer_form.csrf_token }}
+      <div class="row">
+        <div class="twelve columns">
+          {{ customer_form.name.label() }}
+          {{ customer_form.name(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ customer_form.phone.label() }}
+          {{ customer_form.phone(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ customer_form.email.label() }}
+          {{ customer_form.email(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ customer_form.emergency_contact_name.label() }}
+          {{ customer_form.emergency_contact_name(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ customer_form.emergency_contact_phone.label() }}
+          {{ customer_form.emergency_contact_phone(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ customer_form.signed_up_on.label() }}
+          {{ customer_form.signed_up_on(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          <button type="submit">
+            {{ form_submit }}
+          </button>
+        </div>
+      </div>
+    </form>
+    {% if customer %}
+      <button type="submit" onclick="window.location.href='{{ url_for('customer_bp.get') }}'">Cancel</button>
+    {% endif %}
+  </div>
+
+  {% if customers %}
+    <br>
+    <hr>
+    <br>
+    {% for customer in customers %}
+      <div class="record">
+        <div class="record-header">
+          <div class="record-header-left">
+            <b>{{ customer.name }}</b>
+          </div>
+          <div class="record-header-right">
+            <h3>{{ customer.signed_up_on }}</h3>
+          </div>
+        </div>
+        <div class="record-details">
+          <div>
+            {{ customer.phone }}
+          </div>
+          <div>
+            {{ customer.email }}
+          </div>
+        </div>
+        <div class="record-actions">
+          <div class="record-actions-update">
+            <button type="submit" onclick="window.location.href='{{ url_for('customer_bp.get', customer_id=customer.id) }}'">
+              Update
+            </button>
+          </div>
+          <div class="record-actions-delete">
+            <form
+              action="{{ url_for('customer_bp.delete', customer_id=customer.id) }}"
+              method="POST"
+              onsubmit="return confirm('Are you sure you want to delete this customer?');"
+            >
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock content %}

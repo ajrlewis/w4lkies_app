@@ -1,0 +1,113 @@
+{% set active_page = "expense" %}
+{% if expense %}
+  {% set content_header = "Expense " + expense.id | string %}
+  {% set form_action = url_for('expense_bp.update', expense_id=expense.id) %}
+  {% set form_submit = "Update" %}
+{% else %}
+  {% set content_header = "expenses" %}
+  {% set form_action = url_for('expense_bp.add') %}
+  {% set form_submit = "Add" %}
+{% endif %}
+
+{% extends "admin/base.html" %}
+
+{% block content %}
+<div class="container content">
+
+  <div class="content-header">
+    <div class="row">
+      <div class="twelve columns">
+        <h2>{{ content_header }}</h2>        
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel"> 
+    <form action="{{ form_action }}" method="POST">
+      {{ expense_form.csrf_token }}
+      <div class="row">
+        <div class="six columns">
+          {{ expense_form.date.label() }}
+          {{ expense_form.date(class_="u-full-width") }}
+        </div>
+        <div class="six columns">
+          {{ expense_form.price.label() }}
+          {{ expense_form.price(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ expense_form.expense_type_name.label() }}
+          {{ expense_form.expense_type_name(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve columns">
+          {{ expense_form.comment.label() }}
+          {{ expense_form.comment(class_="u-full-width") }}
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve column">
+          <button type="submit" class="form-button actions">
+            {{ form_submit }}
+          </button>
+        </div>
+      </div>
+    </form>
+    {% if expense %}
+      <button onclick="window.location.href='{{ url_for('expense_bp.get') }}'">Cancel</button>
+    {% endif %}
+  </div>
+
+  {% if expenses %}
+    <br>
+    <hr>
+    <br>
+    {% for expense in expenses %}
+      <div class="record">
+        <!-- Record Info -->
+        <div class="record-header">
+          <div class="record-header-left">
+            <b>Expense {{ expense.id }}</b>
+          </div>
+          <div class="record-header-right">
+            <b>{{ expense.date }}</b>
+          </div>
+        </div>
+        <!-- Record Details -->
+        <div class="record-details">
+          {{ expense.name | safe }}
+          <br>
+          {{ "£%0.2f" | format(expense.price | float) }}
+        </div>
+
+        <div class="record-actions">
+          <div class="record-actions-update">
+            <button
+              onclick="window.location.href='{{ url_for('expense_bp.get', expense_id=expense.id) }}'"
+              type="submit"
+            >
+              Update
+            </button>
+          </div>
+          <div class="record-actions-delete">
+            <form
+              action="{{ url_for('expense_bp.delete', expense_id=expense.id) }}"
+              method="POST"
+              onsubmit="return confirm('Are you sure you want to delete this expense?');"
+            >
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <button type="submit">
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% endif %}
+  <br>
+  <br>
+</div>
+{% endblock %}

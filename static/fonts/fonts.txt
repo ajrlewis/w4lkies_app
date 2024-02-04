@@ -1,0 +1,14 @@
+1. Excalibur Nouveau Medium
+2. Hobo Std Medium
+3. Creative Vintage Regular BP
+
+
+@font-face {
+  font-family: 'Excalibur Nouveau';
+  src: url('/fonts/Excalibur Nouveau.ttf') format('truetype');
+}
+
+body {
+  font-family: 'Excalibur Nouveau', serif;
+}
+
