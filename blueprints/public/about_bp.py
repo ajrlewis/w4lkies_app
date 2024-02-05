@@ -10,6 +10,4 @@ def get():
     services = (
         Service.query.filter_by(is_active=True).order_by(desc(Service.price)).all()
     )
-    print(f"{services = }")
-    return render_template("public/about.html"), 200
-    # return render_template("public/about-ui.html"), 200
+    return render_template("public/about.html", services=services), 200

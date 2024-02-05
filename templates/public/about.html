@@ -24,38 +24,45 @@
     <div class="row">
       <div class="twelve columns">
         Hi there, my name is Sophia and I'm the owner of <b>w4lkies</b>, a dog walking business based in <b>Chiswick, W4, London</b>.
-        <br>
-        <br>
         I absolutely love dogs and have a lot of experience working with them.
         I'm passionate about providing a safe and enjoyable experience for every dog in my care.
-        <br>
-        <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="shiftable panel">
+    <div class="row">
+      <div class="twelve columns">
         I provide services from <b>Monday to Friday</b>, with two time slots available: <b>AM (8am to 12pm) and PM (12pm to 6pm)</b>.
         I aim to schedule your preferred time within a <b>one-hour range of your chosen slot</b>.
       </div>
     </div>
   </div>
 
-  <div >
-    <div class="row">
-      <div class="six columns shiftable panel">
-        <h2>Solo Dog Walk</h2>
-        <h3>£25.00 / hr</h3>
-        <ul>
-          <li>
-            For dogs who prefer a bit more <b>one-on-one attention</b>, I offer solo walks tailored to their individual needs.
-          </li>
-          <li>I take <b>regular photos</b> during the walks and <b>create fun and entertaining videos</b> that are shared on Instagram.
-          </li>
-          <li>This <b>deluxe dog walking service</b> is tailored for the modern digital age, ensuring your furry friend <b>receives the utmost care and attention</b>.
-          </li>
-          <!-- <li>I dry dogs down after a rainy walk and ensure their water bowls are full!</li> -->
-          <li>
-            Have more than one dog in your house? <b>Add +£5.00 per extra dog!</b>
-          </li>
-        </ul>
+  {% for service in services %}
+    <div class="shiftable panel">
+      <div class="row">
+        <div class="twelve columns">
+          <h2>{{ service.name }}</h2>
+          <h3>
+            {{ "£%0.2f" | format(service.price | float) }}
+            {% if service.duration %}/ {{ service.duration | int }} mins{% endif%}
+          </h3>
+          <ul>
+            {% for item in service.description.split(".") %}
+            {% if item %}
+              <li>{{ item }}</li>
+            {% endif%}
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-      <div class="six columns shiftable panel">
+    </div>
+  {% endfor %}
+
+  <div class="shiftable panel">
+    <div class="row">
+      <div class="twelve columns">
         <h2>Bespoke</h2>
         <h3>Flexible pricing and duration based on your needs</h3>
         <ul>
@@ -63,7 +70,7 @@
             I offer bespoke services for your dog(s) to suit your needs.
           </li>
           <li>
-            <a href="mailto:{{ config['MAIL_USERNAME'] }}?subject=Hello!">Get in touch</a> to learn more!
+            <a href="mailto:{{ config['MAIL_USERNAME'] }}?subject=Hello!">Get in touch</a> to discuss available options.
           </li>
         </ul>
       </div>
