@@ -11,7 +11,7 @@ from models.dog import Dog
 booking_bp = Blueprint("booking_bp", __name__)
 
 
-# TODO (ajrl) Group bookings by same time. Rethink data structure returned.
+# TODO (ajrl) This is really bad! Make different methods to get past and upcoming bookings.
 @booking_bp.route("/", methods=["GET"])
 @booking_bp.route("/<int:booking_id>", methods=["GET"])
 @login_required
@@ -21,14 +21,12 @@ def get(booking_id: int = None):
     upcoming_bookings = None
     form = BookingForm()
     if booking_id is None:
-        # print(f"{current_user = }")
         # Get all bookings
         bookings = (
             Booking.query.filter_by(user_id=current_user.id)
             .order_by(desc(Booking.id))
             .all()
         )
-        # print(f"{bookings = }")
         if bookings:
             # Set form data to last booking's values for UX improvement
             form.set_data_from_model(bookings[0])
@@ -49,16 +47,20 @@ def get(booking_id: int = None):
                     previous_bookings.append(b)
             # Sort upcoming bookings by descending key and ascending values
             upcoming_bookings = dict(sorted(upcoming_bookings.items()))
+            new_keys = []
             for k, values in upcoming_bookings.items():
                 upcoming_bookings[k] = sorted(
                     upcoming_bookings[k], key=lambda b: b.time
                 )
-                # price = sum([b.service.price for b in values])
-                # number_of_bookings = len(values)
-                # print(f"{number_of_bookings = } {price = }")
-                # new_key = (*k, number_of_bookings, price)
-                # print(f"{new_key = }")
-                # upcoming_bookings[new_key] = upcoming_bookings[k]
+                # Remove duplicate bookings at the same time
+                number_of_bookings = len(set([v.time for v in values]))
+                total_price = sum([b.service.price for b in values])
+                new_key = (*k, number_of_bookings, total_price)
+                new_keys.append(new_key)
+            # Update keys to contain more meta data.
+            old_keys = upcoming_bookings.keys()
+            for new_key, old_key in zip(new_keys, old_keys):
+                upcoming_bookings[new_key] = upcoming_bookings.pop(old_key)
     else:
         # Return details for specified booking
         booking = Booking.query.get(booking_id)

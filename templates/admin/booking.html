@@ -67,18 +67,19 @@
     <br>
     <!-- Show upcoming and past bookings -->
     <div id="upcoming-bookings">
-      {% for (date, day_of_week), bookings in upcoming_bookings.items() %}
+      {% for (date, day_of_week, number_of_bookings, total_price), bookings in upcoming_bookings.items() %}
         <div class="record">
           <div class="record-header">
             <div class="record-header-left">
               <b>{{ day_of_week | upper }} {{ date }}</b>
             </div>
             <div class="record-header-right">
-              <b>{{ bookings | length }} Booking</b>
+              <b>{{ number_of_bookings }} bookings</b>
+              &nbsp;
+              <b>{{ "£%0.2f" | format(total_price | float) }}</b>
             </div>
           </div>
           {% for booking in bookings %}
-
             <div class="record-details">
               <div class="">
                 <b>{{ booking.time.strftime("%I:%M %p") }}</b>
