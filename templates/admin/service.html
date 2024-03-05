@@ -23,7 +23,7 @@
   </div>
 
   <div class="shiftable panel">
-    <form action="{{ form_action }}" method="POST">
+    <form action="{{ form_action }}" method="POST" novalidate>
       {{ service_form.csrf_token }}
       <div class="row">
         <div class="twelve columns">
@@ -49,9 +49,10 @@
       </div>
       <div class="row">
         <div class="twelve columns">
-          {{ service_form.is_active.label }} 
-          <div class="checkbox {{ 'checked' if service_form.is_active.data else '' }}" onclick="toggleCheckbox(this)">
-            {{ service_form.is_active }}
+          {{service_form.is_publicly_offered.data}}
+          {{ service_form.is_publicly_offered.label }}
+          <div class="checkbox {{ 'checked' if service_form.is_publicly_offered.data else '' }}" onclick="toggleCheckbox(this)">
+            {{ service_form.is_publicly_offered }}
           </div>
         </div>
       </div>

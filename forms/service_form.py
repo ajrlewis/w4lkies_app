@@ -29,9 +29,8 @@ class ServiceForm(FlaskForm, FormMixin):
         render_kw={"placeholder": "The duration of the service"},
     )
 
-    is_active = BooleanField(
-        "Is Currently Offered?",
-        validators=[DataRequired()],
-        default=True,
-        render_kw={"placeholder": "Is this service currently offered?"},
+    is_publicly_offered = BooleanField(
+        "Is offered to the public?",
+        validators=[Optional()],
+        default=False,
     )
