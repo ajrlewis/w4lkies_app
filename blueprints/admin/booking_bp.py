@@ -61,6 +61,7 @@ def get(booking_id: int = None):
             old_keys = upcoming_bookings.keys()
             for new_key, old_key in zip(new_keys, old_keys):
                 upcoming_bookings[new_key] = upcoming_bookings.pop(old_key)
+            print("upcoming_bookings = ", upcoming_bookings)
     else:
         # Return details for specified booking
         booking = Booking.query.get(booking_id)
