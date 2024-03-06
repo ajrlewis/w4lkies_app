@@ -67,47 +67,7 @@
     <br>
     <!-- Show upcoming and past bookings -->
     <div id="upcoming-bookings">
-      {% for (date, day_of_week, number_of_bookings, total_price), bookings in upcoming_bookings.items() %}
-        <div class="record">
-          <div class="record-header">
-            <div class="record-header-left">
-              <b>{{ day_of_week | upper }} {{ date }}</b>
-            </div>
-            <div class="record-header-right">
-              <b>{{ number_of_bookings }} bookings</b>
-              &nbsp;
-              <b>{{ "£%0.2f" | format(total_price | float) }}</b>
-            </div>
-          </div>
-          {% for booking in bookings %}
-            <div class="record-details">
-              <div class="">
-                <b>{{ booking.time.strftime("%I:%M %p") }}</b>
-              </div>
-              <div class="record-details">
-                {{ booking.customer.dogs[0].name | safe }} {{ booking.service.name | safe }}
-              </div>
-              <div class="record-actions">
-                <div class="record-actions-update">
-                  <button onclick="window.location.href='{{ url_for('booking_bp.get', booking_id=booking.id) }}'" type="submit">
-                    Update
-                  </button>
-                </div>
-                <div class="record-actions-delete">
-                  <form
-                    action="{{ url_for('booking_bp.delete', booking_id=booking.id) }}"
-                    method="POST"
-                    onsubmit="return confirm('Are you sure you want to delete this booking?');"
-                  >
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <button type="submit">Delete</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-      {% endfor %}
+{{ upcoming_bookings.items() }}
     </div>
 
     <!-- Previous bookings -->
