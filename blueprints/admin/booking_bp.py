@@ -59,10 +59,10 @@ def get(booking_id: int = None):
                 new_keys.append(new_key)
 
             print("upcoming_bookings = ", upcoming_bookings)
-            print("new_keys = ", new_keys)
-
             # Update keys to contain more meta data.
             old_keys = upcoming_bookings.keys()
+            print("new_keys = ", new_keys, len(new_keys))
+            print("old_keys = ", old_keys, len(old_keys))
             for new_key, old_key in zip(new_keys, old_keys):
                 upcoming_bookings[new_key] = upcoming_bookings.pop(old_key)
             print("upcoming_bookings = ", upcoming_bookings)
