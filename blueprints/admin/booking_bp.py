@@ -57,11 +57,16 @@ def get(booking_id: int = None):
                 total_price = sum([b.service.price for b in values])
                 new_key = (*k, number_of_bookings, total_price)
                 new_keys.append(new_key)
+
+            print("upcoming_bookings = ", upcoming_bookings)
+            print("new_keys = ", new_keys)
+
             # Update keys to contain more meta data.
             old_keys = upcoming_bookings.keys()
             for new_key, old_key in zip(new_keys, old_keys):
                 upcoming_bookings[new_key] = upcoming_bookings.pop(old_key)
             print("upcoming_bookings = ", upcoming_bookings)
+
     else:
         # Return details for specified booking
         booking = Booking.query.get(booking_id)
