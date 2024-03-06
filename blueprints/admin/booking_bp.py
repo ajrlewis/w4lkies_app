@@ -30,6 +30,7 @@ def get(booking_id: int = None):
         if bookings:
             # Set form data to last booking's values for UX improvement
             form.set_data_from_model(bookings[0])
+
             # Separate previous and upcoming bookings
             today = date.today()
             previous_bookings = []
@@ -45,27 +46,27 @@ def get(booking_id: int = None):
                         upcoming_bookings[key] = [b]
                 else:
                     previous_bookings.append(b)
+
             # Sort upcoming bookings by descending key and ascending values
             upcoming_bookings = dict(sorted(upcoming_bookings.items()))
-            new_keys = []
             for k, values in upcoming_bookings.items():
                 upcoming_bookings[k] = sorted(
                     upcoming_bookings[k], key=lambda b: b.time
                 )
-                # Remove duplicate bookings at the same time
-                number_of_bookings = len(set([v.time for v in values]))
-                total_price = sum([b.service.price for b in values])
-                new_key = (*k, number_of_bookings, total_price)
-                new_keys.append(new_key)
 
-            print("upcoming_bookings = ", upcoming_bookings)
-            # Update keys to contain more meta data.
-            old_keys = upcoming_bookings.keys()
-            print("new_keys = ", new_keys, len(new_keys))
-            print("old_keys = ", old_keys, len(old_keys))
-            for new_key, old_key in zip(new_keys, old_keys):
-                upcoming_bookings[new_key] = upcoming_bookings.pop(old_key)
-            print("upcoming_bookings = ", upcoming_bookings)
+            # new_keys = []
+            # # number_of_bookings = len(set([v.time for v in values]))
+            # # total_price = sum([b.service.price for b in values])
+            # # new_key = (*k, number_of_bookings, total_price)
+            # # new_keys.append(new_key)
+            # # Update keys to contain more meta data.
+            # old_keys = upcoming_bookings.keys()
+            # print("upcoming_bookings = ", upcoming_bookings)
+            # print("new_keys = ", new_keys, len(new_keys))
+            # print("old_keys = ", old_keys, len(old_keys))
+            # for new_key, old_key in zip(new_keys, old_keys):
+            #     upcoming_bookings[new_key] = upcoming_bookings.pop(old_key)
+            # print("upcoming_bookings = ", upcoming_bookings)
 
     else:
         # Return details for specified booking
