@@ -169,3 +169,21 @@ def download(invoice_id: int):
         download_name=download_name,
         mimetype="application/pdf",
     )
+
+
+@invoice_bp.route("/summary", methods=["GET"])
+@login_required
+def summary():
+    invoices = Invoice.query.order_by(desc(Invoice.date_issued)).all()
+    df = pd.DataFrame(
+        [
+            {"date": pd.Timestamp(i.date_issued), "price": i.total_price}
+            for i in invoices
+        ]
+    )
+    df["year"] = df["date"].apply(lambda d: d.year)
+    df["month"] = df["date"].apply(lambda d: d.month)
+    df = df[["year", "month", "price"]].groupby(["year", "month"]).sum().reset_index()
+    df["price_cumsum"] = df["price"].cumsum()
+    data = df.to_dict(orient="records")
+    return {"data": data}, 200
