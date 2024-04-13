@@ -329,30 +329,13 @@ def chunk_services(services: list[str]) -> list[list[str]]:
 
 
 def create(transactions_df: pd.DataFrame):
-    # config = configparser.ConfigParser()
-    # config.read("config.ini")
-    # server_name = config.get("invoice", "name")
-    # server_url = config.get("invoice", "url")
-    # server_logo = config.get("invoice", "logo")
-    # server_email = config.get("invoice", "email")
-    # server_bank_name = config.get("invoice", "bank_name")
-    # server_bank_sort_code = config.get("invoice", "bank_sort_code")
-    # server_bank_account_number = config.get("invoice", "bank_account_number")
-    # invoice_due_days = config.getint("invoice", "due_days")
-    # invoice_currency = config.get("invoice", "currency")
-    # invoice_payment_request = config.get("invoice", "payment_request")
-    # theme_color_1 = config.get("invoice", "color_1")
-    # theme_color_2 = config.get("invoice", "color_2")
-    # theme_color_3 = config.get("invoice", "color_3")
-    # theme_font_1 = config.get("invoice", "font_1")
-
     server_name = "w4lkies"
     server_url = "https://w4lkies.com"
     server_logo = "static/img/logo-white-background.png"
     server_email = "hello@w4lkies.com"
     server_bank_name = "Sophia Lewis"
-    server_bank_sort_code = "60-95-34"
-    server_bank_account_number = "32769652"
+    server_bank_sort_code = "04-29-09"
+    server_bank_account_number = "65204158"
     invoice_due_days = 7
     invoice_currency = "£"
     invoice_payment_request = ""
