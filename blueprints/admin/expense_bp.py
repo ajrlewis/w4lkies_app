@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
-from flask_login import login_required
+from flask_login import current_user, login_required
 from sqlalchemy import desc
 from forms.expense_form import ExpenseForm
 from models.expense import Expense
@@ -36,7 +36,9 @@ def get(expense_id: int = None):
 def add():
     form = ExpenseForm()
     if form.validate_on_submit():
-        Expense.add(form.data)
+        data = form.data
+        data["user_id"] = current_user.id
+        Expense.add(data)
         flash(f"Expense added successfully!", "success")
     return redirect(url_for("expense_bp.get"))
 
