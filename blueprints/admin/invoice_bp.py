@@ -186,7 +186,9 @@ def summary():
     )
     df["year"] = df["date"].apply(lambda d: d.year)
     df["month"] = df["date"].apply(lambda d: d.month)
-    df = df[["year", "month", "price"]].groupby(["year", "month"]).sum().reset_index()
+    df[["year", "month", "price"]].groupby(["year", "month"]).agg(
+        price=("price", "sum"), number_of_invoices=("price", "count")
+    ).reset_index()
     df["price_cumsum"] = df["price"].cumsum()
     data = df.to_dict(orient="records")
     return {"data": data}, 200
