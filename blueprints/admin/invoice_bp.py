@@ -176,7 +176,13 @@ def download(invoice_id: int):
 def summary():
     invoices = Invoice.query.all()
     df = pd.DataFrame(
-        [{"date": pd.Timestamp(i.end_date), "price": i.total_price} for i in invoices]
+        [
+            {
+                "date": pd.Timestamp(i.start_date + (i.end_date - i.start_date) / 2),
+                "price": i.total_price,
+            }
+            for i in invoices
+        ]
     )
     df["year"] = df["date"].apply(lambda d: d.year)
     df["month"] = df["date"].apply(lambda d: d.month)
