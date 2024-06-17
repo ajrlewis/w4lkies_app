@@ -3,7 +3,8 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
-from flask_minify import Minify
+
+# from flask_minify import Minify
 from flask_sqlalchemy import SQLAlchemy
 from flask_wallet_of_satoshi import WalletOfSatoshi
 from flask_wtf.csrf import CSRFProtect
@@ -13,7 +14,7 @@ csrf = CSRFProtect()
 db = SQLAlchemy()
 mail = Mail()
 migrate = Migrate()
-minify = Minify()
+# minify = Minify()
 wos = WalletOfSatoshi()
 
 login_manager = LoginManager()
@@ -32,7 +33,7 @@ def create_app(Config) -> Flask:
     migrate.init_app(app, db)
     login_manager.init_app(app=app)
     mail.state = mail.init_app(app=app)
-    minify.init_app(app=app)
+    # minify.init_app(app=app)
     wos.init_app(app=app)
     with app.app_context():
         db.create_all()
