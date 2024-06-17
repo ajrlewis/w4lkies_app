@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+<nav>
+  <div class="container">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#team">Team</a></li>
+        <li><a href="#dogs">Dogs</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+  </div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+
+<div class="overview">
+  <div class="container" id="overview">
+    <br>
+    <h2>Dog Care & Walking Services</h2>
+    <p>Hi there, my name is Sophia and I'm the owner of <b>W4lkies</b>, a dog walking business based in <b>Chiswick, London, W4</b>.
+    My team and I absolutely love dogs and have a lot of experience working with them.
+    We're passionate about providing a safe and enjoyable experience for every dog in our care.</p>
+    <br>
+    <a href="#services">Scroll to our services …</a>
+    <br>
+  </div>
+  <br>
+  <br>
+</div>
+
+<div class="services">
+  <div class="container" id="services">
+    <br>
+    <h2>Our Services</h2>
+    <p>We provide services from <b>Monday to Friday</b>, with two time slots available: <b>AM (8am to 12pm) and PM (12pm to 6pm)</b>. We aim to schedule your preferred time within a <b>one-hour range of your chosen slot</b>.</p>
+    <div class="row">
+      {% for service in services %}
+        <div class="four columns">
+          <h2>{{ service.name }}</h2>
+          <h3>
+            {{ "£%0.2f" | format(service.price | float) }}
+            {% if service.duration %}/ {{ service.duration | int }} mins{% endif%}
+          </h3>
+          <ul>
+            {% for item in service.description.split(".") %}
+            {% if item %}
+              <li>{{ item }}</li>
+            {% endif%}
+            {% endfor %}
+          </ul>
+        </div>
+    {% endfor %}
+    </div>
+    <br>
+    <a href="#team">Scroll to our team members …</a>
+  </div>
+  <br>
+  <br>
+</div>
+  
+<div class="team">
+  <div class="container" id="team">
+    <br>
+    <h2>The Team</h2>    
+    <div class="row">
+      <div class="six columns">
+        <img src="/static/img/profile-sophia.jpg" alt="Founder Profile Picture" class="profile">
+        <b>Sophia Lewis</b>
+        <br>
+        <i>Founder</i>
+        <br>
+        <p>As the founder of W4lkies, a premier dog walking business in London W4, I bring a wealth of experience in the pet care industry. With a successful track record of establishing a dog walking business in Edinburgh, Scotland, I have honed my skills in providing top-notch care for furry companions. Prior to founding W4lkies, I worked as a receptionist at a veterinary clinic in Shepherd's Bush, London, where I gained valuable insights into animal care and welfare. Combining my passion for dogs with my professional expertise, I am dedicated to ensuring the well-being and happiness of every canine client. W4lkies is committed to providing reliable and loving dog walking services in the vibrant community of London W4. Let us take your furry friend on a safe and enjoyable adventure while you're away. Your pet's happiness is our top priority!</p>
+      </div>
+      <div class="six columns">
+        <img src="/static/img/profile-sara.jpg" alt="Dog Walker Profile Picture" class="profile">
+        <b>Sara Kiepura</b>
+        <br>
+        <i>Dog Walker</i>
+        <br>
+        <p>
+ Growing up on a farm in Poland surrounded by various animals, I have always had a deep connection with pets. From chickens, pigs, horses, and cows to cats and dogs, caring for animals has been a passion of mine since childhood. After moving to Italy as a teenager, I rescued an abandoned dog and welcomed many cats into our countryside home. Now based in London for the past 10 years, I have transitioned from a career in hospitality to pursue my love for dogs. As a dedicated animal lover, I am excited to devote my time and affection to our canine companions. In my free time, I enjoy traveling, exploring new places, and taking long walks in nature.
+        <!-- Throughout my whole life I have always been around by some sort of different pets.I grow up in Poland on a farm where we had lots of animals like :chickens,pigs,horses,cows ,cats and dogs I use to love living there and take care of all animals. When I was teenager we moved to Italy where I adopted a dog that was abandoned ,I also had lots of cats in our country side house. I moved to London 10 years ago and I loved,I worked in hospitality for long time but now I would love to dedicate my time and love to dogs. I’m a big animal lover . My hobbies are: travelling and exploring new places,I love long walks in the nature -->
+        </p>
+      </div>
+    </div>
+    <br>
+    <a href="#dogs">Scroll to our dogs …</a>
+  </div>
+  <br>
+  <br>
+</div>
+
+<div class="clients">
+  <div class="container" id="dogs">
+    <br>
+    <h2>Our Dogs</h2>
+    <div class="row">
+      <div class="twelve columns">
+      </div>
+    </div>
+    <br>
+
+<style>
+.gallery {}
+img {
+  max-width: 300px;
+  height: auto;
+}
+</style>
+
+  <div class="gallery">
+    {% for (dog_name, dog_breed), image_paths in dog_name_to_image_paths.items() %}
+      <div class="shiftable panel">
+        <h3>{{ dog_name }}</h3>
+        <h4>{{ dog_breed }}</h4>
+        {% for image_path in image_paths %}
+        <div>
+          <img src="{{ url_for('static', filename=image_path) }}" alt="Dog Gallery Image">
+        </div>
+        <br>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+
+    <div class="row">
+    </div>
+    <br>
+    <a href="#contact">Scroll to our contact details …</a>
+  </div>
+  <br>
+  <br>
+</div>
+
+<div class="contact">
+  <div class="container" id="contact">
+    <br>
+    <h2>Get in Touch</h2>
+    <div class="row">
+      <div class="twelve columns">
+        <a href="mailto:hello@w4lkies.com">Contact us</a> now to book your free meet-and-greet today!
+      </div>
+    </div>
+    <br>
+    <a href="#" >Scroll back to the top …</a>
+  </div>
+  <br>
+  <br>
+</div>
+
+{% endblock content %}

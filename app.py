@@ -45,21 +45,26 @@ def create_app(Config) -> Flask:
             return {"now": datetime.utcnow()}
 
         # Import and register public pages
-        from blueprints.public.index_bp import index_bp
-        from blueprints.public.about_bp import about_bp
-        from blueprints.public.download_bp import download_bp
-        from blueprints.public.gallery_bp import gallery_bp
-        from blueprints.public.contact_bp import contact_bp
-        from blueprints.public.pay_bp import pay_bp
+        from blueprints.index_bp import index_bp
+
+        # from blueprints.index_bp import index_bp
+
+        # from blueprints.public.index_bp import index_bp
+        # from blueprints.public.about_bp import about_bp
+        # from blueprints.public.download_bp import download_bp
+        # from blueprints.public.gallery_bp import gallery_bp
+        # from blueprints.public.contact_bp import contact_bp
+
+        # # from blueprints.public.pay_bp import pay_bp
         from blueprints.public.legal_bp import legal_bp
         from blueprints.public.sign_up_bp import sign_up_bp
 
         app.register_blueprint(index_bp, url_prefix="/")
-        app.register_blueprint(about_bp, url_prefix="/about")
-        app.register_blueprint(download_bp, url_prefix="/download")
-        app.register_blueprint(gallery_bp, url_prefix="/gallery")
-        app.register_blueprint(contact_bp, url_prefix="/contact")
-        app.register_blueprint(pay_bp, url_prefix="/pay")
+        # app.register_blueprint(about_bp, url_prefix="/about")
+        # app.register_blueprint(download_bp, url_prefix="/download")
+        # app.register_blueprint(gallery_bp, url_prefix="/gallery")
+        # app.register_blueprint(contact_bp, url_prefix="/contact")
+        # # app.register_blueprint(pay_bp, url_prefix="/pay")
         app.register_blueprint(legal_bp, url_prefix="/legal")
         app.register_blueprint(sign_up_bp, url_prefix="/sign-up")
 
