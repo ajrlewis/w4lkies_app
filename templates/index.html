@@ -21,8 +21,8 @@
     <h2>Dog Care & Walking Services</h2>
     <p>Hi there, my name is Sophia and I'm the owner of <b>W4lkies</b>, a dog walking business based in <b>Chiswick, London, W4</b>.
     My team and I absolutely love dogs and have a lot of experience working with them.
-    We're passionate about providing a safe and enjoyable experience for every dog in our care.</p>
-    <br>
+    We're passionate about providing a <b>safe and enjoyable experience</b> for every dog in our care.</p>
+    <p>As professional dog walkers, we understand the importance of providing a safe and enjoyable experience for your furry friend. That's why we are <b>fully insured</b> for your peace of mind.</p>
     <a href="#services">Scroll to our services …</a>
     <br>
   </div>
@@ -51,7 +51,19 @@
             {% endfor %}
           </ul>
         </div>
-    {% endfor %}
+      {% endfor %}
+      <div class="four columns">
+        <h2>Bespoke</h2>
+        <h3>Flexible pricing and duration based on your needs</h3>
+        <ul>
+          <li>
+            We offer bespoke services for your dog(s) to suit your needs.
+          </li>
+          <li>
+            <a href="mailto:{{ config['MAIL_USERNAME'] }}?subject=Hello!">Get in touch</a> to discuss available options!
+          </li>
+        </ul>
+      </div>
     </div>
     <br>
     <a href="#team">Scroll to our team members …</a>
@@ -98,6 +110,7 @@
     <h2>Our Dogs</h2>
     <div class="row">
       <div class="twelve columns">
+      A selection of some of the dogs we currently care for!
       </div>
     </div>
     <br>
@@ -105,12 +118,40 @@
 <style>
 .gallery {}
 img {
-  max-width: 300px;
+  max-width: 100%;
   height: auto;
 }
 </style>
 
-  <div class="gallery">
+
+<div class="row gallery">
+  <div class="three columns">
+    <h3>Rocky</h3>
+    <!-- <h4>Jack Russell</h4> -->
+    <img src="/static/img/dogs/rocky-01.jpg" alt="Dog Gallery Image">
+    <!-- <p>"Sophia and the team at W4lkies are always there for our Rocky."</p> -->
+  </div>
+  <div class="three columns">
+    <h3>Simon</h3>
+    <!-- <h4>Miniature Schnauzer</h4> -->
+    <img src="/static/img/dogs/simon-01.jpg" alt="Dog Gallery Image">
+    <p>"Sophia has been walking Simon, my miniature Schnauzer, for a couple months now and I am really happy with her. She is on time, reliable and very good with Simon. She clearly loves dogs and mine loves her a lot. He is always very happy to see her and comes back tired and having had a lovely adventure. I can't recommend W4lkies highly enough."</p>
+  </div>
+  <div class="three columns">
+    <h3>Stormi</h3>
+    <!-- <h4>Jack Russell</h4> -->
+    <img src="/static/img/dogs/stormi-02.jpg" alt="Dog Gallery Image">
+    <!-- <p>"Sophia and the team at W4lkies are always there for our Rocky."</p> -->
+  </div>
+  <div class="three columns">
+    <h3>Frankie</h3>
+    <!-- <h4>Jack Russell</h4> -->
+    <img src="/static/img/dogs/frankie-04.jpg" alt="Dog Gallery Image">
+    <!-- <p>"Sophia and the team at W4lkies are always there for our Rocky."</p> -->
+  </div>
+</div>
+
+  <!-- <div class="gallery">
     {% for (dog_name, dog_breed), image_paths in dog_name_to_image_paths.items() %}
       <div class="shiftable panel">
         <h3>{{ dog_name }}</h3>
@@ -124,9 +165,7 @@ img {
       </div>
     {% endfor %}
   </div>
-
-    <div class="row">
-    </div>
+ -->
     <br>
     <a href="#contact">Scroll to our contact details …</a>
   </div>
