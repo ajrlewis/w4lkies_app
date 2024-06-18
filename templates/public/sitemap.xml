@@ -5,7 +5,7 @@
         <loc>{ request.url_root }}{ page.url }}</loc>
         <lastmod>{ page.lastmod }}</lastmod>
     </url>
-    {% endfor %}
+    { endfor %}
 </urlset> -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
