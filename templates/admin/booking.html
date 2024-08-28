@@ -21,46 +21,61 @@
     </div>
   </div>
 
-  <div class="shiftable panel"> 
-    <form action="{{ form_action }}" method="POST">
-      {{ form.csrf_token }}
-      <div class="row">
-        <div class="six columns">
-          {{ form.customer_id.label() }}
-          {{ form.customer_id(class_="u-full-width") }}
+  <!-- Only add or update if user is admin -->
+  {% if current_user.is_admin %}
+    <div class="shiftable panel"> 
+      <form action="{{ form_action }}" method="POST">
+        {{ form.csrf_token }}
+        <div class="row">
+          <div class="twelve columns">
+            {{ form.user_id.label() }}
+            {{ form.user_id(class_="u-full-width") }}
+          </div>
         </div>
-        <div class="six columns">
-          {{ form.service_id.label() }}
-          {{ form.service_id(class_="u-full-width") }}
+        <div class="row">
+          <div class="six columns">
+            {{ form.customer_id.label() }}
+            {{ form.customer_id(class_="u-full-width") }}
+          </div>
+          <div class="six columns">
+            {{ form.service_id.label() }}
+            {{ form.service_id(class_="u-full-width") }}
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="six columns">
-          {{ form.date.label() }}
-          {{ form.date(class_="u-full-width") }}
+        <div class="row">
+          <div class="six columns">
+            {{ form.date.label() }}
+            {{ form.date(class_="u-full-width") }}
+          </div>
+          <div class="six columns">
+            {{ form.time.label() }}
+            {{ form.time(class_="u-full-width") }}
+          </div>
         </div>
-        <div class="six columns">
-          {{ form.time.label() }}
-          {{ form.time(class_="u-full-width") }}
+        <div class="row">
+          <div class="twelve columns">
+            <button type="submit">
+              {{ form_submit }}
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="twelve columns">
-          <button type="submit">
-            {{ form_submit }}
-          </button>
-        </div>
-      </div>
-    </form>
-    {% if booking %}
-      <button onclick="window.location.href='{{ url_for('booking_bp.get') }}'">Cancel</button>
-    {% endif %}
-  </div>
+      </form>
+      {% if booking %}
+        <button onclick="window.location.href='{{ url_for('booking_bp.get') }}'">Cancel</button>
+      {% endif %}
+    </div>
+  {% endif %}
+
 
   {% if upcoming_bookings or previous_bookings %}
-    <br>
-    <hr>
-    <br>
+  
+    <!-- Add space -->
+    {% if current_user.is_admin %} 
+      <br>
+      <hr>
+      <br>
+    {% endif %}
+
     <button class="active" id="upcoming-radio" type="radio">Upcoming</button>
     &nbsp;
     <button id="previous-radio" type="radio">Previous</button>
@@ -69,10 +84,12 @@
     <div id="upcoming-bookings">
       <!-- { for (date, day_of_week, number_of_bookings, total_price), bookings in upcoming_bookings.items() %} -->
       {% for (date, day_of_week), bookings in upcoming_bookings.items() %}
+      
+        {% set bookings_sum = bookings | sum(attribute='service.price') %}
         <div class="record">
           <div class="record-header">
             <div class="record-header-left">
-              <b>{{ day_of_week | upper }} {{ date }}</b>
+              <b>{{ day_of_week | upper }} {{ date }} (£{{ bookings_sum }})</b>
             </div>
             <div class="record-header-right">
               <!-- <b>{ number_of_bookings }} bookings</b> -->
@@ -84,27 +101,31 @@
             <div class="record-details">
               <div class="">
                 <b>{{ booking.time.strftime("%I:%M %p") }}</b>
+                {{ booking.user.name | safe }} 
               </div>
               <div class="record-details">
                 {{ booking.customer.dogs[0].name | safe }} {{ booking.service.name | safe }}
               </div>
-              <div class="record-actions">
-                <div class="record-actions-update">
-                  <button onclick="window.location.href='{{ url_for('booking_bp.get', booking_id=booking.id) }}'" type="submit">
-                    Update
-                  </button>
+
+              {% if current_user.is_admin %}
+                <div class="record-actions">
+                  <div class="record-actions-update">
+                    <button onclick="window.location.href='{{ url_for('booking_bp.get', booking_id=booking.id) }}'" type="submit">
+                      Update
+                    </button>
+                  </div>
+                  <div class="record-actions-delete">
+                    <form
+                      action="{{ url_for('booking_bp.delete', booking_id=booking.id) }}"
+                      method="POST"
+                      onsubmit="return confirm('Are you sure you want to delete this booking?');"
+                    >
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                      <button type="submit">Delete</button>
+                    </form>
+                  </div>
                 </div>
-                <div class="record-actions-delete">
-                  <form
-                    action="{{ url_for('booking_bp.delete', booking_id=booking.id) }}"
-                    method="POST"
-                    onsubmit="return confirm('Are you sure you want to delete this booking?');"
-                  >
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                    <button type="submit">Delete</button>
-                  </form>
-                </div>
-              </div>
+              {% endif %}
             </div>
           {% endfor %}
         </div>
@@ -127,6 +148,8 @@
           </div>
           <!-- Record Details -->
           <div class="record-details">
+            {{ booking.user.name | safe }} 
+            <br>
             {{ booking.customer.dogs[0].name | safe }}
             <br>
             {{ booking.service.name | safe }}

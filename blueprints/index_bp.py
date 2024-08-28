@@ -1,25 +1,28 @@
 from datetime import datetime, timedelta
-from flask import current_app, Blueprint, render_template, Response
-from sqlalchemy import desc
-from models.service import Service
-
 import os
+
+from flask import current_app, Blueprint, render_template, Response
 from flask import Blueprint, render_template
 from sqlalchemy import desc
+from sqlalchemy import desc
+
 from models.dog import Dog
 from models.dog_breed import DogBreed
+from models.service import Service
 
 index_bp = Blueprint("index_bp", __name__)
 
 
 @index_bp.route("/", methods=["GET"])
 def get():
+    # Show publicly available services
     services = (
         Service.query.filter_by(is_publicly_offered=True)
         .order_by(desc(Service.price))
         .all()
     )
 
+    # Show dogs
     dogs = Dog.query.join(DogBreed).order_by(desc(Dog.id)).all()
     dog_name_to_image_paths = {}
     for dog in dogs:
@@ -35,6 +38,7 @@ def get():
         if len(dog_name_to_image_paths[key]) == 0:
             del dog_name_to_image_paths[key]
 
+    # Render template
     return (
         render_template(
             "index.html",
@@ -47,15 +51,5 @@ def get():
 
 @index_bp.route("/sitemap.xml")
 def sitemap():
-    # pages = []
-    # lastmod = datetime.now() - timedelta(days=10)
-    # for rule in current_app.url_map.iter_rules():
-    #     if "GET" in rule.methods:
-    #         exclude_urls = ["/admin/", "/static"]
-    #         url = rule.rule
-    #         page = {"url": url, "lastmod": lastmod.strftime("%Y-%m-%d")}
-    #         if not any(exclude_url in url for exclude_url in exclude_urls):
-    #             pages.append(page)
-    # sitemap_xml = render_template("public/sitemap.xml", pages=pages)
     sitemap_xml = render_template("public/sitemap.xml")
     return Response(sitemap_xml, mimetype="text/xml")

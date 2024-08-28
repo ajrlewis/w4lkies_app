@@ -1,8 +1,11 @@
 import calendar
 from datetime import date, timedelta
+
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
+from loguru import logger
 from sqlalchemy import desc
+
 from forms.booking_form import BookingForm
 from models.booking import Booking
 from models.customer import Customer
@@ -11,7 +14,6 @@ from models.dog import Dog
 booking_bp = Blueprint("booking_bp", __name__)
 
 
-# TODO (ajrl) This is really bad! Make different methods to get past and upcoming bookings.
 @booking_bp.route("/", methods=["GET"])
 @booking_bp.route("/<int:booking_id>", methods=["GET"])
 @login_required
@@ -22,12 +24,13 @@ def get(booking_id: int = None):
     form = BookingForm()
     if booking_id is None:
         # Get all bookings
-        bookings = (
-            Booking.query.filter_by(user_id=current_user.id)
-            .order_by(desc(Booking.id))
-            .all()
-        )
+        query = Booking.query
+        if not current_user.is_admin:
+            logger.debug("Current user is not admin, querying only bookings for user.")
+            query = query.filter_by(user_id=current_user.id)
+        bookings = query.order_by(desc(Booking.id)).all()
         if bookings:
+            logger.debug(f"Found {len(bookings) = }")
             # Set form data to last booking's values for UX improvement
             form.set_data_from_model(bookings[0])
 
@@ -54,20 +57,6 @@ def get(booking_id: int = None):
                     upcoming_bookings[k], key=lambda b: b.time
                 )
 
-            # new_keys = []
-            # # number_of_bookings = len(set([v.time for v in values]))
-            # # total_price = sum([b.service.price for b in values])
-            # # new_key = (*k, number_of_bookings, total_price)
-            # # new_keys.append(new_key)
-            # # Update keys to contain more meta data.
-            # old_keys = upcoming_bookings.keys()
-            # print("upcoming_bookings = ", upcoming_bookings)
-            # print("new_keys = ", new_keys, len(new_keys))
-            # print("old_keys = ", old_keys, len(old_keys))
-            # for new_key, old_key in zip(new_keys, old_keys):
-            #     upcoming_bookings[new_key] = upcoming_bookings.pop(old_key)
-            # print("upcoming_bookings = ", upcoming_bookings)
-
     else:
         # Return details for specified booking
         booking = Booking.query.get(booking_id)
@@ -88,7 +77,7 @@ def get(booking_id: int = None):
 @login_required
 def add():
     form = BookingForm()
-    if form.validate_on_submit():
+    if current_user.is_admin and form.validate_on_submit():
         data = form.data
         data["user_id"] = current_user.id
         Booking.add(data)

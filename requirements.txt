@@ -18,3 +18,5 @@ reportlab
 
 git+https://github.com/ajrlewis/flask_wallet_of_satoshi.git
 git+https://github.com/ajrlewis/bitcoinkit.git
+
+loguru==0.7.2

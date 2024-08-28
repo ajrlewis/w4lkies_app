@@ -5,6 +5,7 @@ from wtforms.fields import DateField
 from wtforms.validators import DataRequired
 from models.customer import Customer
 from models.service import Service
+from models.user import User
 from utils.form_mixin import FormMixin
 
 
@@ -36,11 +37,15 @@ class BookingForm(FlaskForm, FormMixin):
         render_kw={"placeholder": "yyyy-mm-dd"},
     )
     time = SelectField("Time", validators=[DataRequired()], choices=time_choices)
+    user_id = SelectField("User", coerce=int, validators=[DataRequired()])
     customer_id = SelectField("Customer", coerce=int, validators=[DataRequired()])
     service_id = SelectField("Service", coerce=int, validators=[DataRequired()])
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.user_id.choices = [
+            (user.id, user.name) for user in User.query.order_by(User.name).all()
+        ]
         self.customer_id.choices = [
             (customer.id, customer.name)
             for customer in Customer.query.order_by(Customer.name).all()
