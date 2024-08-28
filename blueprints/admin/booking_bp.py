@@ -61,7 +61,9 @@ def get(booking_id: int = None):
         # Return details for specified booking
         booking = Booking.query.get(booking_id)
         if booking:
+            logger.debug(f"{booking = }")
             form.set_data_from_model(booking)
+            form.time.data = booking.time.strftime("%I:%M")
         else:
             flash(f"Booking not found.", "error")
     return render_template(
@@ -89,9 +91,12 @@ def add():
 @login_required
 def update(booking_id: int):
     booking = Booking.query.get(booking_id)
+    logger.debug(f"{booking = }")
     form = BookingForm()
     if booking and form.validate_on_submit():
-        booking.update(form.data)
+        form_data = form.data
+        logger.debug(f"{form_data = }")
+        booking.update(form_data)
         flash("Booking updated successfully!", "success")
     else:
         flash("Booking not found.", "error")
