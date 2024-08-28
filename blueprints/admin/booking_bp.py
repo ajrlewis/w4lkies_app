@@ -81,8 +81,8 @@ def add():
     form = BookingForm()
     if current_user.is_admin and form.validate_on_submit():
         data = form.data
-        data["user_id"] = current_user.id
-        Booking.add(data)
+        booking = Booking.add(data)
+        logger.debug(f"Added {booking = }")
         flash(f"Booking added successfully!", "success")
     return redirect(url_for("booking_bp.get"))
 
