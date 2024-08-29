@@ -21,7 +21,7 @@ def get_time_choices(start_hour: int, end_hour: int, interval_minutes: int):
     end_time = datetime.combine(datetime.today(), working_hours_end)
     while current_time <= end_time:
         time_choice = (
-            current_time.strftime("%I:%M"),
+            current_time.strftime("%H:%M:%S"),
             current_time.strftime("%I:%M %p"),
         )
         time_choices.append(time_choice)

@@ -63,7 +63,9 @@ def get(booking_id: int = None):
         if booking:
             logger.debug(f"{booking = }")
             form.set_data_from_model(booking)
-            form.time.data = booking.time.strftime("%I:%M")
+            # form.time.data = booking.time.strftime("%I:%M")
+            form.time.data = booking.time.strftime("%H:%M:%S")
+
         else:
             flash(f"Booking not found.", "error")
     return render_template(
