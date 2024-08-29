@@ -4,6 +4,11 @@
 
 ## Improvements
 
+### Scripts
+
+    - Add time taken for scripts to execute
+        - i.e. push and deploy methods together in gandi.sh took xyz seconds ...
+
 ### User
 
     - Add role, bio and image to model

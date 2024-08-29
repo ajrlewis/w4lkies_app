@@ -1,3 +1,4 @@
+import os
 import sys
 
 from flask import Flask
@@ -8,8 +9,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wallet_of_satoshi import WalletOfSatoshi
 from flask_wtf.csrf import CSRFProtect
 from htmlmin.main import minify
-
 from loguru import logger
+
+# Configure Loguru
+
+LOGURU_LEVEL = os.getenv("LOGURU_LEVEL", "INFO")
+LOGURU_LEVEL = LOGURU_LEVEL.upper()
+
+logger.remove()
+logger.add(sys.stderr, level=LOGURU_LEVEL)
+logger.debug(f"{LOGURU_LEVEL = }")
+
 
 # from flask_minify import Minify
 
@@ -73,6 +83,12 @@ def create_app(Config) -> Flask:
 
         # Import and register dashboard pages
 
+        from blueprints.dashboard.dashboard_bp import dashboard_bp
+
+        app.register_blueprint(dashboard_bp, url_prefix="/dashboard")
+
+        #
+
         from blueprints.admin.admin_bp import admin_bp
         from blueprints.admin.auth_bp import auth_bp
         from blueprints.admin.customer_bp import customer_bp
@@ -85,7 +101,7 @@ def create_app(Config) -> Flask:
         from blueprints.admin.expense_bp import expense_bp
         from blueprints.admin.verify_sign_up_bp import verify_sign_up_bp
 
-        app.register_blueprint(admin_bp, url_prefix="/dashboard")
+        # app.register_blueprint(admin_bp, url_prefix="/dashboard")
         app.register_blueprint(auth_bp, url_prefix="/dashboard/auth")
         app.register_blueprint(customer_bp, url_prefix="/dashboard/customers")
         app.register_blueprint(dog_bp, url_prefix="/dashboard/dogs")
