@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block navbar %}
+  <nav>
+    <div class="container">
+      <ul>
+        <li><a href="{{ url_for('index_bp.get') }}">Back Home</a></li>
+        <li><a href="#privacy">Privacy Notice</a></li>
+        <li><a href="#cookies">Cookie Policy</a></li>
+      </ul>
+    </div>
+  </nav>
+{% endblock navbar %}
+
+{% block content %}
+
+<div class="overview">
+  <div class="container">
+    <div class="row">
+      <div class="twelve columns">
+        <br>
+        <h1>Legal</h1>
+        <br>
+        <br>
+        <h4>Last Updated: 2024-08-29</h4>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="services">
+    <div class="container" id="privacy">
+      <br>
+      <h3>Privacy Notice</h3>
+      
+      <p>This privacy notice explains how we, <b>{{ config["WEBSITE_LTD_NAME"] }}</b>, collect, use, share and protect the personal data you share with us. These data range from simple email corresponse to detailed forms you submit when signing up for our dog caring and/or walking services.</p>
+
+      <h3>1. Who We Are</h3>
+      <p>We are <b>{{ config["WEBSITE_LTD_NAME"] }}</b>, a dog caring/walking service based in {{ config["WEBISTE_ADDRESS"] }} and registered at {{ config["WEBISTE_ADDRESS"] }}. We are committed to protecting your privacy and will only use your personal data in accordance with this privacy notice.</p>
+
+      <h3>2. Information We Collect</h3>
+      <p>We may collect the following personal data when you use our services:</p>
+      <ul>
+        <li>Name</li>
+        <li>Phone number</li>
+        <li>Email address</li>
+        <li>Dog's name, age, breed, and health information</li>
+        <li>Emergency contact details (name and phone number)</li>
+      </ul>
+      <p>Our 3rd party hosting providers and payment providers may also collect information about your use of our website, such as your IP address, browser type, and pages visited (see <a href="https://www.gandi.net/en/contracts/privacy-policy#:~:text=HOW%20IS%20YOUR%20DATA%20COLLECTED,jungle%20or%20Monster%2C%20etc.)%3B">gandi.net</a> and <a href="https://cityadsclick.com/v2/click-bkgON-KzV5r-og5Xa-60da774c?tl=1&sa=3Ceoqe2EbTghbOw9yLg26KRuVtAmed&sa2=2vekZ8tS3v5hq87t&smc3=233568&url=https%3A%2F%2Fwww.revolut.com%2Fprivacy-policy%2F&no_cookie=1&rfr=NNNNUMDgIL4NOYIA9P0mAwUjPQsIm85Y1f5XXFkWY9sFgvtcXFwYNjVNNNNNNNvYUj%3D%3D&widht=1792&height=1120&timezone=-60">revolut</a> for further details).</p>
+
+      <h3>3. How We Use Your Information</h3>
+
+      <p>We use your personal data to provide you with our services and manage your account. This includes:</p>
+
+      <ul>
+        <li>Contacting you about dog walking arrangements</li>
+        <li>Keeping records of your dog's health and walking history with us</li>
+        <li>Contacting your emergency contacts in case of an emergency</li>
+      </ul>
+
+      <p>We may also use your personal data for the following purposes:</p>
+
+      <ul>
+        <li>To improve our website and services (for e.g. through data analysis)</li>
+        <li>To comply with legal obligations</li>
+        <li>To protect our rights and property</li>
+      </ul>
+
+      <h3>4. Sharing Your Information</h3>
+
+      <p>We may share your personal data with third parties in the following circumstances:</p>
+
+      <ul>
+        <li>With your consent for AI purposes</li>
+        <li>To comply with legal obligations</li>
+        <li>To protect our rights and property</li>
+        <li>With our service providers, such as our website hosting provider or payment processor as highlighted above</li>
+      </ul>
+
+      <p>We will never sell your personal data to any third parties.</p>
+      
+      <h3>5. Security</h3>
+
+      <p>We take the security of your personal data seriously and have implemented appropriate technical and organizational measures to protect your personal data from unauthorized access, use, disclosure, alteration, or destruction.</p>
+
+      <p>We regularly rotate 32-byte passwords to access current data</p>
+
+      <p>We monitor whether you're an active customer. If you become an inactive customer, (typically after 1 year of not using our services) we hash all personal data apart from you and your dog(s) name on our production server. This action requires you to repeat the signup process as before if you wish to use our services again.</p>
+
+      <h3>6. Your Rights</h3>
+
+      <p>You have the following rights regarding your personal data:</p>
+
+      <ul>
+        <li>The right to access your personal data</li>
+        <li>The right to correct any inaccuracies in your personal data</li>
+        <li>The right to erase all of your personal data</li>
+        <li>The right to restrict our use of your personal data (e.g. in data analysis or AI tools)</li>
+        <li>The right to object to our use of your personal data</li>
+        <li>The right to receive your personal data in a structured, commonly used, and machine-readable format</li>
+        <li>The right to withdraw your consent to our use of your personal data</li>
+      </ul>
+
+      <p>To exercise any of these rights, please contact us at <a href="mailto:{{ config['WEBSITE_EMAIL'] }}?subject=About%20My%20Personal%20Data">{{ config["WEBSITE_EMAIL"] }}</a>. We will respond to your request within a reasonable timeframe and in accordance with applicable law.</p>
+    
+      <h3>7. Cookies</h3>
+    
+      <p>We do not currently but reserve the right to use cookies on our website to improve your user experience. For more information, please see our Cookie Policy.</p>
+
+      <h3>8. Changes to This Privacy Notice</h3>
+
+      <p>We may update this privacy notice from time to time to reflect changes in our business or legal requirements. We will notify you of any material changes to this privacy notice by email or by posting a notice on our website.</p>
+    
+      <h3>9. Contact Us</h3>
+      
+      <p>If you have any questions or concerns about our use of your personal data, please contact us at <a href="mailto:{{ config['WEBSITE_EMAIL'] }}?subject=About%20Your%20Privacy%20Notice">{{ config["WEBSITE_EMAIL"] }}</a>.</p>
+      
+    </div>
+  </div>
+
+  <div class="team">
+    <div class="container" id="cookies">
+      <br>
+      <h2>Cookie Policy</h2>
+
+      <h3>1. Introduction</h3>
+      <p>We use cookies on our website to improve your user experience. This policy explains what cookies are, how we use them, and how you can manage them.</p>
+      <h4>2. What are cookies?</h4>
+      <p>Cookies are small text files that are placed on your device when you visit a website. They are widely used to make websites work more efficiently and to provide information to the owners of the site.</p>
+      <h4>3. How we use cookies</h4>
+      <p>We use cookies for the following purposes:</p>
+      <ul>
+        <li>To enable certain functions of the website</li>
+        <li>To provide analytics and improve our website</li>
+        <li>To personalize your experience and show you relevant content</li>
+      </ul>
+
+      <h4>4. Types of cookies we use</h4>
+      <p>We use the following types of cookies on our website:</p>
+      <ul>
+        <li>Essential cookies: These are necessary for the website to function properly and cannot be turned off in our systems.</li>
+        <li>Analytics cookies: These help us understand how our website is being used and improve its performance.</li>
+        <li>Personalization cookies: These allow us to remember your preferences and personalize your experience on our website.</li>
+      </ul>
+      <h4>5. Managing cookies</h4>
+      <p>Most web browsers allow you to manage cookies through their settings. You can choose to block or delete cookies, or selectively accept certain types of cookies. However, please note that blocking or deleting cookies may affect your user experience on our website.</p>
+      <h4>6. Changes to this policy</h4>
+      <p>We may update this policy from time to time to reflect changes in our use of cookies or legal requirements. We encourage you to review this policy periodically.</p>
+      <p>If you have any questions or concerns about our use of cookies, please contact us at <a href="mailto:{{ config['WEBSITE_EMAIL'] }}?subject=About%20Your%20Cookie%20Policy">{{ config["WEBSITE_EMAIL"] }}</a>.</p>
+    </div>
+
+  </div>
+{% endblock %}

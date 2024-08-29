@@ -25,6 +25,8 @@ logger.debug(f"{LOGURU_LEVEL = }")
 
 # Register globals
 
+logger.debug("Creating global external instances ...")
+
 csrf = CSRFProtect()
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -34,6 +36,8 @@ migrate = Migrate()
 wos = WalletOfSatoshi()
 
 # Configure login manager
+
+logger.debug("Configuring login manager ...")
 
 from models.user import User
 
@@ -50,10 +54,14 @@ def load_user(user_id: int) -> User:
 
 
 def create_app(Config) -> Flask:
+    logger.debug("Creating application ...")
+
     app = Flask(__name__, instance_relative_config=True)
 
+    logger.debug("Configuring application ...")
     app.config.from_object(Config)
 
+    logger.debug("Creating external global instances ...")
     csrf.init_app(app=app)
     db.init_app(app=app)
     migrate.init_app(app, db)
@@ -63,6 +71,10 @@ def create_app(Config) -> Flask:
     wos.init_app(app=app)
 
     with app.app_context():
+        logger.debug(
+            "Creating all tables needed (probably migrations should handle this!) ..."
+        )
+
         db.create_all()
 
         # TODO (ajrl) Move this to own module:
@@ -73,8 +85,12 @@ def create_app(Config) -> Flask:
             return {"now": datetime.utcnow()}
 
         # Import home page
+        logger.debug("Importing routes ...")
+
         from blueprints.index_bp import index_bp
-        from blueprints.public.legal_bp import legal_bp
+        from blueprints.legal_bp import legal_bp
+
+        # from blueprints.public.legal_bp import legal_bp
         from blueprints.public.sign_up_bp import sign_up_bp
 
         app.register_blueprint(index_bp, url_prefix="/")
@@ -101,6 +117,8 @@ def create_app(Config) -> Flask:
         from blueprints.admin.expense_bp import expense_bp
         from blueprints.admin.verify_sign_up_bp import verify_sign_up_bp
 
+        logger.debug("Registering routes ...")
+
         # app.register_blueprint(admin_bp, url_prefix="/dashboard")
         app.register_blueprint(auth_bp, url_prefix="/dashboard/auth")
         app.register_blueprint(customer_bp, url_prefix="/dashboard/customers")
@@ -115,4 +133,5 @@ def create_app(Config) -> Flask:
             verify_sign_up_bp, url_prefix="/dashboard/verify-sign-up"
         )
 
+        logger.debug("Returning the application ...")
         return app
