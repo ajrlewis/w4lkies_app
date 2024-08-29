@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_wtf import FlaskForm
-from wtforms import DateField, StringField, SubmitField, TelField
+from wtforms import BooleanField, DateField, StringField, SubmitField, TelField
 from wtforms.validators import DataRequired, Optional
 from utils.form_mixin import FormMixin
 
@@ -44,3 +44,9 @@ class CustomerForm(FlaskForm, FormMixin):
     )
 
     signed_up_on = DateField("Signed Up On", default=datetime.utcnow)
+
+    is_active = BooleanField(
+        "Is active?",
+        validators=[Optional()],
+        default=True,
+    )

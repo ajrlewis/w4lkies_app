@@ -62,6 +62,19 @@
           {{ customer_form.signed_up_on(class_="u-full-width") }}
         </div>
       </div>
+
+      {% if customer %}
+        <div class="row">
+          <div class="twelve columns">
+            {{ customer_form.is_active.label }}
+            <div class="checkbox {{ 'checked' if customer_form.is_active.data else '' }}" onclick="toggleCheckbox(this)">
+              {{ customer_form.is_active }}
+            </div>
+          </div>
+        </div>
+        <br>
+      {% endif %}
+
       <div class="row">
         <div class="twelve columns">
           <button type="submit">

@@ -11,6 +11,7 @@ class Customer(db.Model, ModelMixin):
     emergency_contact_phone = db.Column(db.String(20), nullable=False)
     dogs = db.relationship("Dog", backref="customer", lazy=True)
     signed_up_on = db.Column(db.Date, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
 
     def __repr__(self):
         return self.name
