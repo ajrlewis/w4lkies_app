@@ -1,14 +1,14 @@
 #! /usr/bin/env bash
 
-help() {
+usage() {
    echo "Gandi installation & development script."
    echo
    echo "Syntax: install.sh [-d|h]"
    echo "options:"
    echo "i     Initialize gandi and github remote repositories."
    echo "p     Push to remote repositories."
-   echo "d     Deploy to gandi instance"
-   echo "h     Print this help."
+   echo "d     Deploy to gandi instance."
+   echo "u     Print this help for usage."
    echo
 }
 
@@ -45,7 +45,7 @@ deploy() {
 
 source .env; # get environment variables
 
-while getopts ":ipdh" option; do
+while getopts ":ipdu" option; do
     case $option in
         i) #
             init;
@@ -54,8 +54,8 @@ while getopts ":ipdh" option; do
             push;;
         d) #
             deploy;;
-        h) # display help
-            help;
+        u) # display help
+            usage;
             exit;;
         \?) # Invalid option
             echo "Error: Invalid option";

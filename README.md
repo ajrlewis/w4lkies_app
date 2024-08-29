@@ -61,6 +61,23 @@ Add the file you want to deploy (e.g. `git add <file to add>`) and commit it (e.
 bash scripts/gandi.sh -pd
 ```
 
+Get help on the usage of this script as follows:
+
+```bash
+bash scripts/gandi.sh -u
+```
+
+```
+Gandi installation & development script.
+
+Syntax: install.sh [-d|h]
+options:
+i     Initialize gandi and github remote repositories.
+p     Push to remote repositories.
+d     Deploy to gandi instance.
+u     Print this help for usage.
+```
+
 ## Migrations
 
 After pushing and deploying to the remote server, SSH into the remote server and then:

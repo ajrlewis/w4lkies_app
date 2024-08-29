@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
 
 {% block navbar %}
-<nav>
-  <div class="container">
+  <nav>
+    <div class="container">
       <ul>
         <li><a href="#services">Services</a></li>
         <li><a href="#team">Team</a></li>
         <li><a href="#dogs">Dogs</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-  </div>
-</nav>
+    </div>
+  </nav>
 {% endblock navbar %}
 
 {% block content %}
+
 <div class="overview">
   <div class="container" id="overview">
     <br>
-    <h2>Dog Care & Walking Services</h2>
+    <h1>Dog Caring & Walking Services</h1>
     <p>Hi there, my name is Sophia and I'm the owner of <b>W4lkies</b>, a dog walking business based in <b>Chiswick, London, W4</b>.
     My team and I absolutely love dogs and have a lot of experience working with them.
     We're passionate about providing a <b>safe and enjoyable experience</b> for every dog in our care.</p>
@@ -32,7 +33,7 @@
 <div class="services">
   <div class="container" id="services">
     <br>
-    <h2>Our Services</h2>
+    <h1>Our Services</h1>
     <p>We provide services from <b>Monday to Friday</b>, with two time slots available: <b>AM (8am to 12pm) and PM (12pm to 6pm)</b>. We aim to schedule your preferred time within a <b>one-hour range of your chosen slot</b>.</p>
     <div class="row">
       {% for service in services %}
@@ -44,9 +45,9 @@
           </h3>
           <ul>
             {% for item in service.description.split(".") %}
-            {% if item %}
-              <li>{{ item }}</li>
-            {% endif%}
+              {% if item %}
+                <li>{{ item }}</li>
+              {% endif%}
             {% endfor %}
           </ul>
         </div>
@@ -64,9 +65,11 @@
         </ul>
       </div>
     </div>
-    <!-- <div class="row"> -->
-      <!-- <img src="static/img/bitcoin-accepted-here.jpg" style="max-width: 20%; min-width: 160px;"> -->
-    <!-- </div> -->
+    <br>
+    <div class="row">
+      <h2>Payment Methods</h2>
+      <p>We accept cash, bank transfer or bitcoin for our services. Whatever's easiest for you!</p>
+    </div>
     <br>
     <a href="#team">Scroll to our team members …</a>
   </div>
@@ -77,7 +80,7 @@
 <div class="team">
   <div class="container" id="team">
     <br>
-    <h2>The Team</h2>    
+    <h1>The Team</h1>    
     <div class="row">
       <div class="six columns">
         <img src="/static/img/profile-sophia.jpg" alt="Founder Profile Picture" class="profile">
@@ -94,13 +97,12 @@
         <i>Dog Walker</i>
         <br>
         <p>
- Growing up on a farm in Poland surrounded by various animals, I have always had a deep connection with pets. From chickens, pigs, horses, and cows to cats and dogs, caring for animals has been a passion of mine since childhood. After moving to Italy as a teenager, I rescued an abandoned dog and welcomed many cats into our countryside home. Now based in London for the past 10 years, I have transitioned from a career in hospitality to pursue my love for dogs. As a dedicated animal lover, I am excited to devote my time and affection to our canine companions. In my free time, I enjoy traveling, exploring new places, and taking long walks in nature.
-        <!-- Throughout my whole life I have always been around by some sort of different pets.I grow up in Poland on a farm where we had lots of animals like :chickens,pigs,horses,cows ,cats and dogs I use to love living there and take care of all animals. When I was teenager we moved to Italy where I adopted a dog that was abandoned ,I also had lots of cats in our country side house. I moved to London 10 years ago and I loved,I worked in hospitality for long time but now I would love to dedicate my time and love to dogs. I’m a big animal lover . My hobbies are: travelling and exploring new places,I love long walks in the nature -->
+         Growing up on a farm in Poland surrounded by various animals, I have always had a deep connection with pets. From chickens, pigs, horses, and cows to cats and dogs, caring for animals has been a passion of mine since childhood. After moving to Italy as a teenager, I rescued an abandoned dog and welcomed many cats into our countryside home. Now based in London for the past 10 years, I have transitioned from a career in hospitality to pursue my love for dogs. As a dedicated animal lover, I am excited to devote my time and affection to our canine companions. In my free time, I enjoy traveling, exploring new places, and taking long walks in nature.
         </p>
       </div>
     </div>
     <br>
-    <a href="#dogs">Scroll to our dogs …</a>
+    <a href="#dogs">Scroll to the dogs we look after …</a>
   </div>
   <br>
   <br>
@@ -109,87 +111,75 @@
 <div class="clients">
   <div class="container" id="dogs">
     <br>
-    <h2>Our Dogs</h2>
+    <h1>Our Dogs</h1>
+
     <div class="row">
       <div class="twelve columns">
-      A selection of some of the dogs we currently care for and testimonials from their owners!
+      Here's a small selection of some of the dogs we currently care for with testimonials from their owners!
       </div>
     </div>
     <br>
-<style>
-.gallery {}
-img {
-  max-width: 100%;
-  height: auto;
-}
-</style>
 
-<div class="row gallery">
-  <div class="three columns">
-    <img src="/static/img/dogs/rocky-01.jpg" alt="Dog Gallery Image">
-    <br>
-    <b>Rocky</b>
-    <br>
-    <i>Jack Russell</i>
-    <p>
-"I can't say enough great things about Sophia and her excellent dog walking services. From the first time I met her, it was abundantly clear that Sophia is a true dog lover and has a natural rapport with furry friends of all breeds and sizes. 
-What sets Sophia apart is her incredible passion, patience, and attentiveness when it comes to caring for dogs. She doesn't just walk them - she provides excellent exercise tailored to each dog's unique needs and energy levels."
-<!-- Sophia always makes sure to let the pups sniff around, play, and expend their energy in a positive way during their walks." -->
-<!-- In addition to her wealth of dog expertise, Sophia is incredibly reliable, punctual, and communicative. She sends detailed updates and pictures after every walk, letting you know how your pup is doing." -->
-<!-- I really appreciate her thoughtfulness in making sure my dog is healthy, happy, and engaged both mentally and physically. -->
-<!-- What I appreciate most about Sophia though is her genuine adoration for dogs. You can tell she cherishes every interaction and sees each pup as an individual. She dotes on them, talks to them, and lavishes them with love and attention. With Sophia, your dogs will truly feel like part of her pack.  -->
-<!-- I wholeheartedly recommend hiring Sophia as your dog walker. She provides outstanding care with a level of commitment and love that you won't find elsewhere. Your dogs are sure to adore her, and you can have complete peace of mind knowing they are in such caring, capable hands." -->
-</p>
-  </div>
-  <div class="three columns">
-    <img src="/static/img/dogs/simon-01.jpg" alt="Dog Gallery Image">
-    <br>
-    <b>Simon</b>
-    <br>
-    <i>Miniature Schnauzer</i>
-    <p>"Sophia has been walking Simon, my miniature Schnauzer, for a couple months now and I am really happy with her. She is on time, reliable and very good with Simon. She clearly loves dogs and mine loves her a lot. He is always very happy to see her and comes back tired and having had a lovely adventure. I can't recommend W4lkies highly enough."</p>
-  </div>
-  <!-- <div class="three columns"> -->
-    <!-- <img src="/static/img/dogs/stormi-02.jpg" alt="Dog Gallery Image"> -->
-    <!-- <br> -->
-    <!-- <b>Stormi</b> -->
-    <!-- <br> -->
-    <!-- <i>Pomeranian</i> -->
-    <!-- <p>"..."</p> -->
+  <div class="row">
+    <div class="three columns">
+      <img class="gallery" src="/static/img/dogs/rocky-01.jpg" alt="Dog Gallery Image">
+      <br>
+      <b>Rocky</b>
+      <br>
+      <i>Jack Russell</i>
+      <!-- <span style="font-size: xxx-large;">“</span> -->
+      <p>
+      I can't say enough great things about Sophia and her excellent dog walking services. From the first time I met her, it was abundantly clear that Sophia is a true dog lover and has a natural rapport with furry friends of all breeds and sizes.  What sets Sophia apart is her incredible passion, patience, and attentiveness when it comes to caring for dogs. She doesn't just walk them - she provides excellent exercise tailored to each dog's unique needs and energy levels.</p>
+    </div>
+    <div class="three columns">
+      <img class="gallery"  src="/static/img/dogs/simon-01.jpg" alt="Dog Gallery Image">
+      <br>
+      <b>Simon</b>
+      <br>
+      <i>Miniature Schnauzer</i>
+      <p>"Sophia has been walking Simon, my miniature Schnauzer, for a couple months now and I am really happy with her. She is on time, reliable and very good with Simon. She clearly loves dogs and mine loves her a lot. He is always very happy to see her and comes back tired and having had a lovely adventure. I can't recommend W4lkies highly enough."</p>
+    </div>
+    <!-- <div class="three columns"> -->
+      <!-- <img src="/static/img/dogs/stormi-02.jpg" alt="Dog Gallery Image"> -->
+      <!-- <br> -->
+      <!-- <b>Stormi</b> -->
+      <!-- <br> -->
+      <!-- <i>Pomeranian</i> -->
+      <!-- <p>"..."</p> -->
+    <!-- </div> -->
+    <div class="three columns">
+      <img class="gallery" src="/static/img/dog-hugo.jpg" alt="Dog Gallery Image">
+      <br>
+      <b>Hugo</b>
+      <br>
+      <i>Jack Russell</i>
+      <p>"We are extremely lucky to have found Sophia - she is friendly, trustworthy, and really cares about our dog Hugo💕 Would highly recommend to anyone looking for a dog walker!"</p>
+    </div>
   <!-- </div> -->
-  <div class="three columns">
-    <img src="/static/img/dog-hugo.jpg" alt="Dog Gallery Image">
-    <br>
-    <b>Hugo</b>
-    <br>
-    <i>Jack Russell</i>
-    <p>"We are extremely lucky to have found Sophia - she is friendly, trustworthy, and really cares about our dog Hugo💕 Would highly recommend to anyone looking for a dog walker!"</p>
+  <!-- <div class="row"> -->
+    <div class="three columns">
+      <img class="gallery" src="/static/img/dog-raff.jpg" alt="Dog Gallery Image">
+      <br>
+      <b>Raff</b>
+      <br>
+      <i>Cocker Spaniel</i>
+      <p>"Sophia has been wonderful with Raff, she is really thoughtful on each walk, sensing what he feels like and working with him. Sometimes it's ball chasing, sometimes it's sniffing, and sometimes it's just chilling and watching the world go by! Raff flies out of the door whenever Sophia knocks. If you are looking for a very reliable service where the needs of the dogs always come first, we would thoroughly recommend W4lkies."</p>
+    </div>
   </div>
-<!-- </div> -->
-<!-- <div class="row"> -->
-  <div class="three columns">
-    <img src="/static/img/dog-raff.jpg" alt="Dog Gallery Image">
+      <br>
+      <a href="#contact">Scroll to our contact details …</a>
+    </div>
     <br>
-    <b>Raff</b>
     <br>
-    <i>Cocker Spaniel</i>
-    <p>"Sophia has been wonderful with Raff, she is really thoughtful on each walk, sensing what he feels like and working with him. Sometimes it's ball chasing, sometimes it's sniffing, and sometimes it's just chilling and watching the world go by! Raff flies out of the door whenever Sophia knocks. If you are looking for a very reliable service where the needs of the dogs always come first, we would thoroughly recommend W4lkies."</p>
   </div>
-</div>
-    <br>
-    <a href="#contact">Scroll to our contact details …</a>
-  </div>
-  <br>
-  <br>
-</div>
 
 <div class="contact">
   <div class="container" id="contact">
     <br>
-    <h2>Get in Touch</h2>
+    <h1>Get in Touch</h1>
     <div class="row">
       <div class="twelve columns">
-        <a href="mailto:hello@w4lkies.com?subject=Book a Dog Walk">Contact us</a> now to book your free meet-and-greet today!
+        <a href="mailto:hello@w4lkies.com?subject=Book a Dog Walk">Contact us</a> by email to book your free meet-and-greet with no obligations today!
       </div>
     </div>
     <br>

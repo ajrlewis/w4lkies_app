@@ -2,16 +2,33 @@
 
 ## Bugs
 
-### Booking
-
-    - Time 1.15 PM shows up as 1.15 AM
-
 ## Improvements
 
-### Customers
+### User
+
+    - Add role, bio and image to model
+
+### Testimonial
+
+    - create model
+    - render t.dog.name t.dog.dog_breed t.dog.customer.name t.content
+
+### Bookings
+
+    - add admin decorator to limit route access to admins only
+    - filter by booking.user_id
+
+### Services
 
     - Add is_active
-    - Only show is_active customers in bookings
+
+### Dogs + Customers + Services
+
+    - Remove ability to delete
+
+### Logging
+
+    - Use logger from loguru everywhere!
 
 ### Invoices
 
@@ -19,6 +36,7 @@
 
 ### Templates
     
+    - CSS to hide navigation bar
     - Simplify/Refactor templates
     - Move admin templates to dashboard directory
 
