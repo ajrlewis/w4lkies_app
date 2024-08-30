@@ -24,6 +24,8 @@
       <link rel="stylesheet" href="/static/css/styles.css">
   </head>
   <body>
+
+    <!-- header -->
     <header>
       <div class="row">
         <div class="twelve columns">
@@ -35,46 +37,52 @@
       <br>
       <br>
     </header>
+
+    <!-- navigation -->
     {% block navbar %}{% endblock navbar %}
+
+    <!-- main content -->
     <content>
       {% block content %}{% endblock content %}
     </content>
-  {% block footer %}
-    <footer>
-      <br>
-      <div class="row">
-        <div class="twelve columns">
-          © 2024 London W4lkies Ltd. All rights reserved.
-          <br>
-          <br>
+
+    <!-- footer -->
+    {% block footer %}
+      <footer>
+        <br>
+        <div class="row">
+          <div class="twelve columns">
+            © 2024 London W4lkies Ltd. All rights reserved.
+            <br>
+            <br>
+          </div> 
         </div> 
-      </div> 
-      <div class="row">
-        <div class="four columns">
-          <h4>Contact</h4>
-          <ul>
-            <li>E-mail: <a href="mailto:hello@w4lkies.com">hello@w4lkies.com</a></li>
-            <li>Phone: <a href="tel:{{ config['WEBSITE_TELEPHONE'] }}">{{ config["WEBSITE_TELEPHONE"] }}</a></li>
-          </ul>
-        </div> 
-        <div class="four columns">
-          <h4>Boring</h4>
-          <ul>
-            <li>Legal: <a href="{{ url_for('legal_bp.get') }}">Privacy & Cookies</a></li>
-            <li>Site Map: <a href="{{ url_for('index_bp.sitemap') }}">Our site map</a></li>
-          </ul>
-        </div>
-        <div class="four columns">
-            <h4>Social</h4>
+        <div class="row">
+          <div class="four columns">
+            <h4>Contact</h4>
             <ul>
-              <li>Instagram: <a href="https://www.instagram.com/w4lkies/" target="_blank">@w4lkies</a></li>
-              <li>Nostr: Coming soon™</li>
-              <li>Github: <a href="https://github.com/ajrlewis/w4lkies_app" target="_blank">w4lkies_app</a></li>
+              <li>E-mail: <a href="mailto:hello@w4lkies.com">hello@w4lkies.com</a></li>
+              <li>Phone: <a href="tel:{{ config['WEBSITE_TELEPHONE'] }}">{{ config["WEBSITE_TELEPHONE"] }}</a></li>
             </ul>
+          </div> 
+          <div class="four columns">
+            <h4>Boring</h4>
+            <ul>
+              <li>Legal: <a href="{{ url_for('legal_bp.get') }}">Privacy & Cookies</a></li>
+              <li>Site Map: <a href="{{ url_for('index_bp.sitemap') }}">Our site map</a></li>
+            </ul>
+          </div>
+          <div class="four columns">
+              <h4>Social</h4>
+              <ul>
+                <li>Instagram: <a href="https://www.instagram.com/w4lkies/" target="_blank">@w4lkies</a></li>
+                <li>Nostr: Coming soon™</li>
+                <li>Github: <a href="https://github.com/ajrlewis/w4lkies_app" target="_blank">w4lkies_app</a></li>
+              </ul>
+          </div> 
         </div> 
-      </div> 
-      <br>
-    </footer>
-  {% endblock footer %}
+        <br>
+      </footer>
+    {% endblock footer %}
   </body>
 </html>
