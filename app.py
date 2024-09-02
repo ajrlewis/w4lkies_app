@@ -75,7 +75,7 @@ def create_app(Config) -> Flask:
             "Creating all tables needed (probably migrations should handle this!) ..."
         )
 
-        db.create_all()
+        # db.create_all()
 
         # TODO (ajrl) Move this to own module:
         @app.context_processor
@@ -89,8 +89,6 @@ def create_app(Config) -> Flask:
 
         from blueprints.index_bp import index_bp
         from blueprints.legal_bp import legal_bp
-
-        # from blueprints.public.legal_bp import legal_bp
         from blueprints.public.sign_up_bp import sign_up_bp
 
         app.register_blueprint(index_bp, url_prefix="/")
@@ -100,19 +98,23 @@ def create_app(Config) -> Flask:
         # Import and register dashboard pages
 
         from blueprints.dashboard.dashboard_bp import dashboard_bp
+        from blueprints.dashboard.auth_bp import auth_bp
+        from blueprints.dashboard.booking_bp import booking_bp
 
         app.register_blueprint(dashboard_bp, url_prefix="/dashboard")
+        app.register_blueprint(auth_bp, url_prefix="/dashboard/auth")
+        app.register_blueprint(booking_bp, url_prefix="/dashboard/bookings")
 
         #
 
         from blueprints.admin.admin_bp import admin_bp
-        from blueprints.admin.auth_bp import auth_bp
+
+        # from blueprints.admin.auth_bp import auth_bp
         from blueprints.admin.customer_bp import customer_bp
         from blueprints.admin.dog_bp import dog_bp
         from blueprints.admin.dog_breed_bp import dog_breed_bp
         from blueprints.admin.vet_bp import vet_bp
         from blueprints.admin.service_bp import service_bp
-        from blueprints.admin.booking_bp import booking_bp
         from blueprints.admin.invoice_bp import invoice_bp
         from blueprints.admin.expense_bp import expense_bp
         from blueprints.admin.verify_sign_up_bp import verify_sign_up_bp
@@ -120,13 +122,12 @@ def create_app(Config) -> Flask:
         logger.debug("Registering routes ...")
 
         # app.register_blueprint(admin_bp, url_prefix="/dashboard")
-        app.register_blueprint(auth_bp, url_prefix="/dashboard/auth")
+        # app.register_blueprint(auth_bp, url_prefix="/dashboard/auth")
         app.register_blueprint(customer_bp, url_prefix="/dashboard/customers")
         app.register_blueprint(dog_bp, url_prefix="/dashboard/dogs")
         app.register_blueprint(dog_breed_bp, url_prefix="/dashboard/dog-breeds")
         app.register_blueprint(vet_bp, url_prefix="/dashboard/vets")
         app.register_blueprint(service_bp, url_prefix="/dashboard/services")
-        app.register_blueprint(booking_bp, url_prefix="/dashboard/bookings")
         app.register_blueprint(invoice_bp, url_prefix="/dashboard/invoices")
         app.register_blueprint(expense_bp, url_prefix="/dashboard/expenses")
         app.register_blueprint(

@@ -54,7 +54,5 @@ class BookingForm(FlaskForm, FormMixin):
             Customer.query.filter_by(is_active=True).order_by(Customer.name).all()
         )
         self.customer_id.choices = [(c.id, c.name) for c in customers]
-        self.service_id.choices = [
-            (service.id, service.name)
-            for service in Service.query.order_by(Service.name).all()
-        ]
+        services = Service.query.filter_by(is_active=True).order_by(Service.name).all()
+        self.service_id.choices = [(s.id, s.name) for s in services]

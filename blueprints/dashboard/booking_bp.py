@@ -14,6 +14,7 @@ from models.dog import Dog
 booking_bp = Blueprint("booking_bp", __name__)
 
 
+@booking_bp.route("", methods=["GET"])
 @booking_bp.route("/", methods=["GET"])
 @booking_bp.route("/<int:booking_id>", methods=["GET"])
 @login_required
@@ -68,8 +69,10 @@ def get(booking_id: int = None):
 
         else:
             flash(f"Booking not found.", "error")
+
+    logger.debug(f"Returning {len(bookings)} bookings ...")
     return render_template(
-        "admin/booking.html",
+        "dashboard/booking.html",
         booking=booking,
         upcoming_bookings=upcoming_bookings,
         previous_bookings=previous_bookings,

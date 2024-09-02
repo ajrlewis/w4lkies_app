@@ -25,6 +25,11 @@
   </head>
   <body>
 
+    <!-- flash messages -->
+    {% block flash_messages %}
+      {% include "flash_messages.html" %}
+    {% endblock flash_messages %}
+
     <!-- header -->
     <header>
       <div class="row">
@@ -84,5 +89,8 @@
         <br>
       </footer>
     {% endblock footer %}
+
+    {% block scripts %}{% endblock scripts %}
+
   </body>
 </html>

@@ -64,7 +64,7 @@ def sign_in():
                 logger.debug(f"Redirecting to {next_page = }")
                 return redirect(next_page)
             else:
-                return redirect(url_for("admin_bp.get"))
+                return redirect(url_for("dashboard_bp.get"))
 
         # flash("Please check your login details and try again.", "error")
         return redirect(url_for("auth_bp.sign_in"))

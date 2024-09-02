@@ -4,6 +4,7 @@ from flask_login import login_required
 dashboard_bp = Blueprint("dashboard_bp", __name__)
 
 
+@dashboard_bp.route("", methods=["GET"])
 @dashboard_bp.route("/", methods=["GET"])
 @login_required
 def get():

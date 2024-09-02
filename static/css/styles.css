@@ -25,7 +25,7 @@ nav {
   margin: 0 auto;
 }
 
-h1, h2, h3, h4 {
+h1, h2, h3, h4, h5 {
   font-family: "Hobo Std";
 }
 
@@ -79,13 +79,13 @@ footer {
   background: #F5E3CC;
   color: #1F242C;
   min-height: 33vh;
-  }
+}
 
 .services {
   background: #ff9a36;
   color: #333333;
   min-height: 33vh;
-  }
+}
 
 .team {
   background: #93bfb0;
@@ -103,6 +103,28 @@ footer {
   background: #ff9a36;
   color: #FFFFFF;
   min-height: 66vh;
+}
+
+.dashboard {
+  background: #f4e2cc;
+  color: #1F242C;
+  min-height: 66vh;
+}
+
+.dashboard button {
+/*  background: #ff9a36;*/
+/*  color: #1F242C;*/
+}
+
+.dashboard hr {
+  align: center;
+  display: block;
+  height: 3px;
+  border: 0;
+  border-top: 3px solid #1F242C;
+  margin: auto;
+  padding: 0;
+  width: 33%;
 }
 
 .gallery {
@@ -129,18 +151,39 @@ footer {
   height: 66vw;
 }
 
+.flash-messages {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.flash-messages li {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.flash-messages .error {
+  background-color: #df685820;
+  color: #df6858;
+}
+
+.flash-messages .success {
+  background-color: #32d74b20;
+  color: #32d74b;
+}
+
 @font-face {
   font-family: "Hobo Std";
   src: url("/static/fonts/HoboStd.otf") format("truetype");
 }
 
-/* entity.css */
-/*.entity {
-  width: 90%;
-  background-color: #DEF2F1;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  margin-bottom: 20px;
-  border: 2px solid #2A7977;
-}*/
+.entity {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
