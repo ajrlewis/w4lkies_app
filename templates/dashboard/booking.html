@@ -124,6 +124,7 @@
             </div>
           {% endif %}
         </div>
+        <br>
       {% endfor %}
     {% endfor %}
     </div>
@@ -168,6 +169,8 @@
 
 {% block scripts %}
   <script>
+    const upcomingRadio = document.getElementById('upcoming-radio');
+    const previousRadio = document.getElementById('previous-radio');
     const upcomingDiv = document.getElementById('upcoming-bookings');
     const previousDiv = document.getElementById('previous-bookings');
     upcomingRadio.addEventListener('click', () => {
