@@ -9,3 +9,4 @@ class Service(db.Model, ModelMixin):
     description = db.Column(db.String(500), default="", nullable=False)
     duration = db.Column(db.Float, nullable=True)
     is_publicly_offered = db.Column(db.Boolean, default=True)
+    is_active = db.Column(db.Boolean, default=True)

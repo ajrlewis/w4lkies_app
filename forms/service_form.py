@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, DecimalField, StringField, SubmitField, TextAreaField
 from wtforms.validators import DataRequired, Optional
+
 from utils.form_mixin import FormMixin
 
 
@@ -33,4 +34,10 @@ class ServiceForm(FlaskForm, FormMixin):
         "Is offered to the public?",
         validators=[Optional()],
         default=False,
+    )
+
+    is_active = BooleanField(
+        "Is still active?",
+        validators=[Optional()],
+        default=True,
     )
