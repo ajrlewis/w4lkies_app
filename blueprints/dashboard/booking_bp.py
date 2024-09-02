@@ -30,6 +30,7 @@ def get(booking_id: int = None):
             logger.debug("Current user is not admin, querying only bookings for user.")
             query = query.filter_by(user_id=current_user.id)
         bookings = query.order_by(desc(Booking.id)).all()
+        logger.debug(f"{len(bookings) = })")
         if bookings:
             logger.debug(f"Found {len(bookings) = }")
             # Set form data to last booking's values for UX improvement
@@ -50,6 +51,7 @@ def get(booking_id: int = None):
                         upcoming_bookings[key] = [b]
                 else:
                     previous_bookings.append(b)
+            logger.debug(f"{len(previous = )}")
 
             # Sort upcoming bookings by descending key and ascending values
             upcoming_bookings = dict(sorted(upcoming_bookings.items()))
@@ -57,20 +59,18 @@ def get(booking_id: int = None):
                 upcoming_bookings[k] = sorted(
                     upcoming_bookings[k], key=lambda b: b.time
                 )
+            logger.debug(f"{len(upcoming_bookings = )}")
 
     else:
         # Return details for specified booking
         booking = Booking.query.get(booking_id)
+        logger.debug(f"{booking = }")
         if booking:
-            logger.debug(f"{booking = }")
             form.set_data_from_model(booking)
-            # form.time.data = booking.time.strftime("%I:%M")
             form.time.data = booking.time.strftime("%H:%M:%S")
-
         else:
             flash(f"Booking not found.", "error")
 
-    logger.debug(f"Returning {len(bookings)} bookings ...")
     return render_template(
         "dashboard/booking.html",
         booking=booking,
