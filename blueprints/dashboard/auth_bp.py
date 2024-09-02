@@ -18,7 +18,7 @@ auth_bp = Blueprint("auth_bp", __name__)
 def sign_in():
     form = SignInForm()
     if request.method == "GET":
-        return render_template("admin/auth.html", form=form)
+        return render_template("dashboard/auth.html", form=form)
     elif request.method == "POST":
         if form.validate_on_submit():
             email = form.email.data
