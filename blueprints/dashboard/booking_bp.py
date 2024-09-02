@@ -51,7 +51,6 @@ def get(booking_id: int = None):
                         upcoming_bookings[key] = [b]
                 else:
                     previous_bookings.append(b)
-            logger.debug(f"{len(previous = )}")
 
             # Sort upcoming bookings by descending key and ascending values
             upcoming_bookings = dict(sorted(upcoming_bookings.items()))
@@ -59,7 +58,6 @@ def get(booking_id: int = None):
                 upcoming_bookings[k] = sorted(
                     upcoming_bookings[k], key=lambda b: b.time
                 )
-            logger.debug(f"{len(upcoming_bookings = )}")
 
     else:
         # Return details for specified booking
