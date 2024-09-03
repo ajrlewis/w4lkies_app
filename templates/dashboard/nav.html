@@ -4,10 +4,10 @@
     <div class="container">
       <ul>
         <li><a href="{{ url_for('booking_bp.get') }}">Bookings</a></li>
+        <li><a href="{{ url_for('customer_bp.get') }}">Customers</a></li>
+        <li><a href="{{ url_for('dog_bp.get') }}">Dogs</a></li>
+        <li><a href="{{ url_for('vet_bp.get') }}">Vets</a></li>
         {% if current_user.is_admin %}
-          <li><a href="{{ url_for('customer_bp.get') }}">Customers</a></li>
-          <li><a href="{{ url_for('dog_bp.get') }}">Dogs</a></li>
-          <li><a href="{{ url_for('vet_bp.get') }}">Vets</a></li>
           <li><a href="{{ url_for('expense_bp.get') }}">Expenses</a></li>
           <li><a href="{{ url_for('service_bp.get') }}">Services</a></li>
           <li><a href="{{ url_for('invoice_bp.get') }}">Invoices</a></li>

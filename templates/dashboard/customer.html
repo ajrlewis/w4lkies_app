@@ -1,29 +1,30 @@
-{% set active_page = "customer" %}
-{% extends "admin/base.html" %}
+{% extends "dashboard/base.html" %}
 
+{% set active_page = "customer" %}
+{% if customer %}
+  {% set content_header = "Customer " + customer.id | string %}
+  {% set form_action = url_for('customer_bp.update', customer_id=customer.id) %}
+  {% set form_submit = "Update" %}
+{% else %}
+  {% set content_header = "Customers" %}
+  {% set form_action = url_for('customer_bp.add') %}
+  {% set form_submit = "Add" %}
+{% endif %}
 
 {% block content %}
-<div class="container content">
+<div class="dashboard">
 
-  {% if customer %}
-    {% set content_header = "Customer " + customer.id | string %}
-    {% set form_action = url_for('customer_bp.update', customer_id=customer.id) %}
-    {% set form_submit = "Update" %}
-  {% else %}
-    {% set content_header = "Customers" %}
-    {% set form_action = url_for('customer_bp.add') %}
-    {% set form_submit = "Add" %}
-  {% endif %}
-
-  <div class="content-header">
+  <div class="container">
+    <br>
     <div class="row">
       <div class="twelve columns">
-        <h2>{{ content_header }}</h2>        
+        <h1>{{ content_header }}</h1>
       </div>
     </div>
   </div>
 
-  <div class="shiftable panel">
+  <div class="container">
+    {% if current_user.is_admin %}
     <form action="{{ form_action }}" method="POST">  
       {{ customer_form.csrf_token }}
       <div class="row">
@@ -33,25 +34,21 @@
         </div>
       </div>
       <div class="row">
-        <div class="twelve columns">
+        <div class="six columns">
           {{ customer_form.phone.label() }}
           {{ customer_form.phone(class_="u-full-width") }}
         </div>
-      </div>
-      <div class="row">
-        <div class="twelve columns">
+        <div class="six columns">
           {{ customer_form.email.label() }}
           {{ customer_form.email(class_="u-full-width") }}
         </div>
       </div>
       <div class="row">
-        <div class="twelve columns">
+        <div class="six columns">
           {{ customer_form.emergency_contact_name.label() }}
           {{ customer_form.emergency_contact_name(class_="u-full-width") }}
         </div>
-      </div>
-      <div class="row">
-        <div class="twelve columns">
+        <div class="six columns">
           {{ customer_form.emergency_contact_phone.label() }}
           {{ customer_form.emergency_contact_phone(class_="u-full-width") }}
         </div>
@@ -67,7 +64,7 @@
         <div class="row">
           <div class="twelve columns">
             {{ customer_form.is_active.label }}
-            <div class="checkbox {{ 'checked' if customer_form.is_active.data else '' }}" onclick="toggleCheckbox(this)">
+            <div class="checkbox {{ 'checked' if customer_form.is_active.data else '' }}" onclick="toggleCheckbox(this);">
               {{ customer_form.is_active }}
             </div>
           </div>
@@ -86,48 +83,36 @@
     {% if customer %}
       <button type="submit" onclick="window.location.href='{{ url_for('customer_bp.get') }}'">Cancel</button>
     {% endif %}
+  {% endif %}
   </div>
+</div>
 
+<div class="team">
   {% if customers %}
     <br>
-    <hr>
-    <br>
     {% for customer in customers %}
-      <div class="record">
-        <div class="record-header">
-          <div class="record-header-left">
-            <b>{{ customer.name }}</b>
-          </div>
-          <div class="record-header-right">
-            <h3>{{ customer.signed_up_on }}</h3>
-          </div>
-        </div>
-        <div class="record-details">
-          <div>
-            {{ customer.phone }}
-          </div>
-          <div>
-            {{ customer.email }}
-          </div>
-        </div>
-        <div class="record-actions">
-          <div class="record-actions-update">
-            <button type="submit" onclick="window.location.href='{{ url_for('customer_bp.get', customer_id=customer.id) }}'">
-              Update
-            </button>
-          </div>
-          <div class="record-actions-delete">
-            <form
+      <div class="container">
+        <h2>{{ customer.name }}</h2>
+        <h3>{{ customer.signed_up_on }}</h3>
+        <h4><a href="tel:{{ customer.phone }}">{{ customer.phone }}</a> - <a href="mailto:{{ customer.email }}">{{ customer.email }}</a></h4>
+      </div>
+
+      {% if current_user.is_admin %}
+        <div class="container">
+          <button type="submit" onclick="window.location.href='{{ url_for('customer_bp.get', customer_id=customer.id) }}'">
+            Update
+          </button>
+          <!-- <form
               action="{{ url_for('customer_bp.delete', customer_id=customer.id) }}"
               method="POST"
               onsubmit="return confirm('Are you sure you want to delete this customer?');"
             >
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <button type="submit">Delete</button>
-            </form>
-          </div>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <button type="submit">Delete</button>
+          </form> -->
         </div>
-      </div>
+        {% endif %}
+        <br>
     {% endfor %}
   {% endif %}
 </div>

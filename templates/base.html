@@ -90,6 +90,17 @@
       </footer>
     {% endblock footer %}
 
+    <script type="text/javascript">
+      console.log("here!");
+      // Toggles the checked class in the checkbox
+      function toggleCheckbox(checkbox) {
+        console.log("toggleCheckbox");
+        checkbox.classList.toggle("checked");
+        var input = checkbox.querySelector("input[type='checkbox']");
+        input.checked = !input.checked;
+      }
+    </script>
+    
     {% block scripts %}{% endblock scripts %}
 
   </body>

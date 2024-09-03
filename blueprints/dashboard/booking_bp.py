@@ -6,6 +6,7 @@ from flask_login import current_user, login_required
 from loguru import logger
 from sqlalchemy import desc
 
+from decorators import admin_user_required
 from forms.booking_form import BookingForm
 from models.booking import Booking
 from models.customer import Customer
@@ -80,6 +81,7 @@ def get(booking_id: int = None):
 
 @booking_bp.route("/add", methods=["POST"])
 @login_required
+@admin_user_required
 def add():
     form = BookingForm()
     if current_user.is_admin and form.validate_on_submit():
@@ -92,6 +94,7 @@ def add():
 
 @booking_bp.route("/update/<int:booking_id>", methods=["POST", "PUT"])
 @login_required
+@admin_user_required
 def update(booking_id: int):
     booking = Booking.query.get(booking_id)
     logger.debug(f"{booking = }")
@@ -108,6 +111,7 @@ def update(booking_id: int):
 
 @booking_bp.route("/delete/<int:booking_id>", methods=["POST", "DELETE"])
 @login_required
+@admin_user_required
 def delete(booking_id: int):
     booking = Booking.query.get(booking_id)
     if booking:

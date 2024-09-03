@@ -1,6 +1,7 @@
 from datetime import date
 import hashlib
 from io import BytesIO
+
 from flask import (
     Blueprint,
     flash,
@@ -13,7 +14,9 @@ from flask import (
 from flask_login import login_required
 import pandas as pd
 from sqlalchemy import desc
+
 from app import db
+from decorators import admin_user_required
 from forms.invoice_form import InvoiceForm
 from models.booking import Booking
 from models.customer import Customer
@@ -26,6 +29,7 @@ invoice_bp = Blueprint("invoice_bp", __name__)
 @invoice_bp.route("/", methods=["GET"])
 @invoice_bp.route("/<int:invoice_id>", methods=["GET"])
 @login_required
+@admin_user_required
 def get(invoice_id: int = None):
     invoices = None
     invoice = None
@@ -40,7 +44,7 @@ def get(invoice_id: int = None):
         else:
             flash(f"Invoice not found.", "error")
     return render_template(
-        "admin/invoice.html",
+        "dashboard/invoice.html",
         invoice=invoice,
         invoices=invoices,
         invoice_form=invoice_form,
@@ -50,6 +54,7 @@ def get(invoice_id: int = None):
 
 @invoice_bp.route("/add", methods=["POST"])
 @login_required
+@admin_user_required
 def add():
     form = InvoiceForm()
     if form.validate_on_submit():
@@ -108,6 +113,7 @@ def add():
 
 @invoice_bp.route("/update/<int:invoice_id>", methods=["POST", "PUT"])
 @login_required
+@admin_user_required
 def update(invoice_id: int):
     invoice_id = Invoice.query.get(invoice_id)
     form = InvoiceForm()
@@ -121,6 +127,7 @@ def update(invoice_id: int):
 
 @invoice_bp.route("/delete/<int:invoice_id>", methods=["POST", "DELETE"])
 @login_required
+@admin_user_required
 def delete(invoice_id: int):
     invoice = Invoice.query.get(invoice_id)
     if invoice:
@@ -133,6 +140,7 @@ def delete(invoice_id: int):
 
 @invoice_bp.route("/download/<int:invoice_id>")
 @login_required
+@admin_user_required
 def download(invoice_id: int):
     invoice = db.session.get(Invoice, invoice_id)
     db.session.refresh(invoice)
@@ -173,6 +181,7 @@ def download(invoice_id: int):
 
 @invoice_bp.route("/summary", methods=["GET"])
 @login_required
+@admin_user_required
 def summary():
     invoices = Invoice.query.all()
     df = pd.DataFrame(

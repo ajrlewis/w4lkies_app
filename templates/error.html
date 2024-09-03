@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+  <nav>
+    <div class="container">
+      <ul>
+        <li><a href="{{ url_for('index_bp.get') }}">Home</a></li>
+        <li><a href="{{ url_for('dashboard_bp.get') }}">Dashboard</a></li>
+      </ul>
+    </div>
+  </nav>
+{% endblock navbar %}
+
+{% block content %}
+<div class="container">
+  <br>
+  <h1>{{ code }} Error</h1>
+  <h3>{{ message }}</h3>
+  <br>
+  <br>
+</div>
+{% endblock content %}

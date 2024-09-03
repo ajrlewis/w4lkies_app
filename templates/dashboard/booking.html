@@ -66,17 +66,16 @@
         <button onclick="window.location.href='{{ url_for('booking_bp.get') }}'">Cancel</button>
       {% endif %}
     {% endif %}
+  </div>
+</div>
+
+<div class="team">
 
     {% if upcoming_bookings or previous_bookings %}
       <!-- Add space -->
       {% if current_user.is_admin %} 
         <br>
       {% endif %}
-  </div>
-</div>
-
-<div class="team">
-
   <br>
   <button id="upcoming-radio" type="radio">Upcoming</button>
   &nbsp;
@@ -93,7 +92,7 @@
       {% set bookings_sum = bookings | sum(attribute='service.price') %}
       <h2>{{ day_of_week | upper }} {{ date }}</h2>
       <h3>
-        {{ bookings | length }} bookings 
+        <!-- {{ bookings | length }} bookings  -->
         {% if current_user.is_admin %}
           - {{ "£%0.2f" | format(bookings_sum | float) }}
         {% endif %}
@@ -136,28 +135,32 @@
         <h3>{{ booking.date }} {{ booking.time.strftime("%I:%M %p") }}</h3>
         <h4>{{ booking.user.name | safe }} - {{ booking.customer.dogs[0].name | safe }}</h4>
         <h5>{{ booking.service.name | safe }}</h5>
-        <div class="row">
-          <div class="six columns">
-            <button
-            onclick="window.location.href='{{ url_for('booking_bp.get', booking_id=booking.id) }}'"
-            type="submit"
-          >
-            Update
-            </button>
-          </div>
-          <div class="six columns">
-            <form
-              action="{{ url_for('booking_bp.delete', booking_id=booking.id) }}"
-              method="POST"
-              onsubmit="return confirm('Are you sure you want to delete this booking?');"
+        {% if current_user.is_admin %}
+          <div class="row">
+            <div class="six columns">
+              <button
+              onclick="window.location.href='{{ url_for('booking_bp.get', booking_id=booking.id) }}'"
+              type="submit"
             >
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <button type="submit">
-                Delete
+              Update
               </button>
-            </form>
+            </div>
+            <div class="six columns">
+              <form
+                action="{{ url_for('booking_bp.delete', booking_id=booking.id) }}"
+                method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this booking?');"
+              >
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <button type="submit">
+                  Delete
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
+        {% endif %}
+        <br>
+        <br>
       {% endfor %}
     </div>
 {% endif %}

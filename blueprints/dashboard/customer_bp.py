@@ -1,6 +1,9 @@
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import login_required
+from loguru import logger
 from sqlalchemy import desc
+
+from decorators import admin_user_required
 from forms.customer_form import CustomerForm
 from models.customer import Customer
 from models.dog import Dog
@@ -17,7 +20,9 @@ def get(customer_id: int = None):
     customer = None
     customer_form = CustomerForm()
     if customer_id is None:
-        customers = Customer.query.order_by(desc(Customer.id)).all()
+        customers = (
+            Customer.query.filter_by(is_active=True).order_by(desc(Customer.id)).all()
+        )
     else:
         customer = Customer.query.get(customer_id)
         if customer:
@@ -26,7 +31,7 @@ def get(customer_id: int = None):
             flash(f"Customer not found.", "error")
 
     return render_template(
-        "admin/customer.html",
+        "dashboard/customer.html",
         customer=customer,
         customers=customers,
         customer_form=customer_form,
@@ -35,6 +40,7 @@ def get(customer_id: int = None):
 
 @customer_bp.route("/add", methods=["POST"])
 @login_required
+@admin_user_required
 def add():
     form = CustomerForm()
     if form.validate_on_submit():
@@ -45,6 +51,7 @@ def add():
 
 @customer_bp.route("/update/<int:customer_id>", methods=["POST", "PUT"])
 @login_required
+@admin_user_required
 def update(customer_id: int):
     customer = Customer.query.get(customer_id)
     form = CustomerForm()
@@ -58,6 +65,7 @@ def update(customer_id: int):
 
 @customer_bp.route("/delete/<int:customer_id>", methods=["POST", "DELETE"])
 @login_required
+@admin_user_required
 def delete(customer_id: int):
     customer = Customer.query.get(customer_id)
     if customer:

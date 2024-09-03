@@ -4,25 +4,27 @@
   {% set form_action = url_for('expense_bp.update', expense_id=expense.id) %}
   {% set form_submit = "Update" %}
 {% else %}
-  {% set content_header = "expenses" %}
+  {% set content_header = "Expenses" %}
   {% set form_action = url_for('expense_bp.add') %}
   {% set form_submit = "Add" %}
 {% endif %}
 
-{% extends "admin/base.html" %}
+{% extends "dashboard/base.html" %}
 
 {% block content %}
-<div class="container content">
+<div class="dashboard">
 
-  <div class="content-header">
+  <div class="container">
+    <br>
     <div class="row">
       <div class="twelve columns">
-        <h2>{{ content_header }}</h2>        
+        <h1>{{ content_header }}</h1>
       </div>
     </div>
   </div>
 
-  <div class="shiftable panel"> 
+  <div class="container">
+    {% if current_user.is_admin %}
     <form action="{{ form_action }}" method="POST">
       {{ expense_form.csrf_token }}
       <div class="row">
@@ -58,56 +60,41 @@
     {% if expense %}
       <button onclick="window.location.href='{{ url_for('expense_bp.get') }}'">Cancel</button>
     {% endif %}
+  {% endif %}
   </div>
+</div>
 
+<div class="team">
   {% if expenses %}
     <br>
-    <hr>
-    <br>
     {% for expense in expenses %}
-      <div class="record">
-        <!-- Record Info -->
-        <div class="record-header">
-          <div class="record-header-left">
-            <b>Expense {{ expense.id }}</b>
-          </div>
-          <div class="record-header-right">
-            <b>{{ expense.date }}</b>
-          </div>
-        </div>
-        <!-- Record Details -->
-        <div class="record-details">
-          {{ expense.name | safe }}
-          <br>
-          {{ "£%0.2f" | format(expense.price | float) }}
-        </div>
-
-        <div class="record-actions">
-          <div class="record-actions-update">
-            <button
-              onclick="window.location.href='{{ url_for('expense_bp.get', expense_id=expense.id) }}'"
-              type="submit"
-            >
-              Update
-            </button>
-          </div>
-          <div class="record-actions-delete">
-            <form
-              action="{{ url_for('expense_bp.delete', expense_id=expense.id) }}"
-              method="POST"
-              onsubmit="return confirm('Are you sure you want to delete this expense?');"
-            >
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-              <button type="submit">
-                Delete
-              </button>
-            </form>
-          </div>
-        </div>
+      <div class="container">
+        <h2>Expense {{ expense.id }}</h2>
+        <h3>{{ expense.date }}</h3>
+        <h4>{{ expense.name | safe }} - {{ "£%0.2f" | format(expense.price | float) }}</h4>
       </div>
+      {% if current_user.is_admin %}
+        <div class="container">
+          <button
+            onclick="window.location.href='{{ url_for('expense_bp.get', expense_id=expense.id) }}'"
+            type="submit"
+          >
+            Update
+          </button>
+          <form
+            action="{{ url_for('expense_bp.delete', expense_id=expense.id) }}"
+            method="POST"
+            onsubmit="return confirm('Are you sure you want to delete this expense?');"
+          >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <button type="submit">
+              Delete
+            </button>
+          </form>
+        </div>
+        {% endif %}
+        <br>
     {% endfor %}
   {% endif %}
-  <br>
-  <br>
 </div>
-{% endblock %}
+{% endblock content %}

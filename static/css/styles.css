@@ -108,7 +108,6 @@ footer {
 .dashboard {
   background: #f4e2cc;
   color: #1F242C;
-  min-height: 66vh;
 }
 
 .dashboard button {
@@ -187,3 +186,37 @@ footer {
   justify-content: space-between;
   align-items: center;
 }
+
+/* Checkbox Input */
+input[type="checkbox"] {
+  display: none; /* Hide the default checkbox */
+}
+
+.checkbox {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #1F242C;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkbox:hover {
+  background-color: #1F242C20
+}
+
+.checkbox.checked {
+  background-color: #1F242C;
+}
+
+/* Inner Square Color */
+.checkbox.checked::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: 4px;
+  background-color: #1F242C;
+  border-radius: 2px;
+}
+
