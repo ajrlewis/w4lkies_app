@@ -4,6 +4,7 @@ from datetime import date, timedelta
 from flask import Blueprint, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required
 from loguru import logger
+import pandas as pd
 from sqlalchemy import desc
 
 from decorators import admin_user_required
@@ -23,6 +24,7 @@ def get(booking_id: int = None):
     booking = None
     previous_bookings = None
     upcoming_bookings = None
+    summary_bookings = None
     form = BookingForm()
     if booking_id is None:
         # Get all bookings
@@ -31,6 +33,43 @@ def get(booking_id: int = None):
             logger.debug("Current user is not admin, querying only bookings for user.")
             query = query.filter_by(user_id=current_user.id)
         bookings = query.order_by(desc(Booking.id)).all()
+
+        # Compute summary of bookings for admin user
+        if current_user.is_admin:
+            summary_data = [
+                {
+                    "user_name": b.user.name,
+                    "booking_year": b.date.year,
+                    "booking_month_number": b.date.month,
+                    "booking_month": b.date.strftime("%b"),
+                    "booking_price": b.service.price,
+                }
+                for b in bookings
+                if b.service.price > 10.0  # don't include add-ons
+            ]
+            summary_df = pd.DataFrame(summary_data)
+            summary_gb = summary_df.groupby(
+                ["user_name", "booking_year", "booking_month_number"]
+            )
+            summary_df = summary_gb.agg(
+                booking_month=("booking_month", min),
+                number_of_bookings=("booking_price", len),
+                total_price_of_bookings=("booking_price", sum),
+            ).reset_index()
+            summary_df = summary_df.drop(columns="booking_month_number")
+            logger.debug(summary_df)
+
+            summary_bookings = (
+                summary_df.groupby("user_name")
+                .apply(
+                    lambda s: s[
+                        ["booking_year", "booking_month", "number_of_bookings"]
+                    ].to_dict(orient="records")
+                )
+                .to_dict()
+            )
+            logger.debug(summary_bookings)
+
         logger.debug(f"{len(bookings) = })")
         if bookings:
             logger.debug(f"Found {len(bookings) = }")
@@ -75,6 +114,7 @@ def get(booking_id: int = None):
         booking=booking,
         upcoming_bookings=upcoming_bookings,
         previous_bookings=previous_bookings,
+        summary_bookings=summary_bookings,
         form=form,
     )
 

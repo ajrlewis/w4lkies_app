@@ -80,6 +80,11 @@
   <button id="upcoming-radio" type="radio">Upcoming</button>
   &nbsp;
   <button id="previous-radio" type="radio">Previous</button>
+  {% if current_user.is_admin %}  
+    &nbsp;
+    <button id="summary-radio" type="radio">Summary</button>
+  {% endif %}
+
   <br>
   <br>
 
@@ -100,7 +105,11 @@
       <br>
       {% for booking in bookings %}
         <div class="entity">
-          <h4>{{ booking.time.strftime("%I:%M %p") }} - {{ booking.user.name | safe }} </h4>
+          <h4>{{ booking.time.strftime("%I:%M %p") }} 
+            {% if current_user.is_admin %}
+              - {{ booking.user.name | safe }}
+            {% endif %}
+        </h4>
           <h5>{{ booking.customer.dogs[0].name | safe }} - {{ booking.service.name | safe }}</h5>
           {% if current_user.is_admin %}
             <div class="row">
@@ -164,6 +173,20 @@
       {% endfor %}
     </div>
 {% endif %}
+
+  <div class="container" id="summary-bookings" style="display: none;">
+    {% if current_user.is_admin %}
+      {% for user, summaries in summary_bookings.items() %}
+        <h2>{{ user }}</h2>
+          {% for summary in summaries %}
+            <h3>{{ summary["booking_year"] }} {{ summary["booking_month"] }}
+            {{ summary["number_of_bookings"] }} bookings</h3>
+          {% endfor %}
+        <br>
+      {% endfor %}
+    {% endif %}
+  </div>
+
 <br>
 <br>
 <br>
@@ -174,15 +197,24 @@
   <script>
     const upcomingRadio = document.getElementById('upcoming-radio');
     const previousRadio = document.getElementById('previous-radio');
+    const summaryRadio = document.getElementById('summary-radio');
     const upcomingDiv = document.getElementById('upcoming-bookings');
     const previousDiv = document.getElementById('previous-bookings');
+    const summaryDiv = document.getElementById('summary-bookings');
     upcomingRadio.addEventListener('click', () => {
       upcomingDiv.style.display = 'block';
       previousDiv.style.display = 'none';
+      summaryDiv.style.display = 'none';
     });
     previousRadio.addEventListener('click', () => {
       upcomingDiv.style.display = 'none';
       previousDiv.style.display = 'block';
+      summaryDiv.style.display = 'none';
+    });
+    summaryRadio.addEventListener('click', () => {
+      upcomingDiv.style.display = 'none';
+      previousDiv.style.display = 'none';
+      summaryDiv.style.display = 'block';
     });
   </script>
 {% endblock %}
