@@ -46,6 +46,7 @@ def get(booking_id: int = None):
                 }
                 for b in bookings
                 if b.service.price > 10.0  # don't include add-ons
+                # and b.date >  # only include past 3 months
             ]
             summary_df = pd.DataFrame(summary_data)
             summary_gb = summary_df.groupby(
@@ -63,7 +64,12 @@ def get(booking_id: int = None):
                 summary_df.groupby("user_name")
                 .apply(
                     lambda s: s[
-                        ["booking_year", "booking_month", "number_of_bookings"]
+                        [
+                            "booking_year",
+                            "booking_month",
+                            "number_of_bookings",
+                            "total_price_of_bookings",
+                        ]
                     ].to_dict(orient="records")
                 )
                 .to_dict()

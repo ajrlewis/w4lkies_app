@@ -96,12 +96,11 @@
     {% for (date, day_of_week), bookings in upcoming_bookings.items() %}
       {% set bookings_sum = bookings | sum(attribute='service.price') %}
       <h2>{{ day_of_week | upper }} {{ date }}</h2>
-      <h3>
-        <!-- {{ bookings | length }} bookings  -->
-        {% if current_user.is_admin %}
-          - {{ "£%0.2f" | format(bookings_sum | float) }}
-        {% endif %}
-      </h3>
+      {% if current_user.is_admin %}
+        <h3>
+          {{ "£%0.2f" | format(bookings_sum | float) }} [{{ bookings | length }}]
+        </h3>
+      {% endif %}
       <br>
       {% for booking in bookings %}
         <div class="entity">
@@ -172,15 +171,19 @@
         <br>
       {% endfor %}
     </div>
-{% endif %}
 
+  {% endif %}
+
+
+  <!-- Summary of bookings -->
   <div class="container" id="summary-bookings" style="display: none;">
     {% if current_user.is_admin %}
       {% for user, summaries in summary_bookings.items() %}
         <h2>{{ user }}</h2>
           {% for summary in summaries %}
             <h3>{{ summary["booking_year"] }} {{ summary["booking_month"] }}
-            {{ summary["number_of_bookings"] }} bookings</h3>
+          {{ "£%0.2f" | format(summary["total_price_of_bookings"] | float) }}
+          [{{ summary["number_of_bookings"] }}]</h3>
           {% endfor %}
         <br>
       {% endfor %}
