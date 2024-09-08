@@ -177,7 +177,7 @@
 
   <!-- Summary of bookings -->
   <div class="container" id="summary-bookings" style="display: none;">
-    {% if current_user.is_admin %}
+    {% if current_user.is_admin and summary_bookings %}
       {% for user, summaries in summary_bookings.items() %}
         <h2>{{ user }}</h2>
           {% for summary in summaries %}
