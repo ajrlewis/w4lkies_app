@@ -143,6 +143,7 @@ class SignUpForm(FlaskForm, FormMixin):
         self.vet_name.choices = vet_names
 
         dog_breeds = [dog.breed for dog in Dog.query.all()]
+        dog_breeds = sorted(list(set(dog_breeds)))
         dog_breeds = list(set(dog_breeds))
         dog_breeds = ["Great Dane"] + dog_breeds + ["Other"]
         self.dog_breed.choices = dog_breeds
