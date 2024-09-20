@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required
 from loguru import logger
 from sqlalchemy import desc
@@ -19,7 +19,13 @@ def get(customer_id: int = None):
     customers = None
     customer = None
     customer_form = CustomerForm()
+
     if customer_id is None:
+        # Is customer supplied in query parameters?
+        customer_form_data = dict(request.args)
+        if customer_form_data:
+            customer_form.set_data_from_data(customer_form_data)
+
         customers = (
             Customer.query.filter_by(is_active=True).order_by(desc(Customer.id)).all()
         )
