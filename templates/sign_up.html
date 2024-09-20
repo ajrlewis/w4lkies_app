@@ -1,29 +1,34 @@
-{% set active_page = "sign_up" %}
-{% extends "public/base.html" %}
-{% block content %}
+{% extends "base.html" %}
 
-<div class="container content">
 
-  {% if form.errors %}
-    {{ form.errors }}
-  {% endif %}
-  
-  <div class="content-header">
-    <div class="row">
-      <div class="twelve columns">
-        <h2>Sign Up</h2>
-      </div>
-    </div>
+{% block navbar %}
+<nav>
+  <div class="container">
+    <ul>
+      <li><a href="{{ url_for('index_bp.get') }}">Home</a></li>
+    </ul>
   </div>
+</nav>
+{% endblock navbar %}
 
-
-  <form method="POST" action="{{ url_for('sign_up_bp.add') }}">
-    {{ form.csrf_token }}
-
-    <div class="shiftable panel">
+{% block content %}
+<form method="POST" action="{{ url_for('sign_up_bp.add') }}">
+  {{ form.csrf_token }}
+  <div class="overview">
+    <div class="container">
       <div class="row">
         <div class="twelve columns">
-          <h3>Customer Information</h3>
+          <br>
+          <h1>Sign Up</h1>
+        </div>
+      </div>
+    </div>
+    <!-- Customer information -->
+    <div class="container">
+      <div class="row">
+        <div class="twelve columns">
+          <br>
+          <h2>Customer Information</h2>
         </div>
       </div>
       <div class="row">
@@ -45,7 +50,7 @@
       <br>
       <div class="row">
         <div class="twelve columns">
-          <h4>Emergency Contact</h4>
+          <h3>Emergency Contact</h3>
         </div>
       </div>
       <div class="row">
@@ -58,45 +63,60 @@
           {{ form.customer_emergency_contact_phone }}
         </div>
       </div>
+      <br>
     </div>
-
-    <div class="shiftable panel">
+  </div>
+  <!-- Dog information -->
+  <div class="team">
+    <div class="container">
       <div class="row">
         <div class="twelve columns">
-          <h3>Dog Information</h3>
+          <br>
+          <h2>Dog Information</h2>
         </div>
       </div>
       <div class="row">
         <div class="six columns">
           {{ form.dog_name.label }}
-          {{ form.dog_name }}
+          <div style="color: black;">
+            {{ form.dog_name }}
+          </div>
         </div>
         <div class="six columns">
           {{ form.dog_date_of_birth.label }}
-          {{ form.dog_date_of_birth }}
+          <div style="color: black;">
+            {{ form.dog_date_of_birth }}
+          </div>
         </div>
       </div>
       <div class="row">
-        <div class="six columns">
-          {{ form.dog_breed_name.label }}
-          {{ form.dog_breed_name(id="dog-breed-name-select")}}
+        <div class="six columns" >
+          {{ form.dog_breed.label }}
+          <div style="color: black;">
+            {{ form.dog_breed(id="dog-breed-name-select") }}
+          </div>
         </div>
-        <div class="six columns" id="other-dog-breed-name-group" style="display: none;">
-          {{ form.other_dog_breed_name.label }}
-          {{ form.other_dog_breed_name }}
+        <div class="six columns" id="other-dog-breed-name-group" style="display: none; color: black;">
+          {{ form.other_dog_breed.label }}
+          <div style="color: black;">
+            {{ form.other_dog_breed }}
+          </div>
         </div>
       </div>
       <div class="row">
-        <div class="six columns u-full-width">
+        <div class="six columns u-full-width" style="color: black;">
           {{ form.vet_name.label }}
-          {{ form.vet_name(id="vet-name-select") }}
+          <div style="color: black;">
+            {{ form.vet_name(id="vet-name-select") }}
+          </div>
         </div>
-        <div class="six columns u-full-width" id="other-vet-name-group" style="display: none;">
+        <div class="six columns u-full-width" id="other-vet-name-group" style="display: none; color: black;">
           {{ form.other_vet_name.label }}
-          {{ form.other_vet_name }}
+          <div style="color: black;">
+            {{ form.other_vet_name }}
+          </div>
         </div>
       </div>
-
       <div class="row">
         <div class="three columns">
           {{ form.dog_is_allowed_treats.label }} 
@@ -123,31 +143,34 @@
           </div>
         </div>
       </div>
-
       <div class="row">
         <div class="twelve columns">
           {{ form.dog_behavioral_issues.label }}
-          {{ form.dog_behavioral_issues }}
+          <div style="color: black;">
+            {{ form.dog_behavioral_issues }}
+          </div>
         </div>
       </div>
-
       <div class="row">
         <div class="twelve columns">
           {{ form.dog_medical_needs.label }}
-          {{ form.dog_medical_needs }}
+          <div style="color: black;">
+            {{ form.dog_medical_needs }}
+          </div>
         </div>
       </div>
-
     </div>
-
-    <div class="shiftable panel">
-
+    <br>
+  </div>
+  <!-- Consent -->
+  <div class="clients">
+    <div class="container">
       <div class="row">
         <div class="twelve columns">
-          <h3>Consent & Submit</h3>
+          <br>
+          <h2>Consent & Submit</h2>
         </div>
       </div>
-
       <div class="row">
         <div class="twelve columns">
           {{ form.consent.label }} 
@@ -156,45 +179,37 @@
           </div>
         </div>
       </div>
-      
       <br>
-
       <div class="row">
         <div class="twelve columns">
           {{ form.submit }}
-          <p>
-            By submitting this form, you confirm that you have read and agree to our <a href="{{ url_for('legal_bp.get') }}" target="_blank">privacy notice</a>.
-          </p>
-          </div>
+          <p>By submitting this form, you confirm that you have read and agree to our <a href="{{ url_for('legal_bp.get') }}" target="_blank">privacy notice</a>.</p>
+        </div>
       </div>
-
     </div>
-  </form>
-</div>
+  </div>
+</form>
 {% endblock content %}
 
 {% block scripts %}
-  <script type="text/javascript">
-
-    var dogBreedSelect = document.getElementById("dog-breed-name-select");
-    var otherDogBreedGroup = document.getElementById("other-dog-breed-name-group");
-    dogBreedSelect.addEventListener("change", function() {
-      if (dogBreedSelect.value === "Other") {
-        otherDogBreedGroup.style.display = "block";
-      } else {
-        otherDogBreedGroup.style.display = "none";
-      }
-    });
-
-    var vetNameSelect = document.getElementById("vet-name-select");
-    var otherVetNameGroup = document.getElementById("other-vet-name-group");
-    vetNameSelect.addEventListener("change", function() {
-      if (vetNameSelect.value === "Other") {
-        otherVetNameGroup.style.display = "block";
-      } else {
-        otherVetNameGroup.style.display = "none";
-      }
-    });
-
-  </script>
+<script type="text/javascript">
+  var dogBreedSelect = document.getElementById("dog-breed-name-select");
+  var otherDogBreedGroup = document.getElementById("other-dog-breed-name-group");
+  dogBreedSelect.addEventListener("change", function() {
+    if (dogBreedSelect.value === "Other") {
+      otherDogBreedGroup.style.display = "block";
+    } else {
+      otherDogBreedGroup.style.display = "none";
+    }
+  });
+  var vetNameSelect = document.getElementById("vet-name-select");
+  var otherVetNameGroup = document.getElementById("other-vet-name-group");
+  vetNameSelect.addEventListener("change", function() {
+    if (vetNameSelect.value === "Other") {
+      otherVetNameGroup.style.display = "block";
+    } else {
+      otherVetNameGroup.style.display = "none";
+    }
+  });
+</script>
 {% endblock scripts %}

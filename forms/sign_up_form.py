@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Any, Dict
+
 from flask import render_template
 from flask_wtf import FlaskForm, RecaptchaField
 from wtforms import (
@@ -13,11 +14,13 @@ from wtforms import (
 )
 from flask_wtf.recaptcha import RecaptchaField
 from wtforms.validators import DataRequired, Optional
-from models.dog_breed import DogBreed
+
+from models.dog import Dog
 from models.vet import Vet
+from utils.form_mixin import FormMixin
 
 
-class SignUpForm(FlaskForm):
+class SignUpForm(FlaskForm, FormMixin):
     customer_name = StringField(
         "Name",
         validators=[DataRequired()],
@@ -68,16 +71,16 @@ class SignUpForm(FlaskForm):
         render_kw={"placeholder": "Scooby Doo", "class": "u-full-width"},
     )
 
-    dog_breed_name = SelectField(
+    dog_breed = SelectField(
         "Breed",
         default="Great Dane",
         validators=[DataRequired()],
         render_kw={"placeholder": "Great Dane", "class": "u-full-width"},
     )
-    other_dog_breed_name = StringField(
+    other_dog_breed = StringField(
         "Other Dog Breed",
         render_kw={
-            "placeholder": "Enter other dog breed name",
+            "placeholder": "Enter other dog breed",
             "class": "u-full-width",
         },
     )
@@ -139,11 +142,10 @@ class SignUpForm(FlaskForm):
         vet_names = ["Dooville Veterinary Hospital"] + vet_names + ["Other"]
         self.vet_name.choices = vet_names
 
-        dog_breed_names = [
-            dog_breed.name for dog_breed in DogBreed.query.order_by(DogBreed.name).all()
-        ]
-        dog_breed_names = ["Great Dane"] + dog_breed_names + ["Other"]
-        self.dog_breed_name.choices = dog_breed_names
+        dog_breeds = [dog.breed for dog in Dog.query.all()]
+        dog_breeds = list(set(dog_breeds))
+        dog_breeds = ["Great Dane"] + dog_breeds + ["Other"]
+        self.dog_breed.choices = dog_breeds
 
     def to_dict(self) -> Dict[str, Any]:
         customer_signed_up_on = self.customer_signed_up_on.data.strftime("%Y-%m-%d")
@@ -156,9 +158,9 @@ class SignUpForm(FlaskForm):
         if vet_name == "Other":
             vet_name = self.other_vet_name.data
         dog_name = self.dog_name.data
-        dog_breed_name = self.dog_breed_name.data
-        if dog_breed_name == "Other":
-            dog_breed_name = self.other_dog_breed_name.data
+        dog_breed = self.dog_breed.data
+        if dog_breed == "Other":
+            dog_breed = self.other_dog_breed.data
         dog_date_of_birth = self.dog_date_of_birth.data
         if dog_date_of_birth:
             dog_date_of_birth = dog_date_of_birth.strftime("%Y-%m-%d")
@@ -184,7 +186,7 @@ class SignUpForm(FlaskForm):
             "customer_emergency_contact_phone": customer_emergency_contact_phone,
             "vet_name": vet_name,
             "dog_name": dog_name,
-            "dog_breed_name": dog_breed_name,
+            "dog_breed": dog_breed,
             "dog_date_of_birth": dog_date_of_birth,
             "dog_is_allowed_treats": dog_is_allowed_treats,
             "dog_is_allowed_off_the_lead": dog_is_allowed_off_the_lead,

@@ -84,7 +84,7 @@ def create_app(Config) -> Flask:
 
         from blueprints.index_bp import index_bp
         from blueprints.legal_bp import legal_bp
-        from blueprints.public.sign_up_bp import sign_up_bp
+        from blueprints.sign_up_bp import sign_up_bp
 
         app.register_blueprint(index_bp, url_prefix="/")
         app.register_blueprint(legal_bp, url_prefix="/legal")
@@ -116,11 +116,11 @@ def create_app(Config) -> Flask:
 
         #
 
-        from blueprints.admin.verify_sign_up_bp import verify_sign_up_bp
+        # from blueprints.admin.verify_sign_up_bp import verify_sign_up_bp
 
-        app.register_blueprint(
-            verify_sign_up_bp, url_prefix="/dashboard/verify-sign-up"
-        )
+        # app.register_blueprint(
+        #     verify_sign_up_bp, url_prefix="/dashboard/verify-sign-up"
+        # )
 
         logger.debug("Returning the application ...")
 

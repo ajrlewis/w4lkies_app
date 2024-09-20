@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required
 from sqlalchemy import desc
 
@@ -17,6 +17,11 @@ def get(vet_id: int = None):
     vet = None
     vet_form = VetForm()
     if vet_id is None:
+        # Is vet supplied in query parameters?
+        vet_form_data = dict(request.args)
+        if vet_form_data:
+            vet_form.set_data_from_data(vet_form_data)
+
         vets = Vet.query.order_by(Vet.name).all()
     else:
         vet = Vet.query.get(vet_id)

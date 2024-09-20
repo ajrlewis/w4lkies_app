@@ -53,9 +53,9 @@ def get(booking_id: int = None):
                 ["user_name", "booking_year", "booking_month_number"]
             )
             summary_df = summary_gb.agg(
-                booking_month=("booking_month", min),
+                booking_month=("booking_month", "min"),
                 number_of_bookings=("booking_price", len),
-                total_price_of_bookings=("booking_price", sum),
+                total_price_of_bookings=("booking_price", "sum"),
             ).reset_index()
             summary_df = summary_df.drop(columns="booking_month_number")
             logger.debug(summary_df)

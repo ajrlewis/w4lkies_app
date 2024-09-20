@@ -1,6 +1,6 @@
 import os
 
-from flask import Blueprint, flash, redirect, render_template, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required
 from loguru import logger
 from PIL import Image
@@ -10,7 +10,6 @@ from werkzeug.utils import secure_filename
 from decorators import admin_user_required
 from forms.dog_form import DogForm
 from models.dog import Dog
-from models.dog_breed import DogBreed
 
 dog_bp = Blueprint("dog_bp", __name__)
 
@@ -23,6 +22,11 @@ def get(dog_id: int = None):
     dog = None
     dog_form = DogForm()
     if dog_id is None:
+        # Is dog supplied in query parameters?
+        dog_form_data = dict(request.args)
+        if dog_form_data:
+            dog_form.set_data_from_data(dog_form_data)
+
         dogs = Dog.query.order_by(Dog.name).all()
     else:
         dog = Dog.query.get(dog_id)

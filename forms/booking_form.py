@@ -2,8 +2,16 @@ from datetime import date, datetime, timedelta, time
 
 from flask_wtf import FlaskForm
 from loguru import logger
-from wtforms import SelectField
-from wtforms.fields import DateField
+
+from wtforms import (
+    BooleanField,
+    DateField,
+    IntegerField,
+    SelectField,
+    SubmitField,
+)
+
+# from wtforms.fields import DateField
 from wtforms.validators import DataRequired
 
 from models.customer import Customer
@@ -43,6 +51,9 @@ class BookingForm(FlaskForm, FormMixin):
     user_id = SelectField("User", coerce=int, validators=[DataRequired()])
     customer_id = SelectField("Customer", coerce=int, validators=[DataRequired()])
     service_id = SelectField("Service", coerce=int, validators=[DataRequired()])
+
+    should_repeat = BooleanField("Repeat the booking?", default=False)
+    repeat_weeks = IntegerField("Number of weeks to repeat", default=12)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

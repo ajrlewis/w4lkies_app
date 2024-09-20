@@ -7,7 +7,8 @@ from sqlalchemy import desc
 from sqlalchemy import desc
 
 from models.dog import Dog
-from models.dog_breed import DogBreed
+
+# from models.dog_breed import DogBreed
 from models.service import Service
 
 index_bp = Blueprint("index_bp", __name__)
@@ -23,12 +24,11 @@ def get():
     )
 
     # Show dogs
-    dogs = Dog.query.join(DogBreed).order_by(desc(Dog.id)).all()
+    dogs = Dog.query.order_by(desc(Dog.id)).all()
     dog_name_to_image_paths = {}
     for dog in dogs:
-        key = (dog.name, dog.dog_breed.name)
+        key = (dog.name, dog.breed)
         dog_name_to_image_paths[key] = []
-        # for i in range(10):
         for i in range(2):
             if dog.name.lower() in ["stormi", "simon", "rocky"]:
                 image_path = f"img/dogs/{dog.name.lower()}-0{i}.jpg"

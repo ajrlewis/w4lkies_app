@@ -81,8 +81,8 @@
       </div>
       <div class="row">
         <div class="twelve columns">
-          {{ dog_form.dog_breed_id.label() }}
-          {{ dog_form.dog_breed_id(class_="u-full-width") }}
+          {{ dog_form.dog_breeds.label() }}
+          {{ dog_form.dog_breeds(class_="u-full-width") }}
         </div>
       </div>
       <div class="row">
@@ -99,8 +99,8 @@
       </div>
       <!-- <div class="row"> -->
         <!-- <div class="twelve columns"> -->
-          <!-- {{ dog_form.image.label() }} -->
-          <!-- {{ dog_form.image(class_="u-full-width") }} -->
+          <!-- { dog_form.image.label() }} -->
+          <!-- { dog_form.image(class_="u-full-width") }} -->
         <!-- </div> -->
       <!-- </div> -->
       <div class="row">
@@ -124,7 +124,7 @@
     {% for dog in dogs %}
       <div class="container">
         <h2>{{ dog.name }}</h2>
-        <h3>{{ dog.dog_breed.name }}</h3>
+        <h3>{{ dog.breed }}</h3>
         <h4>Vet: <a href="{{ url_for('vet_bp.get', vet_id=dog.vet.id) }}">{{ dog.vet.name }}</a></h4>
         <h4>Customer: <a href="{{ url_for('customer_bp.get', customer_id=dog.customer.id) }}">{{ dog.customer.name }}</a></h4>
       </div>

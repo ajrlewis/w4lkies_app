@@ -1,5 +1,7 @@
 from datetime import datetime
+
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import (
     BooleanField,
     DateField,
@@ -9,24 +11,29 @@ from wtforms import (
     TextAreaField,
 )
 from wtforms.validators import DataRequired, Optional
-from utils.form_mixin import FormMixin
+
 from models.customer import Customer
-from models.dog_breed import DogBreed
+from models.dog import Dog
 from models.vet import Vet
+from utils.form_mixin import FormMixin
 
 
 class DogForm(FlaskForm, FormMixin):
     name = StringField(
         "Name",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Scooby Doo", "class": "u-full-width"},
+        render_kw={"placeholder": "Scooby Doo"},
+    )
+
+    image = FileField(
+        "Image",
+        validators=[FileAllowed(["jpg", "jpeg", "png"], "Images only!")],
     )
 
     date_of_birth = DateField(
         "Date of Birth",
         validators=[Optional()],
-        # default=datetime.utcnow,
-        render_kw={"placeholder": "YYYY-MM-DD", "class": "u-full-width"},
+        render_kw={"placeholder": "YYYY-MM-DD"},
     )
 
     is_allowed_treats = BooleanField("Allowed Treats", default=False)
@@ -51,11 +58,10 @@ class DogForm(FlaskForm, FormMixin):
         validators=[Optional()],
         render_kw={
             "placeholder": "Allergies, medications, etc.",
-            "class": "u-full-width",
         },
     )
 
-    dog_breed_id = SelectField(
+    dog_breeds = SelectField(
         "Breed",
         default="Great Dane",
         validators=[DataRequired()],
@@ -67,15 +73,9 @@ class DogForm(FlaskForm, FormMixin):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
-        # sql = """
-        # SELECT name FROM DogBreed ORDER BY name ASC
-        # """
-        dog_breed_id_choices = [
-            (breed.id, breed.name)
-            for breed in DogBreed.query.order_by(DogBreed.name).all()
-        ]
-        self.dog_breed_id.choices = dog_breed_id_choices
+        dog_breeds = [dog.breed for dog in Dog.query.all()]
+        dog_breeds_choices = sorted(list(set(dog_breeds)))
+        self.dog_breeds.choices = dog_breeds_choices
 
         customer_id_choices = [
             (customer.id, customer.name)

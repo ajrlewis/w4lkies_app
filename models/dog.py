@@ -12,11 +12,7 @@ class Dog(db.Model, ModelMixin):
     is_neutered_or_spayed = db.Column(db.Boolean, nullable=False)
     behavioral_issues = db.Column(db.String(6000), nullable=False, default="")
     medical_needs = db.Column(db.String(6000), nullable=False, default="")
+    breed = db.Column(db.String(255), nullable=True)
 
-    dog_breed_id = db.Column(db.Integer, db.ForeignKey("dog_breed.id"), nullable=True)
     customer_id = db.Column(db.Integer, db.ForeignKey("customer.id"), nullable=False)
     vet_id = db.Column(db.Integer, db.ForeignKey("vet.id"), nullable=False)
-
-    dog_breed = db.relationship("DogBreed", backref="dog")
-    # customer = db.relationship("Customer", backref="dog")
-    # vet = db.relationship("Vet", backref="dog")
