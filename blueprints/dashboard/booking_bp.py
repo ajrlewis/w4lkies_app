@@ -43,9 +43,10 @@ def get(booking_id: int = None):
                     "booking_month_number": b.date.month,
                     "booking_month": b.date.strftime("%b"),
                     "booking_price": b.service.price,
+                    "booking_duration": b.service.duration,
                 }
                 for b in bookings
-                if b.service.price > 10.0  # don't include add-ons
+                # if b.service.price > 10.0  # don't include add-ons
                 # and b.date >  # only include past 3 months
             ]
             summary_df = pd.DataFrame(summary_data)
@@ -56,8 +57,29 @@ def get(booking_id: int = None):
                 booking_month=("booking_month", "min"),
                 number_of_bookings=("booking_price", len),
                 total_price_of_bookings=("booking_price", "sum"),
+                total_duration_of_bookings=("booking_duration", "sum"),
             ).reset_index()
             summary_df = summary_df.drop(columns="booking_month_number")
+
+            summary_df["total_duration_of_bookings"] // 60
+            summary_df["total_duration_of_bookings_hours"] = (
+                summary_df["total_duration_of_bookings"] // 60
+            )
+            (
+                summary_df["total_duration_of_bookings"] / 60
+                - summary_df["total_duration_of_bookings_hours"]
+            ) * 60
+            summary_df["total_duration_of_bookings_minutes"] = (
+                summary_df["total_duration_of_bookings"] / 60
+                - summary_df["total_duration_of_bookings_hours"]
+            ) * 60
+            summary_df["total_duration_of_bookings"] = (
+                summary_df["total_duration_of_bookings_hours"].astype(str)
+                + " hrs "
+                + summary_df["total_duration_of_bookings_minutes"].astype(str)
+                + " mins"
+            )
+
             logger.debug(summary_df)
 
             summary_bookings = (
@@ -69,6 +91,7 @@ def get(booking_id: int = None):
                             "booking_month",
                             "number_of_bookings",
                             "total_price_of_bookings",
+                            "total_duration_of_bookings",
                         ]
                     ].to_dict(orient="records")
                 )

@@ -138,6 +138,19 @@
 
     <!-- Previous bookings -->
     <div class="container" id="previous-bookings" style="display: none;">
+
+        <!-- {% if current_user.is_admin %}
+          &nbsp;
+          <button id="user-radio" type="radio">Sophia</button>        
+          &nbsp;
+          <button id="user-radio" type="radio">Alex</button>        
+          &nbsp;
+          <button id="user-radio" type="radio">Sara</button>        
+          <br>
+          <br>
+        {% endif %} -->
+
+
       {% for booking in previous_bookings %}
         <h2>Booking {{ booking.id }}</h2>
         <h3>{{ booking.date }} {{ booking.time.strftime("%I:%M %p") }}</h3>
@@ -183,7 +196,7 @@
           {% for summary in summaries %}
             <h3>{{ summary["booking_year"] }} {{ summary["booking_month"] }}
           {{ "£%0.2f" | format(summary["total_price_of_bookings"] | float) }}
-          [{{ summary["number_of_bookings"] }}]</h3>
+          [{{ summary["number_of_bookings"] }} = {{ summary["total_duration_of_bookings"] }}]</h3>
           {% endfor %}
         <br>
       {% endfor %}
