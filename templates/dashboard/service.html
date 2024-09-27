@@ -89,7 +89,7 @@
     {% for service in services %}
       <div class="container">
         <h2>{{ service.name }}</h2>
-        <h3>{{ "£%0.2f" | format(service.price | float) }}</h3>
+        <h3>{{ "£%0.2f" | format(service.price | float) }} [{{ service.duration }} mins]</h3>
         <h5>{{ service.description }}</h5>
       </div>
       <div class="container">
