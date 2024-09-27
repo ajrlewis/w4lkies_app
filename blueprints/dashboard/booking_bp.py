@@ -32,7 +32,8 @@ def get(booking_id: int = None):
         if not current_user.is_admin:
             logger.debug("Current user is not admin, querying only bookings for user.")
             query = query.filter_by(user_id=current_user.id)
-        bookings = query.order_by(desc(Booking.id)).all()
+        # bookings = query.order_by(desc(Booking.id)).all()
+        bookings = query.order_by(desc(Booking.date)).all()
 
         # Compute summary of bookings for admin user
         if current_user.is_admin:
