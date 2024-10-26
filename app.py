@@ -114,6 +114,10 @@ def create_app(Config) -> Flask:
         app.register_blueprint(service_bp, url_prefix="/dashboard/services")
         app.register_blueprint(invoice_bp, url_prefix="/dashboard/invoices")
 
+        from blueprints.dashboard.booking_htmx_bp import booking_htmx_bp
+
+        app.register_blueprint(booking_htmx_bp, url_prefix="/bookings")
+
         #
 
         # from blueprints.admin.verify_sign_up_bp import verify_sign_up_bp

@@ -1,0 +1,31 @@
+<div class="booking" id="booking-{{ booking.id }}">
+  <h3>{{ booking.date }} {{ booking.time.strftime("%I:%M %p") }}</h3>
+  <h4>
+    <!-- { if current_user.is_admin %} -->
+      {{ booking.user.name }} –
+    <!-- { endif %} -->
+    {{ booking.customer.dogs[0].name }} - {{ booking.service.name }}
+  </h4>
+  <!-- { if current_user.is_admin %} -->
+    <div class="row">
+      <div class="twelve columns">
+        <button class="button button-edit u-half-width"
+          hx-target="#booking-{{ booking.id }}"
+          hx-swap="outerHTML swap:100ms"
+          hx-get="/bookings/{{ booking.id }}/edit">
+          Edit
+        </button>
+        <button
+          class="button button-delete u-half-width" 
+          hx-target="#booking-{{ booking.id }}"
+          hx-swap="outerHTML swap:500ms"
+          hx-delete="/bookings/{{ booking.id }}"
+          hx-confirm="Are you sure you wish to delete this booking?">
+          Delete
+        </button>
+      </div>
+      <br>
+    </div>
+      <br>
+  <!-- { endif %} -->
+</div>

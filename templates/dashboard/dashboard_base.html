@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% block head %}
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta http-equiv="Content-Language" content="en-us" />
+      <link rel="apple-touch-icon" href="/static/img/logo.png">
+      <meta name="apple-mobile-web-app-title" content="W4lkies ">
+      <title>W4lkies | Dashboard</title>
+      <link rel="shortcut icon" href="/static/img/favicon.ico">
+      <link rel="stylesheet" href="/static/css/vendor/Skeleton-2.0.4/css/normalize.css">
+      <link rel="stylesheet" href="/static/css/vendor/Skeleton-2.0.4/css/skeleton.css">
+      <link rel="stylesheet" href="/static/css/styles.css">
+    {% endblock head %}
+
+<style type="text/css">
+  .client.htmx-swapping {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+  }
+</style>
+
+<style type="text/css">
+
+:root {
+  --color--light-delete: #F94252;
+  --color--dark-delete: #d11a2a;
+ }
+
+</style>
+
+<style type="text/css">
+    /* Skeleton additions */
+  .button.button-delete,
+  button.button-delete,
+  input[type="submit"].button-delete,
+  input[type="reset"].button-delete,
+  input[type="button"].button-delete {
+    color: #FFF;
+    background-color: var(--color--light-delete);
+    border-color: var(--color--light-delete); }
+  .button.button-delete:hover,
+  button.button-delete:hover,
+  input[type="submit"].button-delete:hover,
+  input[type="reset"].button-delete:hover,
+  input[type="button"].button-delete:hover,
+  .button.button-delete:focus,
+  button.button-delete:focus,
+  input[type="submit"].button-delete:focus,
+  input[type="reset"].button-delete:focus,
+  input[type="button"].button-delete:focus {
+    color: #FFF;
+    background-color: var(--color--dark-delete);
+    border-color: var(--color--dark-delete); }
+
+  .button.button-edit,
+  button.button-edit,
+  input[type="submit"].button-edit,
+  input[type="reset"].button-edit,
+  input[type="button"].button-edit {
+    color: #FFF;
+    background-color: #36CC2E;
+    border-color: #36CC2E; }
+  .button.button-edit:hover,
+  button.button-edit:hover,
+  input[type="submit"].button-edit:hover,
+  input[type="reset"].button-edit:hover,
+  input[type="button"].button-edit:hover,
+  .button.button-edit:focus,
+  button.button-edit:focus,
+  input[type="submit"].button-edit:focus,
+  input[type="reset"].button-edit:focus,
+  input[type="button"].button-edit:focus {
+    color: #FFF;
+    background-color: #74ca7c;
+    border-color: #74ca7c; }
+    
+</style>
+
+
+
+  </head>
+  <body hx-headers='{"X-CSRF-TOKEN": "{{ csrf_token() }}"}'>
+
+    <!-- flash messages -->
+    {% block flash_messages %}
+      {% include "flash_messages.html" %}
+    {% endblock flash_messages %}
+
+    <!-- header -->
+    <header>
+      <div class="row">
+        <div class="twelve columns">
+            <a href="{{ url_for('index_bp.get') }}">
+              <img src="/static/img/logo.png" alt="Logo" class="logo">
+            </a>
+        </div>
+      </div>
+      <br>
+      <br>
+    </header>
+
+    <!-- navigation -->
+    {% block navbar %}
+      <div class="container">
+        <nav>
+          <ul>
+            <li>
+              <a>Bookings</a>
+            </li>
+            <li>
+              <a>Sign Out</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    {% endblock navbar %}
+
+    <!-- main content -->
+    <content>
+      {% block content %}{% endblock content %}
+    </content>
+
+    <!-- footer -->
+    {% block footer %}
+    {% endblock footer %}
+
+    <script src="/static/js/vendor/htmx.min.js"></script>
+    <script src="/static/js/scripts.js"></script>
+    
+    {% block scripts %}{% endblock scripts %}
+
+  </body>
+</html>

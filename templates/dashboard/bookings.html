@@ -1,0 +1,9 @@
+<div id="bookings">
+  {% if bookings | length == 0 %}
+    <h3 style="color: var(--color--dark-delete);">No bookings!</h3>
+  {% else %}
+    {% for booking in bookings %}
+      {% include "dashboard/booking_detail.html" %}
+    {% endfor %}
+  {% endif %}
+</div>

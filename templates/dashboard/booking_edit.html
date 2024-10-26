@@ -1,0 +1,25 @@
+<div id="booking-{{ booking.id }}">
+  <form hx-put="/bookings/{{ booking.id }}">
+    <h3>{{ booking_form.date }} {{ booking_form.time }}</h3>
+    <h4>{{ booking_form.user_id }} - {{ booking_form.customer_id }} - {{ booking_form.service_id }}</h4>
+    <div class="row">
+      <div class="twelve columns">
+        <button
+          id="submit" name="submit" type="submit" value="Submit"
+          class="button button-primary"
+          hx-target="#bookings"
+          hx-swap="outerHTML"
+          hx-put="/bookings/{{ booking.id }}">
+          Update
+        </button>
+        <button
+          class="button button-delete"
+          hx-target="#booking-{{ booking.id }}"
+          hx-swap="outerHTML swap:100ms"
+          hx-get="/bookings/{{ booking.id }}">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

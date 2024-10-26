@@ -1,0 +1,53 @@
+{% extends "dashboard/dashboard_base.html" %}
+
+{% block content %}
+
+  <!-- <div class="container">
+    <h1>Bookings</h1>
+    {% with test=test %}
+      {% include "dashboard/test.html" %}
+    {% endwith %}
+  </div> -->
+
+  <div class="container">
+    <h2>Add a Booking</h2>
+    {% with booking_form=booking_form %}
+      {% include "dashboard/booking_form.html" %}
+    {% endwith %}
+  </div>
+
+  <div class="container">
+    <h2>Your Bookings</h2>
+
+
+    <form id="booking-filter-form"
+      hx-post="/bookings/filter"
+      hx-target="#bookings"
+      hx-trigger="change"
+      hx-swap="outerHTML">
+      <div class="row">
+        <div class="four columns">
+          {{ booking_filter_form.user_id.label() }}
+          {{ booking_filter_form.user_id(class_="u-full-width") }}
+        </div>
+        <div class="four columns">
+          {{ booking_filter_form.date_min.label() }}
+          {{ booking_filter_form.date_min(class_="u-full-width") }}
+        </div>
+        <div class="four columns">
+          {{ booking_filter_form.date_max.label() }}
+          {{ booking_filter_form.date_max(class_="u-full-width") }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="container">
+    {% with bookings=bookings %}
+      {% include "dashboard/bookings.html" %}
+    {% endwith %}
+    <hr>
+    <br>
+  </div>
+
+{% endblock content %}

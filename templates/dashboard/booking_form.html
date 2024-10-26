@@ -1,0 +1,38 @@
+<form id="booking-form" hx-post="/bookings/">
+    <div class="row">
+      <div class="four columns">
+        {{ booking_form.user_id.label() }}
+        {{ booking_form.user_id(class_="u-full-width") }}
+      </div>
+      <div class="four columns">
+        {{ booking_form.service_id.label() }}
+        {{ booking_form.service_id(class_="u-full-width") }}
+      </div>
+      <div class="four columns">
+        {{ booking_form.customer_id.label() }}
+        {{ booking_form.customer_id(class_="u-full-width") }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="six columns">
+        {{ booking_form.date.label() }}
+        {{ booking_form.date(class_="u-full-width") }}
+      </div>
+      <div class="six columns">
+        {{ booking_form.time.label() }}
+        {{ booking_form.time(class_="u-full-width") }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        {{ booking_form.repeating_weeks.label() }}
+        {{ booking_form.repeating_weeks(class_="u-full-width") }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        {{ booking_form.submit(class_="button button-primary") }}
+      </div>
+    </div>
+  </form>
+</div>

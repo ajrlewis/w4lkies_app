@@ -12,7 +12,7 @@ from wtforms import (
 )
 
 # from wtforms.fields import DateField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Optional
 
 from models.customer import Customer
 from models.service import Service
@@ -42,18 +42,22 @@ time_choices = get_time_choices(start_hour=8, end_hour=18, interval_minutes=15)
 
 class BookingForm(FlaskForm, FormMixin):
     date = DateField(
-        "Date",
+        "On this date",
         validators=[DataRequired()],
         format="%Y-%m-%d",
         render_kw={"placeholder": "yyyy-mm-dd"},
     )
-    time = SelectField("Time", validators=[DataRequired()])
-    user_id = SelectField("User", coerce=int, validators=[DataRequired()])
-    customer_id = SelectField("Customer", coerce=int, validators=[DataRequired()])
-    service_id = SelectField("Service", coerce=int, validators=[DataRequired()])
+    time = SelectField("At this time", validators=[DataRequired()])
+    user_id = SelectField("Assign", coerce=int, validators=[DataRequired()])
+    service_id = SelectField("The following", coerce=int, validators=[DataRequired()])
+    customer_id = SelectField("For owner", coerce=int, validators=[DataRequired()])
 
-    should_repeat = BooleanField("Repeat the booking?", default=False)
-    repeat_weeks = IntegerField("Number of weeks to repeat", default=12)
+    repeating_weeks = IntegerField(
+        "Repeat for number of weeks", default=0, validators=[Optional()]
+    )
+    # discount = IntegerField("Add a discount / %", default=0, validators=[Optional()])
+
+    submit = SubmitField("Submit")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
