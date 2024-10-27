@@ -24,7 +24,10 @@ def render_oob_template(
 def get_base():
     booking_form = booking_service.get_form()
     booking_filter_form = booking_service.get_filter_form()
-    bookings = booking_service.get_all()
+    if current_user.is_admin:
+        bookings = booking_service.get_all()
+    else:
+        bookings = booking_service.get_all(user_id=current_user.id)
     return render_template(
         "dashboard/bookings_base.html",
         booking_form=booking_form,
@@ -40,11 +43,11 @@ def get(booking_id: int):
     return render_template("dashboard/booking_detail.html", booking=booking)
 
 
-@booking_htmx_bp.route("/all", methods=["GET"])
-@login_required
-def get_all():
-    bookings = booking_service.get_all()
-    return render_template("dashboard/bookings.html", bookings=bookings)
+# @booking_htmx_bp.route("/all", methods=["GET"])
+# @login_required
+# def get_all():
+#     bookings = booking_service.get_all()
+#     return render_template("dashboard/bookings.html", bookings=bookings)
 
 
 @booking_htmx_bp.route("/filter", methods=["POST"])
@@ -52,6 +55,8 @@ def get_all():
 def get_filtered():
     booking_filter_form = booking_service.get_filter_form()
     data = booking_filter_form.data
+    if not current_user.is_admin:
+        data["user_id"] = current_user.id
     logger.debug(f"{data = }")
     bookings = booking_service.get_all(
         user_id=data.get("user_id"),
@@ -133,7 +138,10 @@ def update(booking_id: int):
     if booking and booking_form.validate_on_submit():
         logger.debug(f"{booking_form.data = }")
         booking = booking_service.update(booking_id, booking_form.data)
-        bookings = booking_service.get_all()
+        if current_user.is_admin:
+            bookings = booking_service.get_all()
+        else:
+            bookings = booking_service.get_all(user_id=current_user.id)
         logger.debug(f"{bookings = }")
     return render_template("dashboard/bookings.html", bookings=bookings)
 
