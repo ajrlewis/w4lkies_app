@@ -12,5 +12,3 @@ backups/
 migrations/
 venv/
 
-static/css/vendor/
-static/js/vendor/

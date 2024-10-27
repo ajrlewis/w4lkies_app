@@ -1,12 +1,12 @@
 <div class="booking" id="booking-{{ booking.id }}">
   <h3>{{ booking.date }} {{ booking.time.strftime("%I:%M %p") }}</h3>
   <h4>
-    <!-- { if current_user.is_admin %} -->
+    {% if current_user.is_admin %}
       {{ booking.user.name }} –
-    <!-- { endif %} -->
+    {% endif %}
     {{ booking.customer.dogs[0].name }} - {{ booking.service.name }}
   </h4>
-  <!-- { if current_user.is_admin %} -->
+  {% if current_user.is_admin %}
     <div class="row">
       <div class="twelve columns">
         <button class="button button-edit u-half-width"
@@ -26,6 +26,6 @@
       </div>
       <br>
     </div>
-      <br>
-  <!-- { endif %} -->
+    {% endif %}
+  <br>
 </div>

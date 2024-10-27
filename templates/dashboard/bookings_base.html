@@ -1,20 +1,20 @@
 {% extends "dashboard/dashboard_base.html" %}
 
 {% block content %}
-
   <!-- <div class="container">
     <h1>Bookings</h1>
     {% with test=test %}
       {% include "dashboard/test.html" %}
     {% endwith %}
   </div> -->
-
-  <div class="container">
-    <h2>Add a Booking</h2>
-    {% with booking_form=booking_form %}
-      {% include "dashboard/booking_form.html" %}
-    {% endwith %}
-  </div>
+  {% if current_user.is_admin %}
+    <div class="container">
+      <h2>Add a Booking</h2>
+      {% with booking_form=booking_form %}
+        {% include "dashboard/booking_form.html" %}
+      {% endwith %}
+    </div>
+  {% endif %}
 
   <div class="container">
     <h2>Your Bookings</h2>
@@ -25,16 +25,20 @@
       hx-target="#bookings"
       hx-trigger="change"
       hx-swap="outerHTML">
-      <div class="row">
-        <div class="four columns">
-          {{ booking_filter_form.user_id.label() }}
-          {{ booking_filter_form.user_id(class_="u-full-width") }}
+      {% if current_user.is_admin %}
+        <div class="row">
+          <div class="twelve columns">
+            {{ booking_filter_form.user_id.label() }}
+            {{ booking_filter_form.user_id(class_="u-full-width") }}
+          </div>
         </div>
-        <div class="four columns">
+      {% endif %}
+      <div class="row">
+        <div class="six columns">
           {{ booking_filter_form.date_min.label() }}
           {{ booking_filter_form.date_min(class_="u-full-width") }}
         </div>
-        <div class="four columns">
+        <div class="six columns">
           {{ booking_filter_form.date_max.label() }}
           {{ booking_filter_form.date_max(class_="u-full-width") }}
         </div>
