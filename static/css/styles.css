@@ -25,6 +25,16 @@ nav {
   margin: 0 auto;
 }
 
+nav {
+  /* ...existing styles... */
+
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* optional, for stacking order */
+}
+
 h1, h2, h3, h4, h5 {
   font-family: "Hobo Std";
 }
@@ -43,7 +53,8 @@ nav li {
 nav li a {
   display: block;
   text-align: center;
-  padding: 14px 16px;
+  padding-right: 14px;
+/*  padding: 14px 16px;*/
 }
 
 nav li a:hover {

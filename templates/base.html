@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    {% block head %}
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -22,6 +23,7 @@
       <link rel="stylesheet" href="/static/css/vendor/Skeleton-2.0.4/css/normalize.css">
       <link rel="stylesheet" href="/static/css/vendor/Skeleton-2.0.4/css/skeleton.css">
       <link rel="stylesheet" href="/static/css/styles.css">
+    {% endblock head %}
   </head>
   <body>
 
@@ -35,7 +37,7 @@
       <div class="row">
         <div class="twelve columns">
             <a href="{{ url_for('index_bp.get') }}">
-              <img src="/static/img/logo.png" alt="Logo" class="logo">
+              <img src="/static/img/logo.png" alt="W4lkies Logo" class="logo">
             </a>
         </div>
       </div>
