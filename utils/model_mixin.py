@@ -6,18 +6,18 @@ from app import db
 
 
 class ModelMixin:
-    # created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
-    # created_by = db.Column(db.String(66), nullable=True)
-    # updated_at = db.Column(db.DateTime, nullable=True)
-    # updated_by = db.Column(db.String(66), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow, nullable=True)
+    created_by = db.Column(db.Integer, nullable=True)
+    updated_at = db.Column(db.DateTime, nullable=True)
+    updated_by = db.Column(db.Integer, nullable=True)
 
-    # def meta(self):
-    #     return {
-    #         "created_at": self.created_at,
-    #         "created_by": self.created_by,
-    #         "updated_at": self.updated_at,
-    #         "updated_by": self.updated_by,
-    #     }
+    def meta(self):
+        return {
+            "created_at": self.created_at,
+            "created_by": self.created_by,
+            "updated_at": self.updated_at,
+            "updated_by": self.updated_by,
+        }
 
     @classmethod
     def get_expected_keys(cls):
