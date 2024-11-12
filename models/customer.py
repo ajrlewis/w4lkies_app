@@ -13,5 +13,7 @@ class Customer(db.Model, ModelMixin):
     signed_up_on = db.Column(db.Date, nullable=False)
     is_active = db.Column(db.Boolean, default=True)
 
+    __table_args__ = (db.UniqueConstraint("name", "email"),)
+
     def __repr__(self):
-        return self.name
+        return f"<Customer {self.id}>"
