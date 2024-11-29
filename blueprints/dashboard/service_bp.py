@@ -41,7 +41,8 @@ def get(service_id: int = None):
 def add():
     form = ServiceForm()
     if form.validate_on_submit():
-        Service.add(form.data)
+        data = form.data | {"is_active": True}
+        Service.add(data)
         flash(f"Service added successfully!", "success")
     return redirect(url_for("service_bp.get"))
 
