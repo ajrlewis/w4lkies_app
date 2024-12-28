@@ -15,7 +15,7 @@ index_bp = Blueprint("index_bp", __name__)
 
 
 @index_bp.route("/", methods=["GET"])
-def home():
+def get():
     # Show publicly available services
     services = (
         db.session.query(Service)
