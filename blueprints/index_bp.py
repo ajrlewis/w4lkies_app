@@ -3,15 +3,40 @@ import os
 
 from flask import current_app, Blueprint, render_template, Response
 from flask import Blueprint, render_template
+from loguru import logger
 from sqlalchemy import desc
 from sqlalchemy import desc
 
+from app import db
 from models.dog import Dog
-
-# from models.dog_breed import DogBreed
 from models.service import Service
 
 index_bp = Blueprint("index_bp", __name__)
+
+
+@index_bp.route("/home", methods=["GET"])
+def home():
+    # Show publicly available services
+    # services = (
+    #     Service.query.filter_by(is_publicly_offered=True)
+    #     .order_by(desc(Service.price))
+    #     .all()
+    # )
+    services = (
+        db.session.query(Service)
+        .filter_by(is_publicly_offered=True)
+        .order_by(desc(Service.price))
+        .all()
+    )
+    logger.debug(f"{services = }")
+    return (
+        render_template(
+            "home.html",
+            services=services,
+            # dog_name_to_image_paths=dog_name_to_image_paths,
+        ),
+        200,
+    )
 
 
 @index_bp.route("/", methods=["GET"])
