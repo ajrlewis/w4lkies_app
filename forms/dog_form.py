@@ -15,6 +15,7 @@ from wtforms.validators import DataRequired, Optional
 from models.customer import Customer
 from models.dog import Dog
 from models.vet import Vet
+from services import dog_service
 from utils.form_mixin import FormMixin
 
 
@@ -35,6 +36,8 @@ class DogForm(FlaskForm, FormMixin):
         validators=[Optional()],
         render_kw={"placeholder": "YYYY-MM-DD"},
     )
+
+    breed = StringField("Breed", default="Great Dane", validators=[Optional()])
 
     is_allowed_treats = BooleanField("Allowed Treats", default=False)
 
@@ -61,11 +64,6 @@ class DogForm(FlaskForm, FormMixin):
         },
     )
 
-    dog_breeds = SelectField(
-        "Breed",
-        default="Great Dane",
-        validators=[DataRequired()],
-    )
     customer_id = SelectField("Customer", validators=[DataRequired()])
     vet_id = SelectField("Vet", validators=[DataRequired()])
 
@@ -73,9 +71,6 @@ class DogForm(FlaskForm, FormMixin):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        dog_breeds = [dog.breed for dog in Dog.query.all()]
-        dog_breeds_choices = sorted(list(set(dog_breeds)))
-        self.dog_breeds.choices = dog_breeds_choices
 
         customer_id_choices = [
             (customer.id, customer.name)

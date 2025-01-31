@@ -5,7 +5,7 @@
       <ul>
         <li><a href="{{ url_for('booking_bp.get') }}">Bookings</a></li>
         <li><a href="{{ url_for('customer_bp.get') }}">Customers</a></li>
-        <li><a href="{{ url_for('dog_bp.get') }}">Dogs</a></li>
+        <li><a href="{{ url_for('dog_bp.get_all') }}">Dogs</a></li>
         <li><a href="{{ url_for('vet_bp.get') }}">Vets</a></li>
         {% if current_user.is_admin %}
           <li><a href="{{ url_for('expense_bp.get') }}">Expenses</a></li>
