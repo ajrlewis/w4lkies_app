@@ -43,7 +43,7 @@ def get(vet_id: int = None):
 def add():
     form = VetForm()
     if form.validate_on_submit():
-        vet.add(form.data)
+        Vet.add(form.data)
         flash(f"Vet added successfully!", "success")
     return redirect(url_for("vet_bp.get"))
 

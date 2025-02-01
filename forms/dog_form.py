@@ -65,8 +65,8 @@ class DogForm(FlaskForm, FormMixin):
         },
     )
 
-    customer_id = SelectField("Customer", validators=[DataRequired()])
-    vet_id = SelectField("Vet", validators=[DataRequired()])
+    customer_id = SelectField("Customer", validators=[DataRequired()], coerce=int)
+    vet_id = SelectField("Vet", validators=[DataRequired()], coerce=int)
 
     submit = SubmitField("Submit")
 
