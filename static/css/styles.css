@@ -200,7 +200,7 @@ footer {
 
 /* Checkbox Input */
 input[type="checkbox"] {
-  display: none; /* Hide the default checkbox */
+  display: none;
 }
 
 .checkbox {

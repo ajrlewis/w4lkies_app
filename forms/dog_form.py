@@ -15,7 +15,6 @@ from wtforms.validators import DataRequired, Optional
 from models.customer import Customer
 from models.dog import Dog
 from models.vet import Vet
-from services import dog_service
 from utils.form_mixin import FormMixin
 
 
@@ -37,7 +36,9 @@ class DogForm(FlaskForm, FormMixin):
         render_kw={"placeholder": "YYYY-MM-DD"},
     )
 
-    breed = StringField("Breed", default="Great Dane", validators=[Optional()])
+    breed = StringField(
+        "Breed", render_kw={"placeholder": "Great Dane"}, validators=[Optional()]
+    )
 
     is_allowed_treats = BooleanField("Allowed Treats", default=False)
 

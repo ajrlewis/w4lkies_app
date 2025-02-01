@@ -1,14 +1,15 @@
+from datetime import date
+import json
+import re
 import sys
 
 sys.path.append("./")
 
-from datetime import date
-import json
-import re
 import numpy as np
 import pandas as pd
 from sqlalchemy.schema import CreateTable
 from werkzeug.security import generate_password_hash
+
 from app import create_app, db
 from models.booking import Booking
 from models.customer import Customer
@@ -45,48 +46,6 @@ def create_database_tables():
     with app.app_context():
         db.create_all()
         db.session.commit()
-
-
-def read_csv(filename: str, model: db.Model):
-    with app.app_context():
-        df = pd.read_csv(filename)
-        df = df.replace(np.nan, None)
-        columns = [c for c in df.columns if c.startswith("is_")]
-        df[columns] = df[columns].astype(bool)
-        for _, row in df.iterrows():
-            obj = model(**row.to_dict())
-            db.session.add(obj)
-            db.session.commit()
-
-
-def restore_from_csvs():
-    drop_database_tables()
-    create_database_tables()
-    read_csv("data/customers.csv", Customer)
-    read_csv("data/vets.csv", Vet)
-    read_csv("data/dog_breeds.csv", DogBreed)
-    read_csv("data/dogs.csv", Dog)
-    read_csv("data/services.csv", Service)
-    read_csv("data/invoices.csv", Invoice)
-    read_csv("data/bookings.csv", Booking)
-
-
-def write_csv(filename: str, model: db.Model):
-    with app.app_context():
-        result = model.query.all()
-        df = pd.DataFrame([vars(obj) for obj in result])
-        df.to_csv(filename, index=False)
-
-
-def print_schema():
-    print(f"{CreateTable(Customer.__table__)},")
-    print(f"{CreateTable(Vet.__table__)},")
-    print(f"{CreateTable(DogBreed.__table__)},")
-    print(f"{CreateTable(Dog.__table__)},")
-    print(f"{CreateTable(Service.__table__)},")
-    print(f"{CreateTable(Invoice.__table__)},")
-    print(f"{CreateTable(Booking.__table__)},")
-    print(f"{CreateTable(User.__table__)},")
 
 
 def main():

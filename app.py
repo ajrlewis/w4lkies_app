@@ -5,28 +5,25 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
+
+# from flask_minify import Minify
 from flask_sqlalchemy import SQLAlchemy
 from flask_wallet_of_satoshi import WalletOfSatoshi
 from flask_wtf.csrf import CSRFProtect
 from htmlmin.main import minify
 from loguru import logger
 
-# Configure Loguru
-
+# Configure logger
+logger.debug("Configuring logger ...")
 LOGURU_LEVEL = os.getenv("LOGURU_LEVEL", "INFO")
 LOGURU_LEVEL = LOGURU_LEVEL.upper()
-
 logger.remove()
 logger.add(sys.stderr, level=LOGURU_LEVEL)
 logger.debug(f"{LOGURU_LEVEL = }")
 
-
-# from flask_minify import Minify
-
 # Register globals
 
 logger.debug("Creating global external instances ...")
-
 csrf = CSRFProtect()
 db = SQLAlchemy()
 login_manager = LoginManager()
@@ -35,22 +32,8 @@ migrate = Migrate()
 # minify = Minify()
 wos = WalletOfSatoshi()
 
-# Configure login manager
 
-logger.debug("Configuring login manager ...")
-
-from models.user import User
-
-login_manager.login_view = "auth_bp.sign_in"
-login_manager.login_message_category = "error"
-# login_manager.session_protection = "strong"
-
-
-@login_manager.user_loader
-def load_user(user_id: int) -> User:
-    user = User.query.get(int(user_id))
-    logger.info(f"Loaded {user = } ...")
-    return user
+# Create application
 
 
 def create_app(Config) -> Flask:
@@ -71,7 +54,22 @@ def create_app(Config) -> Flask:
     wos.init_app(app=app)
 
     with app.app_context():
-        # TODO (ajrl) Move this to own module:
+        # Configure login manager
+
+        from services import user_service
+        from models.user import User
+
+        logger.debug("Configuring login manager ...")
+        login_manager.login_view = "auth_bp.sign_in"
+        login_manager.login_message_category = "error"
+        # login_manager.session_protection = "strong"
+
+        @login_manager.user_loader
+        def load_user(user_id: int) -> User:
+            user = user_service.get_user(int(user_id))
+            logger.debug(f"Loaded {user = }")
+            return user
+
         @app.context_processor
         def handle_context():
             from datetime import datetime

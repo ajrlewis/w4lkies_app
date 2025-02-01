@@ -4,10 +4,11 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from loguru import logger
 from sqlalchemy import desc
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 
 from forms.sign_in_form import SignInForm
 from models.user import User
+from services import user_service
 from utils.email_utils import send
 
 
@@ -24,8 +25,7 @@ def sign_in():
             email = form.email.data
             password = form.password.data
 
-            user = User.query.filter_by(email=email).first()
-
+            user = user_service.get_user_by_email(email)
             if not user:
                 error_message = f"User with {email = } not found!"
                 logger.error(error_message)
@@ -58,6 +58,7 @@ def sign_in():
             logger.debug("Sent email warning to user of sign in.")
 
             # Send logged in user a warning email
+            # TODO (ajrl) Check the request is a GET method
             login_user(user, remember=True)
             next_page = request.form.get("next")
             if next_page:

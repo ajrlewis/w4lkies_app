@@ -19,4 +19,5 @@ if __name__ == "__main__":
     if len(args) == 2:
         logger.info("Using supplied host and port arguments ... ")
         main(*args)
-    main()
+    else:
+        main()
