@@ -1,0 +1,28 @@
+<form id="user-form" hx-post="/app/users" hx-target="#users" hx-swap="innerHTML">
+  {{ user_form.csrf_token }}
+  <div class="row">
+    <div class="six columns">
+      {{ user_form.name.label() }}
+      {{ user_form.name(class_="u-full-width") }}
+    </div>
+    <div class="six columns">
+      {{ user_form.email.label() }}
+      {{ user_form.email(class_="u-full-width") }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      {{ user_form.password.label() }}
+      {{ user_form.password(class_="u-full-width") }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelve columns">
+      <button 
+        type="submit"
+        class="button button-submit u-half-width">
+        Add User
+      </button>
+    </div>
+  </div>
+</form>

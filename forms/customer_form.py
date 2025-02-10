@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, DateField, StringField, SubmitField, TelField
-from wtforms.validators import DataRequired, Optional
+from wtforms.validators import DataRequired, Optional, Regexp
 from utils.form_mixin import FormMixin
 
 
@@ -12,11 +12,11 @@ class CustomerForm(FlaskForm, FormMixin):
         render_kw={"placeholder": "Daphne Blake", "class": "u-full-width"},
     )
 
-    # phone = TelField
-    phone = StringField(
+    phone = TelField(
         "Phone",
         validators=[
             DataRequired(),
+            Regexp(r"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"),
         ],
         render_kw={"placeholder": "(+44) 0123 456789", "class": "u-full-width"},
     )
@@ -36,17 +36,15 @@ class CustomerForm(FlaskForm, FormMixin):
         render_kw={"placeholder": "Fred Jones", "class": "u-full-width"},
     )
 
-    # emergency_contact_phone = TelField
-    emergency_contact_phone = StringField(
+    emergency_contact_phone = TelField(
         "Emergency Contact's Phone",
-        validators=[DataRequired()],
+        validators=[
+            DataRequired(),
+            Regexp(r"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"),
+        ],
         render_kw={"placeholder": "(+44) 1234 567890", "class": "u-full-width"},
     )
 
     signed_up_on = DateField("Signed Up On", default=datetime.utcnow)
 
-    is_active = BooleanField(
-        "Is active?",
-        validators=[Optional()],
-        default=True,
-    )
+    is_active = BooleanField("Is active?", validators=[Optional()], default=True)

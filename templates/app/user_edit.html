@@ -1,0 +1,25 @@
+<tr id="user-{{ user.id }}" class="selected">
+  <form
+    hx-put="/app/users/{{ user.id }}"
+    hx-target="#user-{{ user.id }}"
+    hx-swap="outerHTML swap:100ms">
+    {{ user_form.csrf_token }}
+    <td>{{ user_form.name }}</td>
+    <td>{{ user_form.email }}</td>
+    <td>{{ user_form.is_admin }}</td>
+    <td>
+      <button 
+        type="submit"
+        class="button button-update u-half-width">
+        Update
+      </button>
+      <button
+        class="button button-cancel"
+        hx-target="#user-{{ user.id }}"
+        hx-swap="outerHTML swap:100ms"
+        hx-get="/app/users/{{ user.id }}">
+        Cancel
+      </button>
+    </td>
+  </form>
+</tr>

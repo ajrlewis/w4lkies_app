@@ -32,6 +32,31 @@ migrate = Migrate()
 # minify = Minify()
 wos = WalletOfSatoshi()
 
+# Middleware Methods
+
+from urllib.parse import urlparse
+from flask import request, Response
+
+
+def htmx_middleware(response: Response) -> Response:
+    hx_request = request.headers.get("HX-Request")
+    status_code = response.status_code
+    if hx_request == "true" and status_code == 302:
+        logger.debug(f"{hx_request = } {status_code = }")
+        ref_header = request.headers.get("Referer", "")
+        logger.debug(f"{ref_header = }")
+        if ref_header:
+            referer = urlparse(ref_header)
+            logger.debug(f"{referer = }")
+            querystring = f"?next={referer.path}"
+            logger.debug(f"{querystring = }")
+        else:
+            querystring = ""
+        redirect = urlparse(response.location)
+        response.status_code = 204
+        response.headers["HX-Redirect"] = f"{redirect.path}{querystring}"
+    return response
+
 
 # Create application
 
@@ -66,15 +91,9 @@ def create_app(Config) -> Flask:
 
         @login_manager.user_loader
         def load_user(user_id: int) -> User:
-            user = user_service.get_user(int(user_id))
+            user = user_service.get_user_by_id(int(user_id))
             logger.debug(f"Loaded {user = }")
             return user
-
-        @app.context_processor
-        def handle_context():
-            from datetime import datetime
-
-            return {"now": datetime.utcnow()}
 
         # Import and register public pages
 
@@ -116,14 +135,46 @@ def create_app(Config) -> Flask:
 
         app.register_blueprint(booking_htmx_bp, url_prefix="/bookings")
 
-        #
+        from blueprints.app_bp import app_bp
 
-        # from blueprints.admin.verify_sign_up_bp import verify_sign_up_bp
+        app.register_blueprint(app_bp, url_prefix="/app")
 
-        # app.register_blueprint(
-        #     verify_sign_up_bp, url_prefix="/dashboard/verify-sign-up"
-        # )
+        # Middleware
+
+        from datetime import datetime
+        from flask import flash, redirect, Response, url_for
+
+        @app.context_processor
+        def handle_context():
+            return {"now": datetime.utcnow()}
+
+        @app.errorhandler(400)
+        def handle_bad_request(e):
+            # logger.error(f"Bad request: {e}")
+            flash(f"Ut-oh! {e}", "error")
+            return redirect(url_for("auth_bp.sign_in"))
+
+        @app.errorhandler(403)
+        def handle_expired_token(e):
+            # logger.error(f"Expired token: {e}")
+            return redirect(url_for("auth_bp.sign_in"))
+
+        @app.errorhandler(404)
+        def page_not_found(e):
+            # logger.error(f"Page not found: {e}")
+            return "This page does not exist", 404
+
+        @app.before_request
+        def before_request_func():
+            # logger.debug("before_request_func")
+            return
+
+        @app.after_request
+        def after_request_func(response: Response) -> Response:
+            # logger.debug(f"{response = }")
+            response = htmx_middleware(response)
+            logger.debug(f"{response = }")
+            return response
 
         logger.debug("Returning the application ...")
-
         return app

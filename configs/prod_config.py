@@ -22,7 +22,8 @@ class ProdConfig:
     MAIL_USE_SSL = ast.literal_eval(os.getenv("MAIL_USE_SSL"))
 
     REMEMBER_COOKIE_DURATION = datetime.timedelta(
-        seconds=int(os.getenv("REMEMBER_COOKIE_DURATION", 60))
+        seconds=int(os.getenv("REMEMBER_COOKIE_DURATION", 1))
+        # seconds=int(os.getenv("REMEMBER_COOKIE_DURATION", 60))
     )
     PERMANENT_SESSION_LIFETIME = REMEMBER_COOKIE_DURATION
 
@@ -38,8 +39,8 @@ class ProdConfig:
 
     WEBSITE_NAME = os.getenv("WEBSITE_NAME")
     WEBSITE_LTD_NAME = os.getenv("WEBSITE_LTD_NAME")
-    WEBSITE_SLOGAN = os.getenv("WEBSITE_SLOGAN")
-    WEBSITE_TELEPHONE = os.getenv("WEBSITE_TELEPHONE")
+    WEBSITE_PHONE = os.getenv("WEBSITE_PHONE")
+    WEBSITE_EMAIL = os.getenv("WEBSITE_EMAIL")
     WEBISTE_ADDRESS = os.getenv("WEBISTE_ADDRESS")
     WEBSITE_URL = os.getenv("WEBSITE_URL")
     WEBSITE_INSTAGRAM = os.getenv("WEBSITE_INSTAGRAM")

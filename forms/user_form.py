@@ -1,8 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TelField
-from wtforms.validators import DataRequired
+from wtforms import BooleanField, PasswordField, StringField, SubmitField, TelField
+from wtforms.validators import DataRequired, Optional
+
 from utils.form_mixin import FormMixin
-from models.user import User
 
 
 class UserForm(FlaskForm, FormMixin):
@@ -10,20 +10,21 @@ class UserForm(FlaskForm, FormMixin):
         "Name",
         validators=[DataRequired()],
         render_kw={
-            "placeholder": "Dooville Veterinary Hospital",
+            "placeholder": "Foo Bar",
             "class": "u-full-width",
         },
     )
 
-    address = StringField(
-        "Address",
+    email = StringField(
+        "Email",
         validators=[DataRequired()],
-        render_kw={"placeholder": "Dooville", "class": "u-full-width"},
+        render_kw={"placeholder": "foo@bar.com", "class": "u-full-width"},
     )
 
-    phone = TelField(
-        "Phone",
-        render_kw={"placeholder": "", "class": "u-full-width"},
-    )
+    is_admin = BooleanField("Admin", validators=[Optional()])
 
-    submit = SubmitField("Submit")
+    password = PasswordField(
+        "Password",
+        validators=[DataRequired()],
+        render_kw={"placeholder": "*****", "class": "u-full-width"},
+    )

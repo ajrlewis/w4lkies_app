@@ -1,0 +1,31 @@
+<div class="container" id="users">
+
+  <h1>Users</h1>
+  <br>
+
+  <h2>Add a User</h2>
+
+  {% with user_form=user_form %}
+    {% include "app/user_form.html" %}
+  {% endwith %}
+
+  <h2>Manage Users ({{ users | length }})</h2>
+
+  <table class="table u-full-width">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Admin</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        {% include "app/user_detail.html" %}
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+

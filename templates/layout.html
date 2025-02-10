@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>W4lkies | Dog caring & walking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Language" content="en-GB" />
+  <meta name="description" content="Professional dog walkers in West London offering solo dog walks & pet sitting services."/>
+  <link rel="canonical" href="https://www.w4lkies.com"/>
+  <meta property="og:title" content="W4lkies | Dog Walker in Chiswick, London"/>
+  <meta property="og:description" content="'W4lkies' offers bespoke dog walking services in Chiswick, West London."/>
+  <meta property="og:image" content="/static/img/logo.png"/>
+  <meta property="og:image:width" content="2500"/>
+  <meta property="og:image:height" content="1330"/>
+  <meta property="og:url" content="https://www.w4lkies.com"/>
+  <meta property="og:site_name" content="W4lkies" />
+  <meta name="robots" conent="index,follow"/>
+  <link rel="apple-touch-icon" href="/static/img/logo.png">
+  <meta name="apple-mobile-web-app-title" content="W4lkies">
+  <link rel="stylesheet" href="/static/css/vendor/Skeleton-2.0.4/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/vendor/Skeleton-2.0.4/css/skeleton.css">
+
+  <style type="text/css">
+  :root {
+    --primary: #93bfb0;
+    --primary-light: #b3d2c7;
+    --primary-dark: #73ac99;
+    --primary-content: #1f342d;
+    --foreground: #fbfbfb;
+    --background: #F5E3CC;
+    --border: #dde2e0;
+    --success: #93bf93;
+    --success-content: #1f341f;
+    --warning: #bfbf93;
+    --warning-content: #34341f;
+    --error: #bf9393;
+    --error-content: #341f1f;
+
+  --color-edit: #b3d2c7;
+  --color-delete: #cc6666;
+
+  }
+
+
+  /* Skeleton overrides */
+
+  .button {
+    border-radius: 100px;
+  }
+
+  .button.button-primary,
+  button.button-primary,
+  input[type="submit"].button-primary,
+  input[type="reset"].button-primary,
+  input[type="button"].button-primary {
+    color: var(--primary-content);
+    background-color: var(--primary);
+    border-color: var(--primary); }
+  .button.button-primary:hover,
+  button.button-primary:hover,
+  input[type="submit"].button-primary:hover,
+  input[type="reset"].button-primary:hover,
+  input[type="button"].button-primary:hover,
+  .button.button-primary:focus,
+  button.button-primary:focus,
+  input[type="submit"].button-primary:focus,
+  input[type="reset"].button-primary:focus,
+  input[type="button"].button-primary:focus {
+    color: var(--primary-content);
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark); }
+
+  .button.button-submit,
+  button.button-submit,
+  input[type="submit"].button-submit,
+  input[type="reset"].button-submit,
+  input[type="button"].button-submit {
+    color: var(--submit-content);
+    background-color: var(--submit);
+    border-color: var(--submit); }
+  .button.button-submit:hover,
+  button.button-submit:hover,
+  input[type="submit"].button-submit:hover,
+  input[type="reset"].button-submit:hover,
+  input[type="button"].button-submit:hover,
+  .button.button-submit:focus,
+  button.button-submit:focus,
+  input[type="submit"].button-submit:focus,
+  input[type="reset"].button-submit:focus,
+  input[type="button"].button-submit:focus {
+    color: var(--submit-content);
+    background-color: var(--submit-dark);
+    border-color: var(--submit-dark); }
+
+
+.button-edit {
+  background: var(--color-edit);
+}
+
+.button-delete {
+  background: var(--color-delete);"
+}
+
+.profile{
+  max-width: 100%;
+  height: auto;
+  border-radius: 30px;
+}
+
+.gallery {
+  max-width: 100%;
+  height: auto;
+  border-radius: 30px;
+}
+
+.section {
+  padding: 8rem 0 7rem;
+  text-align: center;
+}
+.section-heading,
+.section-description {
+  margin-bottom: 1.2rem;
+}
+
+.logos {
+  position: relative;
+}
+.logo {
+  position: relative;
+  max-width: 80%;
+  margin: 3rem auto -12rem;
+}
+.logo + .logo {
+  display: none;
+}
+
+.colored-section {
+  background-color: #F5E3CC;
+  padding-bottom: 5rem;
+}
+
+.transparent-section {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Bigger than 550 */
+@media (min-width: 550px) {
+  .section {
+    padding: 12rem 0 11rem;
+  }
+  .hero {
+    padding-bottom: 12rem;
+    text-align: left;
+    height: 165px;
+  }
+  .logo {
+    position: absolute;
+    top: -7rem;
+    right: 3rem;
+    max-height: 362px;
+    z-index: 3;
+  }
+  .logo + .logo {
+    top: -6rem;
+    display: block;
+    max-width: 73.8%;
+    right: 0;
+    z-index: 2;
+    max-height: 338px;
+  }
+  .hero-heading {
+    font-size: 2.4rem;
+  }
+}
+
+/* Bigger than 750 */
+@media (min-width: 750px) {
+  .hero {
+    height: 190px;
+  }
+  .hero-heading {
+    font-size: 2.6rem;
+  }
+  .section {
+    padding: 14rem 0 15rem;
+  }
+  .hero {
+    padding: 16rem 0 14rem;
+  }
+  .section-description {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .logo {
+    top: -14rem;
+    right: 5rem;
+    max-height: 510px;
+  }
+  .logo + .logo {
+    top: -12rem;
+    max-height: 472px;
+  }
+}
+
+/* Bigger than 1000 */
+@media (min-width: 1000px) {
+  .section {
+    padding: 20rem 0 19rem;
+  }
+  .hero {
+    padding: 22rem 0;
+  }
+  .hero-heading {
+    font-size: 3.0rem;
+  }
+  .logo {
+    top: -16rem;
+    max-height: 615px;
+  }
+  .logo + .logo {
+    top: -14rem;
+    max-height: 570px;
+  }
+}
+
+.hero-heading {
+  animation: fadeIn 2s;
+}
+
+.button-primary {
+  animation: fadeIn 2s;
+}
+
+@keyframes slideInFromRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInFromLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.logos {
+  animation: slideInFromRight 2s;
+}
+
+.about-us {
+  opacity: 0.1;
+}
+.about-us.about-us-reveal {
+  opacity: 1;
+  animation: fadeIn 4s, slideInFromLeft 3s;
+}
+
+.services {
+
+}
+
+.service.service-reveal {
+  animation: slideInFromLeft 2s, zoomIn 2s;
+}
+
+  </style>
+
+  <link rel="icon" type="image/png" href="/static/img/favicon.png">
+
+</head>
+<body>
+
+  {% block hero %}
+  <section class="hero">
+    <div class="container">
+      <div class="row">
+        <div class="one-half column">
+          <h1 class="hero-heading">
+          Fully insured dog caring & walking services based in Chiswick, London, W4.
+          </h1>
+          <a class="button button-primary" href="mailto:{{ config['WEBSITE_EMAIL'] }}">Book you free meet and greet!</a>
+        </div>
+        <div class="one-half column logos">
+          <img class="logo" src="/static/img/logo-transparent-background.png">
+          <img class="logo" src="/static/img/logo-transparent-background.png">
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endblock hero %}
+
+  <nav>
+    {% block nav %}
+    {% endblock nav %}
+  </nav>
+
+  <content>
+    {% block content %}{% endblock %}
+  </content>
+
+{% block footer %}
+  <footer>
+    <div class="container" style="text-align:center;">
+      <br>
+      <div class="row">
+        <div class="twelve columns">
+          © {{ now.year }} London W4lkies Ltd. All rights reserved.
+          <br>
+          <br>
+        </div> 
+      </div> 
+      <div class="row">
+        <div class="four columns">
+          <h4>Contact</h4>
+          E-mail: <a href="mailto:{{ config['WEBSITE_EMAIL'] }}">{{ config["WEBSITE_EMAIL"] }}</a>
+          <br>
+          Phone: <a href="tel:{{ config['WEBSITE_PHONE'] }}">{{ config["WEBSITE_PHONE"] }}</a>
+          <br>
+          <br>
+        </div> 
+        <div class="four columns">
+          <h4>Boring</h4>
+          Legal: <a href="{{ url_for('legal_bp.get') }}">Terms of Service, Privacy & Cookies</a>
+          <br>
+          Site Map: <a href="{{ url_for('index_bp.sitemap') }}">Robots welcome!</a>
+          <br>
+          <br>
+        </div>
+        <div class="four columns" style="word-wrap: break-word;">
+            <h4>Social</h4>
+            Instagram: <a href="https://www.instagram.com/{{ config['WEBSITE_INSTAGRAM'] }}" target="_blank">@{{ config["WEBSITE_INSTAGRAM"] }}</a>
+            <br>
+            Nostr: <a href="https://primal.net/p/npub1fv4yss586nhzgyqku92zal4rt0xtp5ftel0w6evnes8kdw2acalsmxaaf3" target="_blank">npub1fv4yss586nhzgyqku92zal4rt0xtp5ftel0w6evnes8kdw2acalsmxaaf3</a>
+            <br>
+            Github: <a href="https://github.com/ajrlewis/w4lkies_app" target="_blank">w4lkies_app</a>
+            <br>
+            <br>
+        </div> 
+      </div> 
+      <br>
+    </div>
+  </footer>
+{% endblock footer %}
+
+<script src="https://unpkg.com/htmx.org"></script>
+{% block scripts %}
+{% endblock scripts %}
+
+</body>
+</html>
