@@ -12,3 +12,6 @@ class Expense(db.Model, ModelMixin):
         db.Integer, db.ForeignKey("expense_type.id"), nullable=False
     )
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+    description = db.Column(db.String(255), nullable=True)
+    category = db.Column(db.String(255), nullable=True)
