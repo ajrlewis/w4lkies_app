@@ -100,6 +100,7 @@ def add():
             subtotal_price=subtotal_price,
             total_price_discount=total_price_discount,
             total_price=total_price,
+            customer_id=customer_id,
         )
         new_invoice.bookings = bookings
         db.session.add(new_invoice)
@@ -148,6 +149,7 @@ def download(invoice_id: int):
     for booking in invoice.bookings:
         date = booking.date
         month = date.strftime("%B")
+        year = date.strftime("%Y")
         customer_name = booking.customer.name
         dog_name = booking.customer.dogs[0].name
         service_name = booking.service.name
@@ -167,7 +169,7 @@ def download(invoice_id: int):
     invoice_df["total_price_discount"] = invoice.total_price_discount
     invoice_df["total_price"] = invoice.total_price
     invoice_pdf = invoice_utils.create(invoice_df)
-    download_name = f"{dog_name} {month}.pdf"
+    download_name = f"{dog_name} {year} {month}.pdf"
     pdf_file = BytesIO()
     pdf_file.write(invoice_pdf)
     pdf_file.seek(0)
