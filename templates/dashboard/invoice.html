@@ -65,7 +65,8 @@
         <h2>Invoice #{{ invoice.invoice_number }}</h2>
         <h3>{{ invoice.start_date }} - {{ invoice.end_date }} ({{ "£%0.2f" | format(invoice.total_price | float) }})</h3>
         {% if invoice.bookings and invoice.bookings[0].customer %}
-          <h4>{{ invoice.bookings[0].customer.name }}</h4>
+          <!-- <h4>{{ invoice.bookings[0].customer.name }}</h4> -->
+          <h4>{{ invoice.customer.name }}</h4>
         {% else %}
           <h4>-</h4>
         {% endif %}
